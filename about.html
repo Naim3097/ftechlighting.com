@@ -634,30 +634,61 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            nav { padding: 20px; }
-            .focus-content h2 { font-size: 12vw; }
-            .focus-overlay-text { bottom: 120px; left: 30px; right: 30px; }
-            .focus-overlay-text h3 { font-size: 36px; }
+            body {
+                overflow-y: auto;
+                height: auto;
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            nav { 
+                padding: 20px; 
+                background: rgba(0,0,0,0.8); /* Ensure nav is visible */
+            }
             
-            #fullpage { width: 500vw; height: 100vh; flex-direction: row; }
-            section { height: 100vh; width: 100vw; overflow: hidden; }
+            .focus-content h2 { font-size: 15vw; }
+            .focus-overlay-text { bottom: 40px; left: 20px; right: 20px; }
+            .focus-overlay-text h3 { font-size: 32px; }
+            
+            #fullpage { 
+                width: 100%; 
+                height: auto; 
+                flex-direction: column; 
+                transform: none !important; /* Disable JS transform */
+            }
+            
+            section { 
+                height: auto; 
+                min-height: 100vh; 
+                width: 100%; 
+                overflow: visible; 
+                flex-shrink: 0;
+            }
+
+            /* Hide Desktop Navigation Controls */
+            .nav-arrows, .page-indicators { display: none; }
             
             /* Editorial Mobile */
-            .editorial-content { flex-direction: column; padding: 40px 20px; overflow-y: auto; }
-            .editorial-text-col { padding: 30px; transform: none; margin-bottom: 20px; }
+            .editorial-section { height: auto; padding: 100px 0; }
+            .editorial-content { flex-direction: column; padding: 0 20px; }
+            .editorial-text-col { padding: 30px; transform: none; margin-bottom: 30px; }
             .editorial-img-col { height: 300px; width: 100%; }
             .editorial-text-col h2 { font-size: 2.5rem; }
 
             /* Glass Insights Mobile */
-            .glass-cards-container { grid-template-columns: 1fr; overflow-y: auto; padding: 80px 20px; gap: 20px; }
-            .glass-card { padding: 25px; }
+            .glass-insights-section { height: auto; padding: 100px 0; }
+            .glass-cards-container { grid-template-columns: 1fr; padding: 0 20px; gap: 20px; }
+            .glass-card { padding: 25px; transform: none !important; }
             .glass-card h3 { font-size: 1.5rem; }
 
             /* Dynamic Tabs Mobile */
-            .dynamic-tabs-section { flex-direction: column; }
-            .tabs-visual { height: 40vh; flex: none; }
-            .tabs-content { height: 60vh; flex: none; padding: 30px; overflow-y: auto; }
+            .dynamic-tabs-section { height: auto; flex-direction: column; }
+            .tabs-visual { height: 40vh; flex: none; width: 100%; }
+            .tabs-content { height: auto; flex: none; width: 100%; padding: 40px 20px; }
             .tab-header { font-size: 1.2rem; }
+            
+            /* Footer */
+            .footer-section { height: 50vh; min-height: 400px; }
         }
     </style>
 </head>
@@ -842,6 +873,8 @@
         let isScrolling = false;
 
         function updateSection(index) {
+            if (window.innerWidth <= 768) return; // Disable on mobile
+
             if (index < 0) index = 0;
             if (index >= totalSections) index = totalSections - 1;
             
@@ -871,6 +904,7 @@
 
         // Wheel Event
         window.addEventListener('wheel', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             if (isScrolling) return;
 
             if (e.deltaY > 0) {
@@ -893,10 +927,12 @@
         let touchEndX = 0;
 
         window.addEventListener('touchstart', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: false });
 
         window.addEventListener('touchend', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             touchEndX = e.changedTouches[0].screenX;
             handleSwipe();
         }, { passive: false });
@@ -936,6 +972,7 @@
         const editorialSection = document.getElementById('editorialSection');
         if (editorialSection) {
             editorialSection.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 const x = (window.innerWidth - e.pageX * 2) / 100;
                 const y = (window.innerHeight - e.pageY * 2) / 100;
                 
@@ -953,6 +990,7 @@
 
         tabItems.forEach(item => {
             item.addEventListener('mouseenter', () => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 // Remove active class from all items
                 tabItems.forEach(t => t.classList.remove('active'));
                 tabImages.forEach(img => img.classList.remove('active'));
@@ -963,10 +1001,31 @@
                 const targetImg = document.querySelector(`.tab-img[data-tab="${tabId}"]`);
                 if (targetImg) targetImg.classList.add('active');
             });
+            
+            // Add click for mobile
+            item.addEventListener('click', () => {
+                if (window.innerWidth > 768) return; // Only for mobile
+                
+                // Toggle active class
+                const isActive = item.classList.contains('active');
+                
+                // Close all
+                tabItems.forEach(t => t.classList.remove('active'));
+                tabImages.forEach(img => img.classList.remove('active'));
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                    const tabId = item.getAttribute('data-tab');
+                    const targetImg = document.querySelector(`.tab-img[data-tab="${tabId}"]`);
+                    if (targetImg) targetImg.classList.add('active');
+                }
+            });
         });
 
         // Initialize
-        updateSection(0);
+        if (window.innerWidth > 768) {
+            updateSection(0);
+        }
 
     </script>
 </body>

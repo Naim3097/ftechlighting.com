@@ -737,37 +737,149 @@
             color: var(--text-dark);
         }
 
-        /* ====== FOOTER ====== */
-        .site-footer {
-            background: #0a0808;
-            color: var(--beige-light);
-            padding: 0 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                height: auto;
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            nav { padding: 20px; background: rgba(251, 241, 229, 0.9); }
+            
+            #fullpage { 
+                width: 100%; 
+                height: auto; 
+                flex-direction: column; 
+                transform: none !important;
+                display: block;
+            }
+            
+            section, footer { 
+                height: auto; 
+                min-height: 100vh; 
+                width: 100%; 
+                overflow: visible; 
+                flex-shrink: 0;
+                padding: 60px 20px;
+            }
+
+            /* Hide Desktop Navigation Controls */
+            .nav-arrows, .page-indicators, .lens-cursor { display: none !important; }
+            
+            /* Section 1: Mask Text */
+            .mask-text-clip { font-size: 15vw; line-height: 1; }
+            
+            /* Section 2: Focus Mode */
+            .focus-section .focus-bg { opacity: 0.6; filter: grayscale(0%); }
+            .focus-content { opacity: 1 !important; transform: none !important; }
+            .focus-content h2 { font-size: 12vw; opacity: 1; transform: none; }
+            .focus-overlay-text { 
+                position: relative; 
+                top: auto; 
+                left: auto; 
+                transform: none; 
+                opacity: 1; 
+                margin-top: 40px; 
+                color: #fff;
+            }
+            
+            /* Section 3: Lens */
+            .lens-reveal { display: none; }
+            .lens-bg { filter: grayscale(0%) brightness(0.6); }
+            .lens-content { position: relative; transform: none !important; opacity: 1 !important; top: auto; left: auto; padding: 40px; }
+            .lens-content h2 { font-size: 12vw; opacity: 1; transform: none; }
+            .lens-content p { opacity: 1; transform: none; font-size: 1rem; }
+            
+            /* Section 4: Fan Deck */
+            .fan-section { height: auto; perspective: none; }
+            .fan-deck { 
+                width: 100%; 
+                height: auto; 
+                transform: none !important; 
+                opacity: 1; 
+                display: flex; 
+                flex-direction: column; 
+                gap: 20px; 
+            }
+            .fan-card { 
+                position: relative; 
+                width: 100%; 
+                height: 400px; 
+                transform: none !important; 
+                opacity: 1; 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            .fan-intro { 
+                position: relative; 
+                left: auto; 
+                top: auto; 
+                transform: none !important; 
+                opacity: 1; 
+                margin-bottom: 40px; 
+                text-align: center;
+            }
+            
+            /* Section 5: Cylinder */
+            .cylinder-section { height: auto; perspective: none; overflow: visible; }
+            .cylinder-title { position: relative; top: auto; opacity: 1; transform: none; margin-bottom: 40px; }
+            .cylinder-title h2 { font-size: 2.5rem; }
+            .cylinder-container { 
+                width: 100%; 
+                height: auto; 
+                transform: none !important; 
+                display: grid; 
+                grid-template-columns: 1fr; 
+                gap: 20px; 
+            }
+            .cylinder-item { 
+                position: relative; 
+                width: 100%; 
+                height: 300px; 
+                transform: none !important; 
+                opacity: 1; 
+                filter: none;
+            }
+            
+            /* Section 6: Strip Expand */
+            .strip-section { flex-direction: column; height: auto; }
+            .strip-item { 
+                width: 100%; 
+                height: 300px; 
+                transform: none !important; 
+                flex: none; 
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .strip-content { 
+                opacity: 1; 
+                transform: none; 
+                bottom: 30px; 
+                left: 30px; 
+                width: auto; 
+            }
+            .strip-content h3 { font-size: 2rem; }
+            .strip-bg { filter: brightness(0.6); transform: none !important; }
+            
+            /* Section 7: Velocity Slider */
+            .velocity-section { height: auto; display: block; }
+            .velocity-intro { position: relative; top: auto; left: auto; opacity: 1; transform: none; margin-bottom: 40px; text-align: center; }
+            .velocity-track { 
+                display: flex; 
+                flex-direction: column; 
+                gap: 40px; 
+                padding: 0; 
+                transform: none !important; 
+                opacity: 1; 
+            }
+            .velocity-item { width: 100%; transform: none !important; }
+            .velocity-img-container { height: 300px; }
+            
+            /* Footer */
+            .footer-main { grid-template-columns: 1fr; gap: 40px; padding: 0; }
+            .site-footer { padding: 60px 20px; height: auto; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
         }
-
-        .footer-main {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 80px;
-            max-width: 1400px;
-            margin: 0 auto 60px;
-            width: 100%;
-        }
-
-        .footer-brand h3 { font-size: 32px; font-weight: 200; letter-spacing: 4px; margin-bottom: 25px; }
-        .footer-brand p { font-size: 15px; font-weight: 300; line-height: 1.8; opacity: 0.7; max-width: 350px; }
-        .footer-column h4 { font-size: 14px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; opacity: 0.5; }
-        .footer-column ul { list-style: none; }
-        .footer-column li { margin-bottom: 15px; }
-        .footer-column a { color: var(--beige-light); text-decoration: none; font-size: 15px; font-weight: 300; opacity: 0.8; transition: opacity 0.3s; }
-        .footer-column a:hover { opacity: 1; }
-        .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 40px; border-top: 1px solid rgba(251, 241, 229, 0.1); display: flex; justify-content: space-between; align-items: center; }
-        .footer-bottom p { font-size: 13px; font-weight: 300; opacity: 0.5; }
-        .footer-bottom .footer-legal { display: flex; gap: 30px; }
-        .footer-bottom .footer-legal a { font-size: 13px; font-weight: 300; color: var(--beige-light); text-decoration: none; opacity: 0.5; }
-
     </style>
 </head>
 <body>
@@ -1040,6 +1152,7 @@
         const dots = document.querySelectorAll('.indicator-dot');
 
         function updateUI() {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             fullpage.style.transform = `translateX(-${currentSectionIndex * 100}%)`;
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentSectionIndex);
@@ -1056,6 +1169,7 @@
         }
 
         function scrollToSection(index) {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             if (isScrolling || index < 0 || index >= totalSections) return;
             isScrolling = true;
             currentSectionIndex = index;
@@ -1065,17 +1179,19 @@
 
         // Initial trigger
         setTimeout(() => {
-            sections[0].classList.add('active');
+            if (window.innerWidth > 768) sections[0].classList.add('active');
         }, 500);
         nextBtn.addEventListener('click', () => scrollToSection(currentSectionIndex + 1));
 
         window.addEventListener('wheel', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             if (isScrolling) return;
             if (e.deltaY > 0) scrollToSection(currentSectionIndex + 1);
             else scrollToSection(currentSectionIndex - 1);
         }, { passive: true });
 
         window.addEventListener('keydown', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') scrollToSection(currentSectionIndex + 1);
             else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') scrollToSection(currentSectionIndex - 1);
         });
@@ -1087,6 +1203,7 @@
             let targetX = 50, targetY = 50;
             let currentX = 50, currentY = 50;
             maskTextSection.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 const rect = maskTextSection.getBoundingClientRect();
                 const x = (e.clientX - rect.left) / rect.width;
                 const y = (e.clientY - rect.top) / rect.height;
@@ -1094,6 +1211,7 @@
                 targetY = 50 + (y - 0.5) * 30;
             });
             function animateMask() {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 currentX += (targetX - currentX) * 0.1;
                 currentY += (targetY - currentY) * 0.1;
                 maskTextClip.style.backgroundPosition = `${currentX}% ${currentY}%`;
@@ -1108,6 +1226,7 @@
         const lensCursor = document.querySelector('.lens-cursor');
         if (lensSection) {
             lensSection.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 const rect = lensSection.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
@@ -1116,6 +1235,7 @@
                 lensCursor.style.top = `${e.clientY}px`;
             });
             lensSection.addEventListener('mouseleave', () => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 lensReveal.style.clipPath = `circle(0% at 50% 50%)`;
             });
         }
@@ -1125,6 +1245,7 @@
         const fanCards = document.querySelectorAll('.fan-card');
         if (fanSection && fanCards.length > 0) {
             const spreadFan = () => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 fanCards.forEach((card, index) => {
                     const angle = (index - 2) * 5;
                     const x = (index - 2) * 40;
@@ -1132,8 +1253,10 @@
                     card.style.zIndex = index + 1;
                 });
             };
-            spreadFan();
+            if (window.innerWidth > 768) spreadFan();
+            
             fanSection.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 const rect = fanSection.getBoundingClientRect();
                 const x = (e.clientX - rect.left) / rect.width;
                 const spreadFactor = 1 + x * 1.5;
@@ -1166,8 +1289,11 @@
                 const div = document.createElement('div');
                 div.className = 'cylinder-item';
                 div.innerHTML = `<img src="${src}">`;
-                const angle = i * angleStep;
-                div.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+                
+                if (window.innerWidth > 768) {
+                    const angle = i * angleStep;
+                    div.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+                }
                 cylinderContainer.appendChild(div);
             });
             
@@ -1177,6 +1303,7 @@
             let velocity = 0;
             
             function animateCylinder() {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 if (!isDragging) {
                     if (Math.abs(velocity) > 0.01) {
                         velocity *= 0.95;
@@ -1192,6 +1319,7 @@
             
             const section = document.querySelector('.cylinder-section');
             section.addEventListener('mousedown', (e) => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 isDragging = true;
                 lastX = e.pageX;
                 velocity = 0;
@@ -1202,6 +1330,7 @@
                 section.style.cursor = 'grab';
             });
             window.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 if (!isDragging) return;
                 const delta = e.pageX - lastX;
                 lastX = e.pageX;
@@ -1216,11 +1345,13 @@
             stripItems.forEach(item => {
                 const img = item.querySelector('.strip-bg');
                 item.addEventListener('mousemove', (e) => {
+                    if (window.innerWidth <= 768) return; // Disable on mobile
                     const rect = item.getBoundingClientRect();
                     const x = (e.clientX - rect.left) / rect.width - 0.5;
                     if (img) img.style.transform = `translateX(${x * 20}px) scale(1.1)`;
                 });
                 item.addEventListener('mouseleave', () => {
+                    if (window.innerWidth <= 768) return; // Disable on mobile
                     if (img) img.style.transform = `translateX(0) scale(1.1)`;
                 });
             });
@@ -1236,6 +1367,7 @@
             let prevPageX = 0;
             
             velocityTrack.addEventListener('mousedown', (e) => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 isDown = true;
                 startX = e.pageX;
                 prevPageX = e.pageX;
@@ -1244,6 +1376,7 @@
             });
             
             window.addEventListener('mouseup', () => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 isDown = false;
                 velocityTrack.style.cursor = 'grab';
                 document.querySelectorAll('.velocity-item').forEach(item => {
@@ -1252,6 +1385,7 @@
             });
             
             window.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 if (!isDown) return;
                 e.preventDefault();
                 const x = e.pageX;

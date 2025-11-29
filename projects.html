@@ -810,16 +810,6 @@
             opacity: 0; /* Hide type to show "View Project" */
         }
 
-        @media (max-width: 768px) {
-            .project-index-section { flex-direction: column; padding: 80px 20px; }
-            .index-list-wrapper { padding: 0; flex: 1; }
-            .index-preview-wrapper { display: none; /* Hide preview on mobile to save space */ }
-            .project-row { grid-template-columns: 1fr; gap: 5px; padding: 20px 0; }
-            .project-row .type { text-align: left; opacity: 1 !important; }
-            .project-row:hover::after { display: none; }
-            .index-header h2 { font-size: 2.5rem; }
-        }
-
         /* ====== FOOTER ====== */
         .footer-section {
             background: #000;
@@ -864,39 +854,78 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            nav { padding: 20px; }
-            #fullpage { width: 600vw; height: 100vh; flex-direction: row; }
+            body {
+                overflow-y: auto;
+                height: auto;
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            nav { 
+                padding: 20px; 
+                background: rgba(0,0,0,0.8);
+            }
+            
+            #fullpage { 
+                width: 100%; 
+                height: auto; 
+                flex-direction: column; 
+                transform: none !important;
+            }
+            
+            section { 
+                height: auto; 
+                min-height: 100vh; 
+                width: 100%; 
+                overflow: visible; 
+                flex-shrink: 0;
+            }
+
+            /* Hide Desktop Navigation Controls */
+            .nav-arrows, .page-indicators { display: none; }
             
             /* Slice Hero Mobile */
             .slice-content h1 { font-size: 18vw; }
             .slice-strip img { width: 100vw; left: 0 !important; }
 
             /* Diagonal Mobile */
-            .diagonal-section { flex-direction: column; }
-            .diagonal-bg, .diagonal-image { height: 40vh; width: 100%; clip-path: none; }
-            .diagonal-content { padding: 30px; transform: none; opacity: 1; }
+            .diagonal-section { flex-direction: column; height: auto; min-height: 100vh; }
+            .diagonal-bg { height: 40vh; width: 100%; clip-path: none; position: relative; }
+            .diagonal-image { height: 40vh; width: 100%; clip-path: none; position: relative; }
+            .diagonal-content { padding: 30px; transform: none; opacity: 1; max-width: 100%; }
             .diagonal-content h2 { font-size: 2.5rem; }
 
-            /* Slider Mobile */
-            .slider-item { flex-direction: column; }
-            .slider-image { flex: 1; }
-            .slider-text { flex: 1; padding: 40px 30px; }
-            .slider-text h2 { font-size: 2rem; }
-            .slider-nav { bottom: 30px; right: 30px; }
+            /* Triptych Mobile */
+            .triptych-section { flex-direction: column; height: auto; }
+            .triptych-col { width: 100%; height: 400px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); flex: none; }
+            .triptych-info { opacity: 1; transform: none; bottom: 20px; left: 20px; right: 20px; }
+            .triptych-info h3 { font-size: 1.8rem; }
 
             /* Morph Mobile */
-            .morphing-grid { padding: 20px; }
-            .morph-container { grid-template-columns: 1fr !important; grid-template-rows: repeat(4, 1fr) !important; gap: 10px; }
+            .morphing-grid { padding: 20px; height: auto; }
+            .morph-container { 
+                grid-template-columns: 1fr !important; 
+                grid-template-rows: repeat(4, 400px) !important; 
+                gap: 10px; 
+                height: auto;
+            }
             .morph-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+            .morph-label { opacity: 1; transform: none; bottom: 20px; left: 20px; }
+            .morph-controls { display: none; }
 
-            /* Timeline Mobile */
-            .timeline-line { display: none; }
-            .timeline-item { grid-template-columns: 1fr; gap: 30px; margin-bottom: 60px; }
-            .timeline-item:nth-child(even) .timeline-image { order: 1; }
-            .timeline-item:nth-child(even) .timeline-text { text-align: left; order: 2; }
-            .timeline-image { height: 250px; }
-            .timeline-text { padding: 0; }
-            .timeline-text h3 { font-size: 1.8rem; }
+            /* Project Index Mobile */
+            .project-index-section { flex-direction: column; padding: 40px 20px; height: auto; }
+            .index-list-wrapper { padding: 0; flex: 1; width: 100%; }
+            .index-preview-wrapper { display: none; }
+            .project-row { grid-template-columns: 1fr; gap: 5px; padding: 20px 0; }
+            .project-row .type { text-align: left; opacity: 1 !important; }
+            .project-row:hover::after { display: none; }
+            .index-header h2 { font-size: 2.5rem; }
+            .index-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .index-header p { text-align: left; max-width: 100%; }
+            
+            /* Footer */
+            .footer-section { height: 50vh; min-height: 400px; }
         }
     </style>
 </head>
@@ -1166,6 +1195,7 @@
 
         // Wheel Event
         window.addEventListener('wheel', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             if (isScrolling) return;
 
             // Check if we are in the Project Index section (Section 5, index 4)
@@ -1203,17 +1233,19 @@
                     setTimeout(() => isScrolling = false, 800);
                 }
             }
-        });
+        }, { passive: false });
 
         // Touch Events
         let touchStartX = 0;
         let touchEndX = 0;
 
         window.addEventListener('touchstart', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: false });
 
         window.addEventListener('touchend', (e) => {
+            if (window.innerWidth <= 768) return; // Disable on mobile
             touchEndX = e.changedTouches[0].screenX;
             handleSwipe();
         }, { passive: false });
@@ -1229,19 +1261,23 @@
         }
 
         // Click Events
-        nextSectionBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            updateSection(currentSection + 1);
-        });
+        if (nextSectionBtn) {
+            nextSectionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                updateSection(currentSection + 1);
+            });
+        }
 
-        prevSectionBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (currentSection === 0) {
-                window.location.href = 'index.html';
-            } else {
-                updateSection(currentSection - 1);
-            }
-        });
+        if (prevSectionBtn) {
+            prevSectionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentSection === 0) {
+                    window.location.href = 'index.html';
+                } else {
+                    updateSection(currentSection - 1);
+                }
+            });
+        }
 
         indicators.forEach((dot, index) => {
             dot.addEventListener('click', () => {
@@ -1276,6 +1312,7 @@
 
         projectRows.forEach(row => {
             row.addEventListener('mouseenter', () => {
+                if (window.innerWidth <= 768) return; // Disable on mobile
                 const imgSrc = row.getAttribute('data-img');
                 if (imgSrc) {
                     previewImage.src = imgSrc;
