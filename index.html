@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTECH - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* FTECH Brand Colors */
+            --primary-burgundy: #820000;
+            --burgundy-dark: #2a0a0a;
+            --burgundy-alt: #811517;
+            --accent-burgundy: #87181a;
+            --beige-light: #FBF1E5;
+            --beige-alt: #FBF4E9;
+            --text-dark: #1a1a1a;
+            --text-secondary: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--beige-light);
+            overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ====== NAVIGATION (MINIMALIST) ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 50px;
+            z-index: 10000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            mix-blend-mode: normal;
+        }
+
+        .logo {
+            display: block;
+            width: 120px;
+            pointer-events: auto;
+            /* Smart contrast: White on dark, Black on light */
+            mix-blend-mode: difference; 
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* Force the burgundy logo to be pure white for maximum contrast */
+            filter: brightness(0) invert(1); 
+        }
+
+        /* ====== MENU TOGGLE ====== */
+        .menu-toggle {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            z-index: 20001; /* Above overlay */
+            mix-blend-mode: difference;
+            color: #fff;
+        }
+
+        .menu-text {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .hamburger {
+            width: 40px;
+            height: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+        }
+
+        .hamburger span:nth-child(1) { width: 100%; }
+        .hamburger span:nth-child(2) { width: 70%; }
+
+        .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
+
+        /* Active State for Hamburger */
+        .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+
+        /* ====== MENU OVERLAY ====== */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--burgundy-dark);
+            z-index: 20000;
+            transform: translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .menu-overlay.active {
+            transform: translateY(0);
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-link {
+            font-size: 4rem;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 200;
+            letter-spacing: -1px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.1;
+        }
+
+        .menu-link span {
+            font-size: 1rem;
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            opacity: 0;
+            transition: all 0.4s ease;
+            color: var(--primary-burgundy);
+            font-weight: 700;
+        }
+
+        .menu-link:hover {
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .menu-link:hover span {
+            opacity: 1;
+            right: -20px;
+        }
+
+        .menu-footer {
+            position: absolute;
+            bottom: 50px;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+
+        /* Responsive Menu */
+        @media (max-width: 768px) {
+            .menu-link { font-size: 2.5rem; }
+        }
+
+        /* ====== SECTION: HERO (CURTAIN REVEAL) ====== */
+        .curtain-reveal {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            background: #0f0c0c;
+        }
+
+        .curtain-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        /* Accordion Section Styles (Integrated into Curtain BG) */
+        .accordion-section {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            background: var(--beige-light);
+            overflow: hidden;
+        }
+
+        .accordion-panel {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+        }
+
+        .accordion-panel:last-child {
+            border-right: none;
+        }
+
+        .accordion-panel.expanded {
+            flex: 3;
+        }
+
+        .accordion-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        /* Inactive State: Uniform Dark Overlay */
+        .accordion-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* Active State: Gradient Overlay */
+        .accordion-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(20, 16, 16, 0.95) 0%, rgba(20, 16, 16, 0.4) 50%, transparent 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .accordion-panel.expanded .accordion-bg::before {
+            opacity: 0;
+        }
+
+        .accordion-panel.expanded .accordion-bg::after {
+            opacity: 1;
+        }
+
+        .accordion-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.5);
+            transform: scale(1);
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), filter 1s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform, filter;
+        }
+
+        .accordion-panel.expanded .accordion-bg img {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.08);
+        }
+
+        .accordion-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            font-size: 36px;
+            font-weight: 200;
+            color: var(--beige-light);
+            white-space: nowrap;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 2;
+        }
+
+        .accordion-panel.expanded .accordion-title {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .accordion-content {
+            position: absolute;
+            bottom: 70px;
+            left: 70px;
+            right: 70px;
+            color: var(--beige-light);
+            opacity: 0;
+            transform: translateY(35px);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1) 0.3s;
+            z-index: 2;
+        }
+
+        .accordion-panel.expanded .accordion-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .accordion-content::before {
+            content: '';
+            width: 50px;
+            height: 1px;
+            background: rgba(251, 241, 229, 0.6);
+            display: block;
+            margin-bottom: 25px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+        }
+
+        .accordion-panel.expanded .accordion-content::before {
+            transform: scaleX(1);
+        }
+
+        .accordion-content h2 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--beige-light);
+            text-stroke: 1px var(--beige-light);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: color 0.4s ease;
+        }
+
+        .accordion-panel:hover .accordion-content h2 {
+            color: rgba(251, 241, 229, 0.1);
+        }
+
+        .accordion-content p {
+            font-size: 17px;
+            font-weight: 300;
+            line-height: 1.9;
+            max-width: 650px;
+            letter-spacing: 0.3px;
+            margin-bottom: 30px;
+        }
+
+        .accordion-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--beige-light);
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border: none;
+            padding: 0;
+            position: relative;
+        }
+
+        .accordion-cta::after {
+            content: '→';
+            font-size: 18px;
+            transition: transform 0.3s;
+            line-height: 1;
+        }
+
+        .accordion-cta:hover {
+            color: #fff;
+            background: transparent;
+        }
+
+        .accordion-cta:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Curtain Panels (Overlay) */
+        .curtain-panels {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            z-index: 10; /* Higher than accordion */
+            pointer-events: none; /* Allow clicks to pass through after animation */
+        }
+
+        .curtain-panel {
+            flex: 1;
+            background: linear-gradient(180deg, #1a1414 0%, var(--burgundy-dark) 100%);
+            border-left: 1px solid rgba(251, 241, 229, 0.1);
+            transform-origin: top;
+            transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform;
+            position: relative;
+            margin-left: -1px; /* Overlap to prevent sub-pixel gaps */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: translate3d(0,0,0);
+        }
+
+        .curtain-panel:first-child {
+            border-left: none;
+            margin-left: 0;
+        }
+
+        .curtain-panel:last-child {
+            border-right: none;
+        }
+
+        .curtain-panel:nth-child(1) { transition-delay: 0s; }
+        .curtain-panel:nth-child(2) { transition-delay: 0.08s; }
+        .curtain-panel:nth-child(3) { transition-delay: 0.16s; }
+        .curtain-panel:nth-child(4) { transition-delay: 0.24s; }
+        .curtain-panel:nth-child(5) { transition-delay: 0.32s; }
+        .curtain-panel:nth-child(6) { transition-delay: 0.40s; }
+        .curtain-panel:nth-child(7) { transition-delay: 0.48s; }
+
+        .curtain-reveal.active .curtain-panel {
+            transform: translateY(-100%) scaleY(0.98);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            nav { padding: 0 40px; }
+            .accordion-panel.expanded .accordion-title { font-size: 52px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { 
+                padding: 20px; 
+                /* Removed justify-content: center to keep logo and menu spaced apart */
+            }
+            .curtain-panels { flex-direction: row; }
+            
+            .accordion-section { 
+                flex-direction: column; 
+                padding-top: 120px;
+                background: #000;
+            }
+            .accordion-panel { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .accordion-title { transform: translate(-50%, -50%) rotate(0deg); font-size: 24px; }
+            .accordion-panel.expanded .accordion-title { font-size: 36px; top: 25%; }
+            .accordion-content { bottom: 30px; left: 20px; right: 20px; }
+            .accordion-content h2 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (Minimalist) -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="assets/logo/logo no tagline.png" alt="FTECH">
+        </a>
+        <div class="menu-toggle" id="menuToggle">
+            <span class="menu-text">Menu</span>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="index.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
+        </div>
+        <div class="menu-footer">
+            <p>FTECH Solutions Sdn Bhd</p>
+            <p>Kuala Lumpur • Johor • Sarawak • Singapore</p>
+        </div>
+    </div>
+
+    <!-- Hero Section (Curtain Reveal + Accordion) -->
+    <section class="curtain-reveal">
+        <div class="curtain-bg">
+            <!-- Accordion Section -->
+            <section class="accordion-section">
+                <!-- Panel 1: Main Home -->
+                <div class="accordion-panel" data-index="0">
+                    <div class="accordion-bg">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920" alt="FTECH Lighting">
+                    </div>
+                    <div class="accordion-title">Welcome</div>
+                    <div class="accordion-content">
+                        <h2>Delivering Values<br>Solving Complexities</h2>
+                        <p>Holistic & Innovative Lighting Solutions. We craft lighting solutions that transform industrial and commercial spaces into experiences.</p>
+                        <a href="#" class="accordion-cta">Explore FTECH</a>
+                    </div>
+                </div>
+
+                <!-- Panel 2: About Us -->
+                <div class="accordion-panel" data-index="1">
+                    <div class="accordion-bg">
+                        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1920" alt="About Us">
+                    </div>
+                    <div class="accordion-title">About Us</div>
+                    <div class="accordion-content">
+                        <h2>Who We Are</h2>
+                        <p>We are a team of dedicated professionals committed to excellence in lighting design and engineering. Discover our story and philosophy.</p>
+                        <a href="about.html" class="accordion-cta">Read Our Story</a>
+                    </div>
+                </div>
+
+                <!-- Panel 3: Our Services -->
+                <div class="accordion-panel" data-index="2">
+                    <div class="accordion-bg">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920" alt="Our Services">
+                    </div>
+                    <div class="accordion-title">Services</div>
+                    <div class="accordion-content">
+                        <h2>What We Do</h2>
+                        <p>From conceptual design to installation and commissioning, we offer a comprehensive range of lighting services tailored to your needs.</p>
+                        <a href="services.html" class="accordion-cta">View Services</a>
+                    </div>
+                </div>
+
+                <!-- Panel 4: Featured Projects -->
+                <div class="accordion-panel" data-index="3">
+                    <div class="accordion-bg">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920" alt="Featured Projects">
+                    </div>
+                    <div class="accordion-title">Projects</div>
+                    <div class="accordion-content">
+                        <h2>Our Work</h2>
+                        <p>Explore our portfolio of award-winning projects across various sectors, showcasing our expertise and innovation.</p>
+                        <a href="projects.html" class="accordion-cta">View Portfolio</a>
+                    </div>
+                </div>
+
+                <!-- Panel 5: Contact Us -->
+                <div class="accordion-panel" data-index="4">
+                    <div class="accordion-bg">
+                        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1920" alt="Contact Us">
+                    </div>
+                    <div class="accordion-title">Contact</div>
+                    <div class="accordion-content">
+                        <h2>Get in Touch</h2>
+                        <p>Ready to transform your space? Connect with our team for consultations, quotes, and lighting design inquiries.</p>
+                        <a href="contact.html" class="accordion-cta">Contact Us</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Curtain Panels Overlay -->
+        <div class="curtain-panels">
+            <div class="curtain-panel"></div>
+            <div class="curtain-panel"></div>
+            <div class="curtain-panel"></div>
+            <div class="curtain-panel"></div>
+            <div class="curtain-panel"></div>
+            <div class="curtain-panel"></div>
+            <div class="curtain-panel"></div>
+        </div>
+    </section>
+
+    <script>
+        // Menu Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            
+            // Update text based on state
+            const menuText = menuToggle.querySelector('.menu-text');
+            if (menuOverlay.classList.contains('active')) {
+                menuText.textContent = 'Close';
+            } else {
+                menuText.textContent = 'Menu';
+            }
+        });
+
+        // Trigger Curtain Animation on Load
+        document.addEventListener('DOMContentLoaded', () => {
+            const hero = document.querySelector('.curtain-reveal');
+            // Small delay to ensure transition happens after render
+            setTimeout(() => {
+                hero.classList.add('active');
+            }, 500);
+
+            // Accordion Expand Logic
+            const accordionPanels = document.querySelectorAll('.accordion-panel');
+            
+            if (accordionPanels.length > 0) {
+                accordionPanels.forEach(panel => {
+                    panel.addEventListener('mouseenter', () => {
+                        // Collapse all
+                        accordionPanels.forEach(p => p.classList.remove('expanded'));
+                        
+                        // Expand hovered
+                        panel.classList.add('expanded');
+                    });
+                });
+                
+                // Expand first panel by default after curtain reveal
+                setTimeout(() => {
+                    accordionPanels[0].classList.add('expanded');
+                }, 1500); // Wait for curtain to go up
+            }
+        });
+    </script>
+</body>
+</html>
+

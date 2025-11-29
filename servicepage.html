@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTECH - Services & Solutions</title>
+    <style>
+        /* ====== BASE STYLES FROM PREVIEW.HTML ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-burgundy: #820000;
+            --burgundy-dark: #2a0a0a;
+            --burgundy-alt: #811517;
+            --accent-burgundy: #87181a;
+            --beige-light: #FBF1E5;
+            --beige-alt: #FBF4E9;
+            --text-dark: #1a1a1a;
+            --text-secondary: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--beige-light);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #fullpage {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            /* Much smoother, heavier ease for a premium feel */
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
+
+        section, footer {
+            height: 100vh;
+            width: 100vw;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--beige-light);
+        }
+
+        /* ====== ENTRANCE ANIMATIONS ====== */
+        /* Common fade-up for text */
+        .animate-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+            transition-delay: 0.3s;
+        }
+
+        section.active .animate-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger delays */
+        .delay-1 { transition-delay: 0.4s; }
+        .delay-2 { transition-delay: 0.5s; }
+        .delay-3 { transition-delay: 0.6s; }
+
+        /* Navigation UI */
+        .nav-arrows {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 9999;
+            mix-blend-mode: difference; /* Ensures visibility on dark/light */
+        }
+
+        .nav-arrow {
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            color: #fff;
+            background: transparent;
+            font-size: 24px;
+        }
+
+        .nav-arrow:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .nav-arrow.disabled { opacity: 0.3; pointer-events: none; }
+
+        .page-indicators {
+            position: fixed;
+            top: 50%;
+            right: 40px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 9999;
+        }
+
+        .indicator-dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(130, 0, 0, 0.2);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .indicator-dot.active { background: var(--primary-burgundy); }
+
+        /* Navigation Overlay */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 50px;
+            z-index: 10000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            mix-blend-mode: normal;
+        }
+
+        .logo {
+            display: block;
+            width: 120px;
+            pointer-events: auto;
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Section Labels */
+        .section-label {
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--primary-burgundy);
+            z-index: 10;
+            opacity: 0.5;
+            text-transform: uppercase;
+        }
+
+        /* ====== SECTION 25: TEXT MASK (HERO) ====== */
+        .mask-text-section {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .mask-text-clip {
+            font-size: 18vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            background-image: url('assets/sections/service & solution/conceptual lighting design/1.jpg');
+            background-size: 120% auto;
+            background-position: center;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: rgba(255,255,255,0.02);
+            line-height: 0.85;
+            text-align: center;
+            transition: background-position 0.1s cubic-bezier(0.1, 0.5, 0.5, 1), transform 1.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.5s ease; 
+            cursor: default;
+            filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
+            
+            /* Initial State */
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .mask-text-section.active .mask-text-clip {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ====== SECTION 20: FOCUS MODE (CORE COMPETENCIES) ====== */
+        .focus-section {
+            background: #000;
+            cursor: none; 
+        }
+
+        .focus-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/sections/core competencies/1.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) grayscale(100%);
+            transition: filter 0.4s, transform 2s ease-out;
+            opacity: 0.4;
+            transform: scale(1.1);
+        }
+
+        .focus-section.active .focus-bg {
+            transform: scale(1);
+        }
+
+        .focus-section:hover .focus-bg {
+            filter: blur(0px) grayscale(50%);
+            opacity: 0.6;
+        }
+
+        .focus-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            mix-blend-mode: difference;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .focus-section:hover .focus-content {
+            opacity: 0;
+        }
+
+        .focus-content h2 {
+            font-size: 8vw;
+            line-height: 0.9;
+            font-weight: 900;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+        }
+
+        .focus-section.active .focus-content h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .focus-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .focus-section:hover .focus-overlay-text {
+            opacity: 1;
+        }
+
+        .focus-overlay-text h3 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .focus-overlay-text ul {
+            list-style: none;
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        /* ====== SECTION 17: THE LENS (CONCEPTUAL) ====== */
+        .lens-section {
+            background: #111;
+            cursor: none;
+        }
+
+        .lens-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/sections/service & solution/conceptual lighting design/2.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%) brightness(0.3);
+        }
+
+        .lens-reveal {
+            position: absolute;
+            inset: 0;
+            background-image: url('assets/sections/service & solution/conceptual lighting design/2.jpg');
+            background-size: cover;
+            background-position: center;
+            clip-path: circle(0% at 50% 50%);
+            transition: clip-path 0.1s;
+            z-index: 2;
+        }
+
+        .lens-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            text-align: center;
+            color: #fff;
+            pointer-events: none;
+            mix-blend-mode: difference;
+        }
+
+        .lens-content h2 {
+            font-size: 6vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+        }
+
+        .lens-section.active .lens-content h2 {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .lens-content p {
+            font-size: 1.2vw;
+            margin-top: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
+        }
+
+        .lens-section.active .lens-content p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lens-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0); /* Hidden initially */
+            z-index: 10;
+            mix-blend-mode: difference;
+            transition: transform 0.3s;
+        }
+
+        .lens-section:hover .lens-cursor {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* ====== SECTION 26: THE FAN DECK (BESPOKE) ====== */
+        .fan-section {
+            background: #f0f0f0;
+            perspective: 1500px;
+        }
+
+        .fan-deck {
+            position: relative;
+            width: 320px;
+            height: 480px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateX(100px) rotateY(-20deg);
+            transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+        }
+
+        .fan-section.active .fan-deck {
+            opacity: 1;
+            transform: translateX(0) rotateY(0);
+        }
+
+        .fan-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy */
+            transform-origin: 50% 120%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .fan-card img {
+            width: 100%;
+            height: 65%;
+            object-fit: cover;
+        }
+
+        .fan-card-info {
+            padding: 25px;
+            background: #fff;
+            flex: 1;
+        }
+
+        .fan-card-info h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--primary-burgundy);
+        }
+        
+        .fan-card-info p {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .fan-intro {
+            position: absolute;
+            left: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 400px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .fan-section.active .fan-intro {
+            opacity: 1;
+            transform: translateY(-50%);
+        }
+        
+        .fan-intro h2 {
+            font-size: 48px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .fan-intro p {
+            color: var(--text-secondary);
+        }
+
+        /* ====== SECTION 24: THE CYLINDER (ARCHITECTURAL) ====== */
+        .cylinder-section {
+            background: #050505;
+            perspective: 2000px;
+        }
+
+        .cylinder-container {
+            position: relative;
+            width: 300px;
+            height: 440px;
+            transform-style: preserve-3d;
+            transform: rotateX(-6deg) scale(0.8); 
+            opacity: 0;
+            transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+        }
+
+        .cylinder-section.active .cylinder-container {
+            opacity: 1;
+            transform: rotateX(-6deg) scale(1);
+        }
+
+        .cylinder-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; 
+            opacity: 1; 
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #111;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            filter: brightness(0.6) grayscale(100%);
+            transition: filter 0.4s, transform 0.4s, border-color 0.4s;
+        }
+
+        .cylinder-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .cylinder-item:hover {
+            filter: brightness(1.2) grayscale(0%);
+            border-color: #fff;
+            z-index: 100;
+            box-shadow: 0 0 30px rgba(255,255,255,0.15), 0 20px 60px rgba(0,0,0,0.9);
+        }
+        
+        .cylinder-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .cylinder-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0.15) 0%, transparent 40%);
+            pointer-events: none;
+        }
+        
+        .cylinder-title {
+            position: absolute;
+            top: 10%;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .cylinder-section.active .cylinder-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .cylinder-title h2 {
+            font-size: 48px;
+            font-weight: 200;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        /* ====== SECTION 23: STRIP EXPAND (COMMERCIAL/RESIDENTIAL) ====== */
+        .strip-section {
+            display: flex;
+            background: #000;
+        }
+
+        .strip-item {
+            flex: 1;
+            position: relative;
+            transition: flex 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 1s ease;
+            overflow: hidden;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transform: translateY(100%); /* Start hidden */
+        }
+
+        .strip-section.active .strip-item {
+            transform: translateY(0);
+        }
+
+        /* Staggered entrance */
+        .strip-item:nth-child(1) { transition-delay: 0s; }
+        .strip-item:nth-child(2) { transition-delay: 0.1s; }
+        .strip-item:nth-child(3) { transition-delay: 0.2s; }
+        .strip-item:nth-child(4) { transition-delay: 0.3s; }
+        .strip-item:nth-child(5) { transition-delay: 0.4s; }
+
+        .strip-item:hover {
+            flex: 6;
+            transition-delay: 0s !important; /* Remove delay on hover */
+        }
+
+        .strip-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.4);
+            transition: filter 0.6s, transform 1.2s;
+            transform: scale(1.1);
+        }
+
+        .strip-item:hover .strip-bg {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1);
+        }
+
+        .strip-section:hover .strip-item:not(:hover) .strip-bg {
+            filter: grayscale(100%) brightness(0.2);
+        }
+
+        .strip-content {
+            position: absolute;
+            bottom: 60px;
+            left: 60px;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition-delay: 0.1s;
+            width: 400px;
+        }
+
+        .strip-item:hover .strip-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.3s;
+        }
+
+        .strip-content h3 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .strip-num {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            font-size: 24px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .strip-item:hover .strip-num {
+            color: #fff;
+        }
+
+        /* ====== SECTION 18: VELOCITY SLIDER (INSTALLATION) ====== */
+        .velocity-section {
+            background: var(--beige-light);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .velocity-track {
+            display: flex;
+            gap: 5vw;
+            padding: 0 10vw;
+            cursor: grab;
+            will-change: transform;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: opacity 1s, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .velocity-section.active .velocity-track {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .velocity-item {
+            flex-shrink: 0;
+            width: 30vw;
+            position: relative;
+            transition: transform 0.1s;
+        }
+
+        .velocity-img-container {
+            width: 100%;
+            height: 40vh;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .velocity-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .velocity-num {
+            font-size: 120px;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--primary-burgundy);
+            position: absolute;
+            top: -60px;
+            left: -20px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .velocity-info h3 {
+            font-size: 24px;
+            color: var(--primary-burgundy);
+            margin-bottom: 10px;
+        }
+        
+        .velocity-info p {
+            color: var(--text-secondary);
+        }
+        
+        .velocity-intro {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .velocity-section.active .velocity-intro {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .velocity-intro h2 {
+            font-size: 48px;
+            color: var(--text-dark);
+        }
+
+        /* ====== FOOTER ====== */
+        .site-footer {
+            background: #0a0808;
+            color: var(--beige-light);
+            padding: 0 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 80px;
+            max-width: 1400px;
+            margin: 0 auto 60px;
+            width: 100%;
+        }
+
+        .footer-brand h3 { font-size: 32px; font-weight: 200; letter-spacing: 4px; margin-bottom: 25px; }
+        .footer-brand p { font-size: 15px; font-weight: 300; line-height: 1.8; opacity: 0.7; max-width: 350px; }
+        .footer-column h4 { font-size: 14px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; opacity: 0.5; }
+        .footer-column ul { list-style: none; }
+        .footer-column li { margin-bottom: 15px; }
+        .footer-column a { color: var(--beige-light); text-decoration: none; font-size: 15px; font-weight: 300; opacity: 0.8; transition: opacity 0.3s; }
+        .footer-column a:hover { opacity: 1; }
+        .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 40px; border-top: 1px solid rgba(251, 241, 229, 0.1); display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { font-size: 13px; font-weight: 300; opacity: 0.5; }
+        .footer-bottom .footer-legal { display: flex; gap: 30px; }
+        .footer-bottom .footer-legal a { font-size: 13px; font-weight: 300; color: var(--beige-light); text-decoration: none; opacity: 0.5; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="assets/logo/logo no tagline.png" alt="FTECH">
+        </a>
+    </nav>
+
+    <div class="nav-arrows">
+        <div class="nav-arrow" id="prevSection">←</div>
+        <div class="nav-arrow" id="nextSection">→</div>
+    </div>
+
+    <div class="page-indicators" id="pageIndicators"></div>
+
+    <div id="fullpage">
+        
+        <!-- SECTION 1: HERO (TEXT MASK) -->
+        <section class="mask-text-section">
+            <div class="section-label">01 - Introduction</div>
+            <div class="mask-text-clip">
+                OUR<br>SERVICES
+            </div>
+        </section>
+
+        <!-- SECTION 2: CORE COMPETENCIES (FOCUS MODE) -->
+        <section class="focus-section">
+            <div class="section-label">02 - Core Competencies</div>
+            <div class="focus-bg"></div>
+            <div class="focus-content">
+                <h2>CORE<br>COMPETENCIES</h2>
+            </div>
+            <div class="focus-overlay-text">
+                <h3>Our Expertise</h3>
+                <ul>
+                    <li>Control System Design & Integration</li>
+                    <li>Interior & Exterior Lighting Design</li>
+                    <li>Comprehensive Contract Services</li>
+                    <li>Turnkey Project Management</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 3: CONCEPTUAL LIGHTING (THE LENS) -->
+        <section class="lens-section">
+            <div class="section-label">03 - Conceptual Design</div>
+            <div class="lens-bg"></div>
+            <div class="lens-reveal"></div>
+            <div class="lens-content">
+                <h2>Conceptual<br>Lighting</h2>
+                <p>Creating powerful experiences through interplay of structural form.</p>
+            </div>
+            <div class="lens-cursor"></div>
+        </section>
+
+        <!-- SECTION 4: BESPOKE CUSTOMIZATION (FAN DECK) -->
+        <section class="fan-section">
+            <div class="section-label">04 - Bespoke Customization</div>
+            <div class="fan-intro">
+                <h2>Bespoke<br>Customization</h2>
+                <p>Our customized and bespoke lighting services are central to our business.</p>
+            </div>
+            <div class="fan-deck">
+                <div class="fan-card">
+                    <img src="assets/sections/service & solution/bespoke lighting fitting customization/1.jpg" alt="Custom 1">
+                    <div class="fan-card-info">
+                        <h3>Custom Fitting</h3>
+                        <p>Tailored to specifications</p>
+                    </div>
+                </div>
+                <div class="fan-card">
+                    <img src="assets/sections/service & solution/bespoke lighting fitting customization/2.jpg" alt="Custom 2">
+                    <div class="fan-card-info">
+                        <h3>Material Selection</h3>
+                        <p>Premium finishes</p>
+                    </div>
+                </div>
+                <div class="fan-card">
+                    <img src="assets/sections/service & solution/bespoke lighting fitting customization/3.jpg" alt="Custom 3">
+                    <div class="fan-card-info">
+                        <h3>Prototyping</h3>
+                        <p>Rapid development</p>
+                    </div>
+                </div>
+                <div class="fan-card">
+                    <img src="assets/sections/service & solution/bespoke lighting fitting customization/1.jpg" alt="Custom 4">
+                    <div class="fan-card-info">
+                        <h3>Fabrication</h3>
+                        <p>Precision manufacturing</p>
+                    </div>
+                </div>
+                <div class="fan-card">
+                    <img src="assets/sections/service & solution/bespoke lighting fitting customization/2.jpg" alt="Custom 5">
+                    <div class="fan-card-info">
+                        <h3>Installation</h3>
+                        <p>Expert fitting</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: ARCHITECTURAL LIGHTING (CYLINDER) -->
+        <section class="cylinder-section">
+            <div class="section-label">05 - Architectural Lighting</div>
+            <div class="cylinder-title">
+                <h2>Architectural<br>Lighting</h2>
+            </div>
+            <div class="cylinder-container" id="cylinderContainer">
+                <!-- Injected by JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 6: COMMERCIAL & RESIDENTIAL (STRIP EXPAND) -->
+        <section class="strip-section">
+            <div class="section-label">06 - Commercial & Residential</div>
+            <div class="strip-item">
+                <span class="strip-num">01</span>
+                <img src="assets/sections/service & solution/commercial and residential lighting/1.jpg" class="strip-bg">
+                <div class="strip-content">
+                    <h3>Commercial</h3>
+                    <p>Full-service commercial lighting solutions.</p>
+                </div>
+            </div>
+            <div class="strip-item">
+                <span class="strip-num">02</span>
+                <img src="assets/sections/service & solution/commercial and residential lighting/2.jpg" class="strip-bg">
+                <div class="strip-content">
+                    <h3>Residential</h3>
+                    <p>Enhancing living spaces with light.</p>
+                </div>
+            </div>
+            <div class="strip-item">
+                <span class="strip-num">03</span>
+                <img src="assets/sections/service & solution/commercial and residential lighting/3.jpg" class="strip-bg">
+                <div class="strip-content">
+                    <h3>Retail</h3>
+                    <p>Creating atmosphere for brands.</p>
+                </div>
+            </div>
+            <div class="strip-item">
+                <span class="strip-num">04</span>
+                <img src="assets/sections/service & solution/commercial and residential lighting/1.jpg" class="strip-bg">
+                <div class="strip-content">
+                    <h3>Hospitality</h3>
+                    <p>Welcoming environments for guests.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: INSTALLATION & TESTING (VELOCITY SLIDER) -->
+        <section class="velocity-section">
+            <div class="section-label">07 - Process</div>
+            <div class="velocity-intro">
+                <h2>End-to-End<br>Solutions</h2>
+            </div>
+            <div class="velocity-track" id="velocityTrack">
+                <div class="velocity-item">
+                    <span class="velocity-num">01</span>
+                    <div class="velocity-img-container">
+                        <img src="assets/sections/service & solution/design, installation, testing & commissioning/1.jpg" class="velocity-img">
+                    </div>
+                    <div class="velocity-info">
+                        <h3>Consultancy</h3>
+                        <p>Feasibility studies & planning</p>
+                    </div>
+                </div>
+                <div class="velocity-item">
+                    <span class="velocity-num">02</span>
+                    <div class="velocity-img-container">
+                        <img src="assets/sections/service & solution/design, installation, testing & commissioning/2.jpg" class="velocity-img">
+                    </div>
+                    <div class="velocity-info">
+                        <h3>Design</h3>
+                        <p>Technical & aesthetic design</p>
+                    </div>
+                </div>
+                <div class="velocity-item">
+                    <span class="velocity-num">03</span>
+                    <div class="velocity-img-container">
+                        <img src="assets/sections/service & solution/design, installation, testing & commissioning/3.jpg" class="velocity-img">
+                    </div>
+                    <div class="velocity-info">
+                        <h3>Installation</h3>
+                        <p>Professional implementation</p>
+                    </div>
+                </div>
+                <div class="velocity-item">
+                    <span class="velocity-num">04</span>
+                    <div class="velocity-img-container">
+                        <img src="assets/sections/service & solution/design, installation, testing & commissioning/4.jpg" class="velocity-img">
+                    </div>
+                    <div class="velocity-info">
+                        <h3>Testing</h3>
+                        <p>Rigorous quality assurance</p>
+                    </div>
+                </div>
+                <div class="velocity-item">
+                    <span class="velocity-num">05</span>
+                    <div class="velocity-img-container">
+                        <img src="assets/sections/service & solution/design, installation, testing & commissioning/5.jpg" class="velocity-img">
+                    </div>
+                    <div class="velocity-info">
+                        <h3>Commissioning</h3>
+                        <p>Final handover & training</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <h3>FTECH</h3>
+                    <p>A holistic and innovative lighting specialist delivering end-to-end solutions.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="timeline.html">Timeline</a></li>
+                        <li><a href="coverage.html">Coverage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <p>FTECH Solutions Sdn Bhd</p>
+                    <p>Kuala Lumpur, Malaysia</p>
+                    <p><a href="mailto:info@ftech.com.my">info@ftech.com.my</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FTECH Solutions Sdn Bhd. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // ====== NAVIGATION & SCROLL LOGIC ======
+        const fullpage = document.getElementById('fullpage');
+        const sections = document.querySelectorAll('section, footer');
+        const prevBtn = document.getElementById('prevSection');
+        const nextBtn = document.getElementById('nextSection');
+        const indicatorsContainer = document.getElementById('pageIndicators');
+        
+        let currentSectionIndex = 0;
+        let isScrolling = false;
+        const totalSections = sections.length;
+
+        // Indicators
+        sections.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('indicator-dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => scrollToSection(index));
+            indicatorsContainer.appendChild(dot);
+        });
+        const dots = document.querySelectorAll('.indicator-dot');
+
+        function updateUI() {
+            fullpage.style.transform = `translateX(-${currentSectionIndex * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSectionIndex);
+            });
+            prevBtn.classList.toggle('disabled', currentSectionIndex === 0);
+            nextBtn.classList.toggle('disabled', currentSectionIndex === totalSections - 1);
+
+            // Trigger animations
+            sections.forEach(sec => sec.classList.remove('active'));
+            // Small delay to allow slide to start
+            setTimeout(() => {
+                sections[currentSectionIndex].classList.add('active');
+            }, 100);
+        }
+
+        function scrollToSection(index) {
+            if (isScrolling || index < 0 || index >= totalSections) return;
+            isScrolling = true;
+            currentSectionIndex = index;
+            updateUI();
+            setTimeout(() => { isScrolling = false; }, 1200); // Match new transition duration
+        }
+
+        // Initial trigger
+        setTimeout(() => {
+            sections[0].classList.add('active');
+        }, 500);
+        nextBtn.addEventListener('click', () => scrollToSection(currentSectionIndex + 1));
+
+        window.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+            if (e.deltaY > 0) scrollToSection(currentSectionIndex + 1);
+            else scrollToSection(currentSectionIndex - 1);
+        }, { passive: true });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') scrollToSection(currentSectionIndex + 1);
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') scrollToSection(currentSectionIndex - 1);
+        });
+
+        // ====== SECTION 25: TEXT MASK PARALLAX ======
+        const maskTextSection = document.querySelector('.mask-text-section');
+        const maskTextClip = document.querySelector('.mask-text-clip');
+        if (maskTextSection && maskTextClip) {
+            let targetX = 50, targetY = 50;
+            let currentX = 50, currentY = 50;
+            maskTextSection.addEventListener('mousemove', (e) => {
+                const rect = maskTextSection.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                targetX = 50 + (x - 0.5) * 30;
+                targetY = 50 + (y - 0.5) * 30;
+            });
+            function animateMask() {
+                currentX += (targetX - currentX) * 0.1;
+                currentY += (targetY - currentY) * 0.1;
+                maskTextClip.style.backgroundPosition = `${currentX}% ${currentY}%`;
+                requestAnimationFrame(animateMask);
+            }
+            animateMask();
+        }
+
+        // ====== SECTION 17: THE LENS ======
+        const lensSection = document.querySelector('.lens-section');
+        const lensReveal = document.querySelector('.lens-reveal');
+        const lensCursor = document.querySelector('.lens-cursor');
+        if (lensSection) {
+            lensSection.addEventListener('mousemove', (e) => {
+                const rect = lensSection.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                lensReveal.style.clipPath = `circle(180px at ${x}px ${y}px)`;
+                lensCursor.style.left = `${e.clientX}px`;
+                lensCursor.style.top = `${e.clientY}px`;
+            });
+            lensSection.addEventListener('mouseleave', () => {
+                lensReveal.style.clipPath = `circle(0% at 50% 50%)`;
+            });
+        }
+
+        // ====== SECTION 26: FAN DECK ======
+        const fanSection = document.querySelector('.fan-section');
+        const fanCards = document.querySelectorAll('.fan-card');
+        if (fanSection && fanCards.length > 0) {
+            const spreadFan = () => {
+                fanCards.forEach((card, index) => {
+                    const angle = (index - 2) * 5;
+                    const x = (index - 2) * 40;
+                    card.style.transform = `translateX(${x}px) rotate(${angle}deg)`;
+                    card.style.zIndex = index + 1;
+                });
+            };
+            spreadFan();
+            fanSection.addEventListener('mousemove', (e) => {
+                const rect = fanSection.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const spreadFactor = 1 + x * 1.5;
+                fanCards.forEach((card, index) => {
+                    const baseAngle = (index - 2) * 10;
+                    const angle = baseAngle * spreadFactor;
+                    const translateX = (index - 2) * 60 * spreadFactor;
+                    const translateY = Math.abs(index - 2) * 10;
+                    card.style.transform = `translateX(${translateX}px) translateY(${translateY}px) rotate(${angle}deg)`;
+                });
+            });
+            fanSection.addEventListener('mouseleave', spreadFan);
+        }
+
+        // ====== SECTION 24: CYLINDER ======
+        const cylinderContainer = document.getElementById('cylinderContainer');
+        if (cylinderContainer) {
+            const images = [
+                'assets/sections/service & solution/architectural lighting/1.jpg',
+                'assets/sections/service & solution/architectural lighting/2.jpg',
+                'assets/sections/service & solution/architectural lighting/3.jpg',
+                'assets/sections/service & solution/architectural lighting/1.jpg',
+                'assets/sections/service & solution/architectural lighting/2.jpg',
+                'assets/sections/service & solution/architectural lighting/3.jpg'
+            ];
+            const radius = 520; 
+            const angleStep = 360 / images.length;
+            
+            images.forEach((src, i) => {
+                const div = document.createElement('div');
+                div.className = 'cylinder-item';
+                div.innerHTML = `<img src="${src}">`;
+                const angle = i * angleStep;
+                div.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+                cylinderContainer.appendChild(div);
+            });
+            
+            let currentAngle = 0;
+            let isDragging = false;
+            let lastX = 0;
+            let velocity = 0;
+            
+            function animateCylinder() {
+                if (!isDragging) {
+                    if (Math.abs(velocity) > 0.01) {
+                        velocity *= 0.95;
+                        currentAngle += velocity;
+                    } else {
+                        currentAngle += 0.2;
+                    }
+                }
+                cylinderContainer.style.transform = `rotateY(${-currentAngle}deg)`;
+                requestAnimationFrame(animateCylinder);
+            }
+            animateCylinder();
+            
+            const section = document.querySelector('.cylinder-section');
+            section.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                lastX = e.pageX;
+                velocity = 0;
+                section.style.cursor = 'grabbing';
+            });
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+                section.style.cursor = 'grab';
+            });
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const delta = e.pageX - lastX;
+                lastX = e.pageX;
+                velocity = delta * 0.3;
+                currentAngle -= velocity;
+            });
+        }
+
+        // ====== SECTION 23: STRIP EXPAND ======
+        const stripItems = document.querySelectorAll('.strip-item');
+        if (stripItems.length > 0) {
+            stripItems.forEach(item => {
+                const img = item.querySelector('.strip-bg');
+                item.addEventListener('mousemove', (e) => {
+                    const rect = item.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width - 0.5;
+                    if (img) img.style.transform = `translateX(${x * 20}px) scale(1.1)`;
+                });
+                item.addEventListener('mouseleave', () => {
+                    if (img) img.style.transform = `translateX(0) scale(1.1)`;
+                });
+            });
+        }
+
+        // ====== SECTION 18: VELOCITY SLIDER ======
+        const velocityTrack = document.getElementById('velocityTrack');
+        if (velocityTrack) {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            let currentTrans = 0;
+            let prevPageX = 0;
+            
+            velocityTrack.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX;
+                prevPageX = e.pageX;
+                velocityTrack.style.cursor = 'grabbing';
+                e.stopPropagation(); // Prevent page drag issues
+            });
+            
+            window.addEventListener('mouseup', () => {
+                isDown = false;
+                velocityTrack.style.cursor = 'grab';
+                document.querySelectorAll('.velocity-item').forEach(item => {
+                    item.style.transform = `skewX(0deg)`;
+                });
+            });
+            
+            window.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX;
+                const velocity = x - prevPageX;
+                prevPageX = x;
+                
+                const skew = Math.max(Math.min(velocity * 0.8, 15), -15);
+                document.querySelectorAll('.velocity-item').forEach(item => {
+                    item.style.transform = `skewX(${-skew}deg)`;
+                });
+
+                currentTrans += velocity * 1.5;
+                if (currentTrans > 0) currentTrans = 0;
+                const minTrans = -(velocityTrack.scrollWidth - window.innerWidth);
+                if (currentTrans < minTrans) currentTrans = minTrans;
+                
+                velocityTrack.style.transform = `translateX(${currentTrans}px)`;
+            });
+        }
+    </script>
+</body>
+</html>
