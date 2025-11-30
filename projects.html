@@ -629,6 +629,17 @@
                 backdrop-filter: blur(10px);
                 border-bottom: 1px solid rgba(0,0,0,0.05);
             }
+
+            /* Mobile Nav Elements */
+            .logo, .menu-toggle { mix-blend-mode: normal; }
+            .logo img { filter: none; transition: filter 0.3s; }
+            .logo:hover img { filter: brightness(0) invert(1); }
+            
+            .menu-toggle { color: var(--primary-burgundy); transition: color 0.3s; }
+            .hamburger span { background: var(--primary-burgundy); transition: background 0.3s; }
+            
+            .menu-toggle:hover { color: #fff; }
+            .menu-toggle:hover .hamburger span { background: #fff; }
             
             #fullpage { 
                 width: 100%; 
@@ -649,7 +660,7 @@
             .nav-arrows, .page-indicators { display: none; }
             
             /* Slice Hero Mobile */
-            .slice-content h1 { font-size: 18vw; }
+            .slice-content h1 { font-size: 15vw; }
             .slice-strip img { width: 100vw; }
 
             /* Diagonal Mobile */

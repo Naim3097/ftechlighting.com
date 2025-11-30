@@ -448,6 +448,17 @@
                 border-bottom: 1px solid rgba(0,0,0,0.05);
             }
 
+            /* Mobile Nav Elements */
+            .logo, .menu-toggle { mix-blend-mode: normal; }
+            .logo img { filter: none; transition: filter 0.3s; }
+            .logo:hover img { filter: brightness(0) invert(1); }
+            
+            .menu-toggle { color: var(--primary-burgundy); transition: color 0.3s; }
+            .hamburger span { background: var(--primary-burgundy); transition: background 0.3s; }
+            
+            .menu-toggle:hover { color: #fff; }
+            .menu-toggle:hover .hamburger span { background: #fff; }
+
             .curtain-reveal {
                 height: auto;
                 min-height: 100vh;
