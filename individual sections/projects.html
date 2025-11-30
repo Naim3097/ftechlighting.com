@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTECH - Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-burgundy: #820000;
+            --burgundy-dark: #2a0a0a;
+            --beige-light: #FBF1E5;
+            --beige-alt: #FBF4E9;
+            --text-dark: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --accent-burgundy: #87181a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #050505;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ====== HORIZONTAL SCROLL CONTAINER ====== */
+        #fullpage {
+            display: flex;
+            width: 600vw; /* 6 Sections: Hero, Featured, Slider, Grid, Timeline, Footer */
+            height: 100vh;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            will-change: transform;
+        }
+
+        section {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ====== NAVIGATION ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 50px;
+            z-index: 10000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            mix-blend-mode: normal;
+        }
+
+        .logo {
+            display: block;
+            width: 120px;
+            pointer-events: auto;
+            /* Smart contrast: White on dark, Black on light */
+            mix-blend-mode: difference; 
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* Force the burgundy logo to be pure white for maximum contrast */
+            filter: brightness(0) invert(1); 
+        }
+
+        /* ====== MENU TOGGLE ====== */
+        .menu-toggle {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            z-index: 20001; /* Above overlay */
+            mix-blend-mode: difference;
+            color: #fff;
+        }
+
+        .menu-text {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .hamburger {
+            width: 40px;
+            height: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+        }
+
+        .hamburger span:nth-child(1) { width: 100%; }
+        .hamburger span:nth-child(2) { width: 70%; }
+
+        .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
+
+        /* Active State for Hamburger */
+        .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+
+        /* ====== MENU OVERLAY ====== */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--burgundy-dark);
+            z-index: 20000;
+            transform: translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .menu-overlay.active {
+            transform: translateY(0);
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-link {
+            font-size: 4rem;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 200;
+            letter-spacing: -1px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.1;
+        }
+
+        .menu-link span {
+            font-size: 1rem;
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            opacity: 0;
+            transition: all 0.4s ease;
+            color: var(--primary-burgundy);
+            font-weight: 700;
+        }
+
+        .menu-link:hover {
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .menu-link:hover span {
+            opacity: 1;
+            right: -20px;
+        }
+
+        .menu-footer {
+            position: absolute;
+            bottom: 50px;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+
+        /* Responsive Menu */
+        @media (max-width: 768px) {
+            .menu-link { font-size: 2.5rem; }
+        }
+
+        /* ====== NAVIGATION ARROWS & INDICATORS ====== */
+        .nav-arrows {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            z-index: 9999;
+        }
+
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(130, 0, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            color: var(--primary-burgundy);
+            background: rgba(251, 241, 229, 0.8);
+            backdrop-filter: blur(5px);
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .nav-arrow:hover {
+            background: var(--primary-burgundy);
+            color: var(--beige-light);
+            border-color: var(--primary-burgundy);
+            transform: scale(1.1);
+        }
+
+        .page-indicators {
+            position: fixed;
+            top: 50%;
+            right: 40px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+            pointer-events: auto;
+        }
+
+        .indicator-dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator-dot.active {
+            background: #fff;
+            transform: scale(1.5);
+        }
+
+        /* ====== SECTION 1: THE SLICE (Section 21) - Hero ====== */
+        .slice-section {
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .slice-strip {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid rgba(0,0,0,0.8);
+            transform: translateY(100%);
+            filter: brightness(2);
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
+        }
+
+        .slice-strip:nth-child(odd) { transform: translateY(-100%); }
+        .slice-strip:nth-child(even) { transform: translateY(100%); }
+
+        .slice-strip:nth-child(1) { transition-delay: 0.0s; }
+        .slice-strip:nth-child(2) { transition-delay: 0.1s; }
+        .slice-strip:nth-child(3) { transition-delay: 0.2s; }
+        .slice-strip:nth-child(4) { transition-delay: 0.3s; }
+        .slice-strip:nth-child(5) { transition-delay: 0.4s; }
+
+        .slice-section.active .slice-strip {
+            transform: translateY(0);
+            filter: brightness(1);
+        }
+
+        .slice-strip img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            filter: contrast(1.1);
+            transform: scale(1);
+            transition: transform 10s ease; /* Slow zoom effect */
+        }
+
+        .slice-section.active .slice-strip img {
+            transform: scale(1.1);
+        }
+
+        .slice-strip:nth-child(1) img { left: 0; }
+        .slice-strip:nth-child(2) img { left: -20vw; }
+        .slice-strip:nth-child(3) img { left: -40vw; }
+        .slice-strip:nth-child(4) img { left: -60vw; }
+        .slice-strip:nth-child(5) img { left: -80vw; }
+
+        .slice-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            color: #fff;
+            mix-blend-mode: difference;
+            opacity: 0;
+            transition: opacity 1s 1.5s;
+        }
+
+        .slice-section.active .slice-content {
+            opacity: 1;
+        }
+
+        .slice-content h1 {
+            font-size: 12vw;
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -5px;
+            text-transform: uppercase;
+        }
+
+        /* ====== SECTION 2: DIAGONAL SPLIT (Section 3) - Featured Project ====== */
+        .diagonal-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            background: #0f0c0c;
+        }
+
+        .diagonal-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1414 0%, var(--burgundy-dark) 100%);
+            clip-path: polygon(0 0, 58% 0, 42% 100%, 0 100%);
+            z-index: 1;
+            transition: clip-path 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .diagonal-section:hover .diagonal-bg {
+            clip-path: polygon(0 0, 62% 0, 38% 100%, 0 100%);
+        }
+
+        .diagonal-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 65%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .diagonal-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(20, 10, 10, 0.3) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .diagonal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
+            transform: scale(1);
+            transition: transform 8s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform;
+        }
+
+        .diagonal-section:hover .diagonal-image img {
+            transform: scale(1.1);
+        }
+
+        .diagonal-content {
+            position: relative;
+            z-index: 3;
+            color: var(--beige-light);
+            padding: 0 120px;
+            max-width: 650px;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 1s 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .diagonal-section.active .diagonal-content {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .diagonal-content h2 {
+            font-size: 4rem;
+            font-weight: 200;
+            line-height: 0.95;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .diagonal-content .thin-line {
+            width: 70px;
+            height: 1px;
+            background: rgba(251, 241, 229, 0.6);
+            margin: 35px 0;
+        }
+
+        .project-meta {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(251, 241, 229, 0.8);
+        }
+
+        .project-meta strong {
+            color: var(--primary-burgundy);
+            display: block;
+            margin-top: 15px;
+            font-weight: 400;
+        }
+
+        /* ====== SECTION 3: TRIPTYCH SHOWCASE (Replaces Slider) ====== */
+        .triptych-section {
+            height: 100vh;
+            display: flex;
+            background: #0f0c0c;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .triptych-col {
+            flex: 1;
+            position: relative;
+            height: 100%;
+            transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+
+        .triptych-col:last-child { border-right: none; }
+        
+        .triptych-col:hover { flex: 1.5; }
+
+        .triptych-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.6);
+            transition: filter 0.6s, transform 1.2s;
+        }
+
+        .triptych-col:hover .triptych-img {
+            filter: grayscale(0%) brightness(0.9);
+            transform: scale(1.05);
+        }
+
+        .triptych-info {
+            position: absolute;
+            bottom: 120px;
+            left: 40px;
+            right: 40px;
+            z-index: 2;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .triptych-col:hover .triptych-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .triptych-info h3 {
+            font-size: 2.5rem;
+            color: var(--beige-light);
+            margin-bottom: 10px;
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .triptych-info p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .triptych-number {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            font-size: 1.5rem;
+            color: var(--primary-burgundy);
+            z-index: 2;
+            font-weight: 700;
+        }
+
+        /* ====== SECTION 4: MORPHING GRID (Section 13) - Grid ====== */
+        .morphing-grid {
+            height: 100vh;
+            background: linear-gradient(135deg, var(--beige-light) 0%, var(--beige-alt) 100%);
+            padding: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .morph-container {
+            width: 100%;
+            max-width: 1500px;
+            height: 80vh;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 3px;
+            transition: grid-template-columns 1s cubic-bezier(0.19, 1, 0.22, 1), grid-template-rows 1s cubic-bezier(0.19, 1, 0.22, 1);
+            background: var(--burgundy-dark);
+        }
+
+        /* Layout 1: Featured Masonry (default) */
+        .morph-container .morph-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+        .morph-container .morph-item:nth-child(2) { grid-column: span 1; grid-row: span 1; }
+        .morph-container .morph-item:nth-child(3) { grid-column: span 1; grid-row: span 1; }
+        .morph-container .morph-item:nth-child(4) { grid-column: span 2; grid-row: span 1; }
+
+        /* Layout 2: Gallery Showcase - Even 2x4 grid */
+        .morph-container.layout-2 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+        .morph-container.layout-2 .morph-item:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+        .morph-container.layout-2 .morph-item:nth-child(2) { grid-column: span 1; grid-row: span 1; }
+        .morph-container.layout-2 .morph-item:nth-child(3) { grid-column: span 1; grid-row: span 1; }
+        .morph-container.layout-2 .morph-item:nth-child(4) { grid-column: span 1; grid-row: span 1; }
+
+        .morph-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: grid-column 1s cubic-bezier(0.19, 1, 0.22, 1), grid-row 1s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            background: var(--burgundy-dark);
+        }
+
+        .morph-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 10, 10, 0.4) 0%, transparent 60%);
+            opacity: 1;
+            transition: opacity 0.6s;
+            z-index: 1;
+        }
+
+        .morph-item:hover::before {
+            opacity: 0;
+        }
+
+        .morph-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(80%) brightness(0.85);
+            transform: scale(1);
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), filter 1s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform, filter;
+        }
+
+        .morph-item:hover img {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.1);
+        }
+
+        .morph-label {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            color: var(--beige-light);
+            font-size: 1.5rem;
+            font-weight: 200;
+            letter-spacing: -0.5px;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 2;
+        }
+
+        .morph-item:hover .morph-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .morph-controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .morph-btn {
+            width: 14px;
+            height: 14px;
+            border: 1px solid rgba(130, 0, 0, 0.4);
+            background: transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+        }
+
+        .morph-btn::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: var(--primary-burgundy);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .morph-btn.active {
+            border-color: var(--primary-burgundy);
+        }
+
+        .morph-btn.active::before {
+            transform: scale(1);
+        }
+
+        /* ====== SECTION 5: PROJECT INDEX (Replaces Timeline) ====== */
+        .project-index-section {
+            height: 100vh;
+            background: var(--beige-light);
+            padding: 0; /* Remove padding to use full layout */
+            display: flex;
+            overflow: hidden;
+        }
+
+        .index-list-wrapper {
+            flex: 1.2;
+            padding: 120px 60px 120px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            background: var(--beige-light); /* Ensure it covers the image if needed */
+        }
+
+        .index-preview-wrapper {
+            flex: 0.8;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            border-left: 1px solid var(--primary-burgundy);
+        }
+
+        .preview-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.1);
+            transition: opacity 0.5s ease, transform 0.8s ease;
+            filter: grayscale(20%);
+        }
+
+        .preview-image.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .preview-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        .index-header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--primary-burgundy);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .index-header h2 {
+            font-size: 4rem;
+            color: var(--primary-burgundy);
+            font-weight: 200;
+            line-height: 0.9;
+            letter-spacing: -2px;
+        }
+
+        .index-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 300px;
+            text-align: right;
+        }
+
+        .project-list-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 20px;
+        }
+
+        /* Custom Scrollbar */
+        .project-list-container::-webkit-scrollbar { width: 6px; }
+        .project-list-container::-webkit-scrollbar-track { background: rgba(130,0,0,0.1); }
+        .project-list-container::-webkit-scrollbar-thumb { background: var(--primary-burgundy); border-radius: 3px; }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: 0.5fr 2fr 1fr 1fr;
+            padding: 30px 0; /* Increased padding */
+            border-bottom: 1px solid rgba(130,0,0,0.1);
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: pointer;
+            color: var(--text-dark);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .project-row:hover {
+            background: transparent; /* Removed background change for cleaner look */
+            padding-left: 20px;
+            border-bottom-color: var(--primary-burgundy);
+        }
+
+        .project-row .year { 
+            font-weight: 700; 
+            color: var(--accent-burgundy); 
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .project-row .name { 
+            font-size: 1.8rem; /* Larger name */
+            font-weight: 300; 
+            letter-spacing: -0.5px;
+            transition: color 0.3s;
+        }
+
+        .project-row:hover .name {
+            color: var(--primary-burgundy);
+        }
+
+        .project-row .loc { 
+            font-size: 0.85rem; 
+            color: var(--text-secondary); 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+        }
+        .project-row .type { font-size: 0.9rem; color: var(--text-secondary); text-align: right; }
+
+        /* View Project Indicator */
+        .project-row::after {
+            content: 'View Project →';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-burgundy);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-row:hover::after {
+            opacity: 1;
+        }
+        
+        .project-row:hover .type {
+            opacity: 0; /* Hide type to show "View Project" */
+        }
+
+        @media (max-width: 768px) {
+            .project-index-section { flex-direction: column; padding: 80px 20px; }
+            .index-list-wrapper { padding: 0; flex: 1; }
+            .index-preview-wrapper { display: none; /* Hide preview on mobile to save space */ }
+            .project-row { grid-template-columns: 1fr; gap: 5px; padding: 20px 0; }
+            .project-row .type { text-align: left; opacity: 1 !important; }
+            .project-row:hover::after { display: none; }
+            .index-header h2 { font-size: 2.5rem; }
+        }
+
+        /* ====== FOOTER ====== */
+        .footer-section {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .footer-content h2 {
+            font-size: 6vw;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-content p {
+            font-size: 18px;
+            font-weight: 300;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+
+        .footer-btn {
+            padding: 20px 60px;
+            border: 1px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .footer-btn:hover {
+            background: var(--primary-burgundy);
+            color: #fff;
+            border-color: var(--primary-burgundy);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 20px; }
+            #fullpage { width: 600vw; height: 100vh; flex-direction: row; }
+            
+            /* Slice Hero Mobile */
+            .slice-content h1 { font-size: 18vw; }
+            .slice-strip img { width: 100vw; left: 0 !important; }
+
+            /* Diagonal Mobile */
+            .diagonal-section { flex-direction: column; }
+            .diagonal-bg, .diagonal-image { height: 40vh; width: 100%; clip-path: none; }
+            .diagonal-content { padding: 30px; transform: none; opacity: 1; }
+            .diagonal-content h2 { font-size: 2.5rem; }
+
+            /* Slider Mobile */
+            .slider-item { flex-direction: column; }
+            .slider-image { flex: 1; }
+            .slider-text { flex: 1; padding: 40px 30px; }
+            .slider-text h2 { font-size: 2rem; }
+            .slider-nav { bottom: 30px; right: 30px; }
+
+            /* Morph Mobile */
+            .morphing-grid { padding: 20px; }
+            .morph-container { grid-template-columns: 1fr !important; grid-template-rows: repeat(4, 1fr) !important; gap: 10px; }
+            .morph-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+
+            /* Timeline Mobile */
+            .timeline-line { display: none; }
+            .timeline-item { grid-template-columns: 1fr; gap: 30px; margin-bottom: 60px; }
+            .timeline-item:nth-child(even) .timeline-image { order: 1; }
+            .timeline-item:nth-child(even) .timeline-text { text-align: left; order: 2; }
+            .timeline-image { height: 250px; }
+            .timeline-text { padding: 0; }
+            .timeline-text h3 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="home.html" class="logo">
+            <img src="../assets/logo/logo no tagline.png" alt="FTECH">
+        </a>
+        <div class="menu-toggle" id="menuToggle">
+            <span class="menu-text">Menu</span>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="home.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
+        </div>
+        <div class="menu-footer">
+            <p>FTECH Solutions Sdn Bhd</p>
+            <p>Kuala Lumpur • Johor • Sarawak • Singapore</p>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <a href="#" class="nav-arrow" id="prevSectionBtn">←</a>
+        <a href="#" class="nav-arrow" id="nextSectionBtn">→</a>
+    </div>
+
+    <!-- Page Indicators -->
+    <div class="page-indicators">
+        <div class="indicator-dot active" data-index="0"></div>
+        <div class="indicator-dot" data-index="1"></div>
+        <div class="indicator-dot" data-index="2"></div>
+        <div class="indicator-dot" data-index="3"></div>
+        <div class="indicator-dot" data-index="4"></div>
+        <div class="indicator-dot" data-index="5"></div>
+    </div>
+
+    <div id="fullpage">
+        <!-- Section 1: Hero (The Slice) -->
+        <section class="slice-section active">
+            <div class="slice-strip"><img src="../assets/sections/projects/hero.jpg" alt="Hero 1"></div>
+            <div class="slice-strip"><img src="../assets/sections/projects/hero.jpg" alt="Hero 2"></div>
+            <div class="slice-strip"><img src="../assets/sections/projects/hero.jpg" alt="Hero 3"></div>
+            <div class="slice-strip"><img src="../assets/sections/projects/hero.jpg" alt="Hero 4"></div>
+            <div class="slice-strip"><img src="../assets/sections/projects/hero.jpg" alt="Hero 5"></div>
+            <div class="slice-content">
+                <h1>PROJECTS</h1>
+            </div>
+        </section>
+
+        <!-- Section 2: Featured (Diagonal Split) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="../assets/sections/projects/menara hap seng 3 kuala lumpur.jpg" alt="Menara Hap Seng 3">
+            </div>
+            <div class="diagonal-content">
+                <h2>Menara<br>Hap Seng 3</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Kuala Lumpur</p>
+                    <p><strong>Scope:</strong> Facade, Exterior & Landscape, Interior Lighting</p>
+                    <p><strong>Completion:</strong> December 2019</p>
+                    <p style="margin-top: 20px;">A landmark project showcasing our capability in delivering comprehensive lighting solutions for high-rise commercial developments.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Showcase (Triptych Showcase) -->
+        <section class="triptych-section">
+            <div class="triptych-col">
+                <div class="triptych-img"><img src="../assets/sections/projects/aria klcc kuala lumpur.jpg" alt="Aria KLCC"></div>
+                <div class="triptych-number">01</div>
+                <div class="triptych-info">
+                    <h3>Aria KLCC</h3>
+                    <p>Luxury Residential Lighting</p>
+                </div>
+            </div>
+            <div class="triptych-col">
+                <div class="triptych-img"><img src="../assets/sections/projects/mercedes showroom puchong.webp" alt="Mercedes Showroom"></div>
+                <div class="triptych-number">02</div>
+                <div class="triptych-info">
+                    <h3>Mercedes Showroom</h3>
+                    <p>Automotive Retail Experience</p>
+                </div>
+            </div>
+            <div class="triptych-col">
+                <div class="triptych-img"><img src="../assets/sections/projects/versis medini johor.jpg" alt="Versis Medini"></div>
+                <div class="triptych-number">03</div>
+                <div class="triptych-info">
+                    <h3>Versis Medini</h3>
+                    <p>Commercial Landscape</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Grid (Morphing Grid) -->
+        <section class="morphing-grid">
+            <div class="morph-container" id="morphContainer">
+                <div class="morph-item">
+                    <img src="../assets/sections/projects/sterling drug (malaya) sdn bhd.jpeg" alt="Sterling Drug">
+                    <div class="morph-label">Sterling Drug (Selangor)</div>
+                </div>
+                <div class="morph-item">
+                    <img src="../assets/sections/projects/hornbill skyways hangar sarawak.jpg" alt="Hornbill Skyways">
+                    <div class="morph-label">Hornbill Skyways (Sarawak)</div>
+                </div>
+                <div class="morph-item">
+                    <img src="../assets/sections/projects/kuching port authority sarawak.jpeg" alt="Kuching Port">
+                    <div class="morph-label">Kuching Port Authority</div>
+                </div>
+                <div class="morph-item">
+                    <img src="../assets/sections/projects/sime darby business centre singapore.webp" alt="Sime Darby">
+                    <div class="morph-label">Sime Darby (Singapore)</div>
+                </div>
+            </div>
+            <div class="morph-controls">
+                <button class="morph-btn active" data-layout="1"></button>
+                <button class="morph-btn" data-layout="2"></button>
+            </div>
+        </section>
+
+        <!-- Section 5: Project Index (Replaces Timeline) -->
+        <section class="project-index-section">
+            <div class="index-list-wrapper">
+                <div class="index-header">
+                    <h2>Selected Works</h2>
+                    <p>A curated list of our lighting design and engineering projects across Malaysia and Singapore.</p>
+                </div>
+                <div class="project-list-container">
+                    <a href="#" class="project-row" data-img="../assets/sections/projects/maslee express pontian johor.jpg">
+                        <div class="year">2022</div>
+                        <div class="name">Maslee Pontian</div>
+                        <div class="loc">Johor</div>
+                        <div class="type">Interior Lighting</div>
+                    </a>
+                    <a href="#" class="project-row" data-img="../assets/sections/projects/autohaus setia alam selangor.jpg">
+                        <div class="year">2021</div>
+                        <div class="name">Autohaus Setia Alam</div>
+                        <div class="loc">Selangor</div>
+                        <div class="type">Showroom Lighting</div>
+                    </a>
+                    <a href="#" class="project-row" data-img="../assets/sections/projects/akasa cheras south balakong.jpg">
+                        <div class="year">2020</div>
+                        <div class="name">Akasa Cheras South</div>
+                        <div class="loc">Selangor</div>
+                        <div class="type">Exterior & Landscape</div>
+                    </a>
+                    <a href="#" class="project-row" data-img="../assets/sections/projects/one @ changi city singapore.jpg">
+                        <div class="year">2019</div>
+                        <div class="name">One @ Changi City</div>
+                        <div class="loc">Singapore</div>
+                        <div class="type">Commercial Hub</div>
+                    </a>
+                    <a href="#" class="project-row" data-img="../assets/sections/projects/menara hap seng 3 kuala lumpur.jpg">
+                        <div class="year">2019</div>
+                        <div class="name">Menara Hap Seng 3</div>
+                        <div class="loc">Kuala Lumpur</div>
+                        <div class="type">Facade & Interior</div>
+                    </a>
+                    <a href="#" class="project-row" data-img="../assets/sections/projects/UPECA.jpg">
+                        <div class="year">2018</div>
+                        <div class="name">UPECA Aerotech</div>
+                        <div class="loc">Selangor</div>
+                        <div class="type">Industrial Lighting</div>
+                    </a>
+                    <a href="#" class="project-row" data-img="../assets/sections/projects/hornbill skyways hangar sarawak.jpg">
+                        <div class="year">2018</div>
+                        <div class="name">Hornbill Skyways Hangar</div>
+                        <div class="loc">Sarawak</div>
+                        <div class="type">Aviation Facility</div>
+                    </a>
+                    <a href="#" class="project-row" data-img="../assets/sections/projects/kuching port authority sarawak.jpeg">
+                        <div class="year">2017</div>
+                        <div class="name">Kuching Port Authority</div>
+                        <div class="loc">Sarawak</div>
+                        <div class="type">Port Lighting</div>
+                    </a>
+                </div>
+            </div>
+            <div class="index-preview-wrapper">
+                <div class="preview-placeholder">Hover to Preview</div>
+                <img src="" alt="Preview" class="preview-image" id="previewImage">
+            </div>
+        </section>
+
+        <!-- Section 6: Footer -->
+        <section class="footer-section">
+            <div class="footer-content">
+                <h2>Ready to Start?</h2>
+                <p>With a focus on precision and creativity, we transform every vision into a functional and inspiring reality. Let's discuss your distinctive requirements.</p>
+                <a href="contact.html" class="footer-btn">Get in Touch</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Menu Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+
+            const menuText = menuToggle.querySelector('.menu-text');
+            if (menuOverlay.classList.contains('active')) {
+                menuText.textContent = 'Close';
+            } else {
+                menuText.textContent = 'Menu';
+            }
+        });
+
+        // Horizontal Scroll Logic
+        const fullpage = document.getElementById('fullpage');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const nextSectionBtn = document.getElementById('nextSectionBtn');
+        const prevSectionBtn = document.getElementById('prevSectionBtn');
+        let currentSection = 0;
+        const totalSections = 6;
+        let isScrolling = false;
+
+        function updateSection(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSections) index = totalSections - 1;
+            
+            currentSection = index;
+            
+            // Update transform
+            fullpage.style.transform = `translateX(-${currentSection * 100}vw)`;
+            
+            // Update indicators
+            indicators.forEach((dot, i) => {
+                if (i === currentSection) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+
+            // Update Arrows
+            if (currentSection === totalSections - 1) {
+                nextSectionBtn.style.opacity = '0.5';
+                nextSectionBtn.style.pointerEvents = 'none';
+            } else {
+                nextSectionBtn.style.opacity = '1';
+                nextSectionBtn.style.pointerEvents = 'auto';
+            }
+
+            prevSectionBtn.style.opacity = '1';
+            prevSectionBtn.style.pointerEvents = 'auto';
+
+            // Trigger animations for specific sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            sections[currentSection].classList.add('active');
+        }
+
+        // Wheel Event
+        window.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+
+            // Check if we are in the Project Index section (Section 5, index 4)
+            // and if we are scrolling vertically within it
+            if (currentSection === 4) {
+                const listContainer = document.querySelector('.project-list-container');
+                if (listContainer) {
+                    // Check if the list is actually scrollable
+                    const isScrollable = listContainer.scrollHeight > listContainer.clientHeight;
+                    
+                    if (isScrollable) {
+                        // Use a small buffer (2px) for scroll detection to account for subpixel rendering
+                        const atBottom = (listContainer.scrollHeight - listContainer.scrollTop) <= (listContainer.clientHeight + 2);
+                        const atTop = listContainer.scrollTop <= 0;
+
+                        if (e.deltaY > 0 && !atBottom) {
+                            return; // Allow default vertical scroll
+                        } else if (e.deltaY < 0 && !atTop) {
+                            return; // Allow default vertical scroll
+                        }
+                    }
+                }
+            }
+
+            if (e.deltaY > 0) {
+                if (currentSection < totalSections - 1) {
+                    isScrolling = true;
+                    updateSection(currentSection + 1);
+                    setTimeout(() => isScrolling = false, 800);
+                }
+            } else {
+                if (currentSection > 0) {
+                    isScrolling = true;
+                    updateSection(currentSection - 1);
+                    setTimeout(() => isScrolling = false, 800);
+                }
+            }
+        });
+
+        // Touch Events
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        window.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: false });
+
+        window.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: false });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchStartX - touchEndX > swipeThreshold) {
+                if (currentSection < totalSections - 1) updateSection(currentSection + 1);
+            }
+            if (touchEndX - touchStartX > swipeThreshold) {
+                if (currentSection > 0) updateSection(currentSection - 1);
+            }
+        }
+
+        // Click Events
+        nextSectionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            updateSection(currentSection + 1);
+        });
+
+        prevSectionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentSection === 0) {
+                window.location.href = 'home.html';
+            } else {
+                updateSection(currentSection - 1);
+            }
+        });
+
+        indicators.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                updateSection(index);
+            });
+        });
+
+        // --- Triptych Logic (Hover only, no JS needed but keeping structure clean) ---
+        // The CSS handles the hover expansion.
+
+        // --- Morphing Grid Logic ---
+        const morphContainer = document.getElementById('morphContainer');
+        const morphBtns = document.querySelectorAll('.morph-btn');
+
+        morphBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                morphBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const layout = btn.getAttribute('data-layout');
+                if (layout === '1') {
+                    morphContainer.classList.remove('layout-2');
+                } else {
+                    morphContainer.classList.add('layout-2');
+                }
+            });
+        });
+
+        // --- Project Index Preview Logic ---
+        const projectRows = document.querySelectorAll('.project-row');
+        const previewImage = document.getElementById('previewImage');
+
+        projectRows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                const imgSrc = row.getAttribute('data-img');
+                if (imgSrc) {
+                    previewImage.src = imgSrc;
+                    previewImage.classList.add('active');
+                }
+            });
+
+            row.addEventListener('mouseleave', () => {
+                // Optional: Keep the last image or fade out
+                // previewImage.classList.remove('active'); 
+            });
+        });
+
+        // Initialize
+        updateSection(0);
+    </script>
+</body>
+</html>

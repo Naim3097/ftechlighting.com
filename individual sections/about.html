@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTECH - About Us</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-burgundy: #820000;
+            --burgundy-dark: #2a0a0a;
+            --beige-light: #FBF1E5;
+            --beige-alt: #FBF4E9;
+            --text-dark: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --accent-burgundy: #87181a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #050505;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ====== HORIZONTAL SCROLL CONTAINER ====== */
+        #fullpage {
+            display: flex;
+            width: 500vw; /* 5 Sections: Hero, Editorial, Glass, Tabs, Footer */
+            height: 100vh;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            will-change: transform;
+        }
+
+        section {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ====== NAVIGATION ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 50px;
+            z-index: 10000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            mix-blend-mode: normal;
+        }
+
+        .logo {
+            display: block;
+            width: 120px;
+            pointer-events: auto;
+            /* Smart contrast: White on dark, Black on light */
+            mix-blend-mode: difference; 
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* Force the burgundy logo to be pure white for maximum contrast */
+            filter: brightness(0) invert(1); 
+        }
+
+        /* ====== MENU TOGGLE ====== */
+        .menu-toggle {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            z-index: 20001; /* Above overlay */
+            mix-blend-mode: difference;
+            color: #fff;
+        }
+
+        .menu-text {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .hamburger {
+            width: 40px;
+            height: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+        }
+
+        .hamburger span:nth-child(1) { width: 100%; }
+        .hamburger span:nth-child(2) { width: 70%; }
+
+        .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
+
+        /* Active State for Hamburger */
+        .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+
+        /* ====== MENU OVERLAY ====== */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--burgundy-dark);
+            z-index: 20000;
+            transform: translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .menu-overlay.active {
+            transform: translateY(0);
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-link {
+            font-size: 4rem;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 200;
+            letter-spacing: -1px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.1;
+        }
+
+        .menu-link span {
+            font-size: 1rem;
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            opacity: 0;
+            transition: all 0.4s ease;
+            color: var(--primary-burgundy);
+            font-weight: 700;
+        }
+
+        .menu-link:hover {
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .menu-link:hover span {
+            opacity: 1;
+            right: -20px;
+        }
+
+        .menu-footer {
+            position: absolute;
+            bottom: 50px;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+
+        /* Responsive Menu */
+        @media (max-width: 768px) {
+            .menu-link { font-size: 2.5rem; }
+        }
+
+        /* ====== NAVIGATION ARROWS & INDICATORS ====== */
+        .nav-arrows {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            z-index: 9999;
+        }
+
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(130, 0, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            color: var(--primary-burgundy);
+            background: rgba(251, 241, 229, 0.8);
+            backdrop-filter: blur(5px);
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .nav-arrow:hover {
+            background: var(--primary-burgundy);
+            color: var(--beige-light);
+            border-color: var(--primary-burgundy);
+            transform: scale(1.1);
+        }
+
+        .page-indicators {
+            position: fixed;
+            top: 50%;
+            right: 40px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+            pointer-events: auto;
+        }
+
+        .indicator-dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator-dot.active {
+            background: #fff;
+            transform: scale(1.5);
+        }
+
+        /* ====== SECTION 20: FOCUS MODE (HERO) ====== */
+        .focus-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+
+        .focus-bg {
+            position: absolute;
+            inset: 0;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            filter: blur(30px) brightness(0.3) grayscale(100%);
+            transition: filter 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(1.2);
+            z-index: 0;
+        }
+
+        .focus-section:hover .focus-bg {
+            filter: blur(0px) brightness(1) grayscale(0%);
+            transform: scale(1);
+        }
+
+        .focus-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--beige-light);
+            transition: all 0.6s ease;
+            pointer-events: none;
+        }
+
+        .focus-section:hover .focus-content {
+            opacity: 0;
+            transform: scale(1.1);
+            filter: blur(10px);
+        }
+
+        .focus-content h2 {
+            font-size: 12vw;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 0.8;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .focus-overlay-text {
+            position: absolute;
+            bottom: 120px;
+            left: 80px;
+            color: #fff;
+            z-index: 3;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+            pointer-events: none;
+        }
+
+        .focus-section:hover .focus-overlay-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .focus-overlay-text h3 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--beige-light);
+            text-stroke: 1px var(--beige-light);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-transform: none;
+        }
+        
+        .focus-overlay-text p {
+            font-size: 17px;
+            font-weight: 300;
+            line-height: 1.9;
+            letter-spacing: 0.3px;
+            color: var(--beige-light);
+            max-width: 650px;
+        }
+
+        /* ====== SECTION 27: THE EDITORIAL PARALLAX ====== */
+        .editorial-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: var(--beige-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .editorial-bg {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background-image: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2400');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(20%) contrast(1.1);
+            transition: transform 0.1s ease-out;
+            z-index: 1;
+        }
+
+        .editorial-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 60px;
+            max-width: 1400px;
+            padding: 0 40px;
+            align-items: center;
+        }
+
+        .editorial-text-col {
+            flex: 1;
+            background: rgba(251, 241, 229, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 60px;
+            border: 1px solid rgba(130, 0, 0, 0.1);
+            transform: translateY(30px);
+            transition: transform 0.1s ease-out;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            color: var(--text-dark);
+        }
+
+        .editorial-img-col {
+            flex: 1;
+            height: 600px;
+            position: relative;
+        }
+
+        .editorial-img-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .editorial-text-col h2 {
+            font-size: 3.5rem;
+            color: var(--primary-burgundy);
+            margin-bottom: 30px;
+            line-height: 1;
+            font-weight: 300;
+        }
+
+        .editorial-text-col p {
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .editorial-text-col p:first-of-type::first-letter {
+            font-size: 3.5rem;
+            float: left;
+            margin-right: 15px;
+            line-height: 0.8;
+            font-weight: 700;
+            color: var(--primary-burgundy);
+        }
+
+        /* ====== SECTION 28: GLASS INSIGHTS ====== */
+        .glass-insights-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2400');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glass-insights-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6); /* Darker overlay for contrast */
+            z-index: 1;
+        }
+
+        .glass-cards-container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1400px;
+            padding: 0 40px;
+            perspective: 1000px;
+        }
+
+        .glass-card {
+            background: rgba(42, 10, 10, 0.4); /* True Glass Effect */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 40px;
+            color: white;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .glass-card:hover {
+            background: rgba(130, 0, 0, 0.6); /* Burgundy tint on hover */
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .glass-card h3 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            font-weight: 300;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .glass-card p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            opacity: 0.9;
+            font-weight: 300;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ====== SECTION 29: DYNAMIC TABS ====== */
+        .dynamic-tabs-section {
+            height: 100vh;
+            display: flex;
+            background: var(--burgundy-dark);
+            color: var(--beige-light);
+            overflow: hidden;
+        }
+
+        .tabs-visual {
+            flex: 1.2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tabs-visual img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            transform: scale(1.1);
+        }
+
+        .tabs-visual img.active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.6s ease, transform 6s ease-out;
+        }
+
+        .tabs-content {
+            flex: 0.8;
+            padding: 80px 80px 140px 80px; /* Increased bottom padding for nav arrows */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--burgundy-dark);
+            position: relative;
+            z-index: 2;
+        }
+
+        .tab-item {
+            border-bottom: 1px solid rgba(251, 241, 229, 0.1);
+            padding: 30px 20px; /* Added horizontal padding */
+            cursor: pointer;
+            transition: all 0.4s ease;
+            opacity: 0.5;
+            border-left: 3px solid transparent; /* Hidden border for active state */
+        }
+
+        .tab-item:hover, .tab-item.active {
+            opacity: 1;
+            border-bottom-color: rgba(251, 241, 229, 0.3);
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            padding-left: 30px; /* Slight shift */
+        }
+
+        .tab-item.active {
+            border-left-color: var(--primary-burgundy);
+        }
+
+        .tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 0;
+            transition: margin 0.3s ease;
+        }
+
+        .tab-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(251, 241, 229, 0.8);
+        }
+
+        .tab-item.active .tab-header {
+            margin-bottom: 20px;
+        }
+
+        .tab-item.active .tab-body {
+            max-height: 200px; /* Approximate max height */
+        }
+
+        /* ====== FOOTER ====== */
+        .footer-section {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .footer-content h2 {
+            font-size: 6vw;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-content p {
+            font-size: 18px;
+            font-weight: 300;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+
+        .footer-btn {
+            padding: 20px 60px;
+            border: 1px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .footer-btn:hover {
+            background: var(--primary-burgundy);
+            color: #fff;
+            border-color: var(--primary-burgundy);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 20px; }
+            .focus-content h2 { font-size: 12vw; }
+            .focus-overlay-text { bottom: 120px; left: 30px; right: 30px; }
+            .focus-overlay-text h3 { font-size: 36px; }
+            
+            #fullpage { width: 500vw; height: 100vh; flex-direction: row; }
+            section { height: 100vh; width: 100vw; overflow: hidden; }
+            
+            /* Editorial Mobile */
+            .editorial-content { flex-direction: column; padding: 40px 20px; overflow-y: auto; }
+            .editorial-text-col { padding: 30px; transform: none; margin-bottom: 20px; }
+            .editorial-img-col { height: 300px; width: 100%; }
+            .editorial-text-col h2 { font-size: 2.5rem; }
+
+            /* Glass Insights Mobile */
+            .glass-cards-container { grid-template-columns: 1fr; overflow-y: auto; padding: 80px 20px; gap: 20px; }
+            .glass-card { padding: 25px; }
+            .glass-card h3 { font-size: 1.5rem; }
+
+            /* Dynamic Tabs Mobile */
+            .dynamic-tabs-section { flex-direction: column; }
+            .tabs-visual { height: 40vh; flex: none; }
+            .tabs-content { height: 60vh; flex: none; padding: 30px; overflow-y: auto; }
+            .tab-header { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="home.html" class="logo">
+            <img src="../assets/logo/logo no tagline.png" alt="FTECH">
+        </a>
+        <div class="menu-toggle" id="menuToggle">
+            <span class="menu-text">Menu</span>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="home.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
+        </div>
+        <div class="menu-footer">
+            <p>FTECH Solutions Sdn Bhd</p>
+            <p>Kuala Lumpur • Johor • Sarawak • Singapore</p>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <a href="#" class="nav-arrow" id="prevSectionBtn">←</a>
+        <a href="#" class="nav-arrow" id="nextSectionBtn">→</a>
+    </div>
+
+    <!-- Page Indicators -->
+    <div class="page-indicators">
+        <div class="indicator-dot active" data-index="0"></div>
+        <div class="indicator-dot" data-index="1"></div>
+        <div class="indicator-dot" data-index="2"></div>
+        <div class="indicator-dot" data-index="3"></div>
+        <div class="indicator-dot" data-index="4"></div>
+    </div>
+
+    <div id="fullpage">
+        <!-- Section 1: Focus Mode (Hero) -->
+        <section class="focus-section">
+            <div class="focus-bg" style="background-image: url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600');"></div>
+            <div class="focus-content">
+                <h2>About<br>Us</h2>
+            </div>
+            <div class="focus-overlay-text">
+                <h3>Who We Are</h3>
+                <p>Dedicated professionals committed to excellence.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: The Editorial (Section 27) -->
+        <section class="editorial-section" id="editorialSection">
+            <div class="editorial-bg"></div>
+            <div class="editorial-content">
+                <div class="editorial-text-col">
+                    <h2>The Editorial</h2>
+                    <p>FTECH Solutions Sdn Bhd (FTECH) is a holistic and innovative lighting specialist headquartered in Kuala Lumpur, Malaysia. The company provides end-to-end lighting solutions, working closely with clients from conceptualization and design planning to lighting simulation, project management, installation, and maintenance.</p>
+                    <p>FTECH is a licensed professional entity specializing in bespoke luminaires, pole customization, and steel and aluminium fabrication works for construction projects within the commercial and industrial sectors.</p>
+                    <p>The company's capabilities also encompass the design and installation of both indoor and outdoor lighting systems for various facilities, including office buildings, public transportation terminals, convention and event centers, educational institutions, libraries, and parliamentary complexes.</p>
+                </div>
+                <div class="editorial-img-col">
+                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1400" alt="FTECH Office">
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Glass Insights (Section 28) -->
+        <section class="glass-insights-section">
+            <div class="glass-insights-overlay"></div>
+            <div class="glass-cards-container">
+                <div class="glass-card">
+                    <h3>Vision</h3>
+                    <p>To evolve as one of the key players in the lighting design industries, setting new standards for innovation and sustainability.</p>
+                </div>
+                <div class="glass-card">
+                    <h3>Mission</h3>
+                    <p>Our mission at FTECH is to deliver values by solving complexities in every lighting project we are involved in, ensuring functional and aesthetic excellence.</p>
+                </div>
+                <div class="glass-card">
+                    <h3>Company Values</h3>
+                    <p><strong>Quality Striving:</strong> Excellence in every aspect.<br>
+                    <strong>Care:</strong> Deep respect for clients and team.<br>
+                    <strong>Agility:</strong> Proactive and flexible mindset.<br>
+                    <strong>Integrity:</strong> Honesty and accountability.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Dynamic Tabs (Section 29) -->
+        <section class="dynamic-tabs-section">
+            <div class="tabs-visual">
+                <img src="https://images.unsplash.com/photo-1540932296235-d84c1562ab1e?q=80&w=1400" class="tab-img active" data-tab="1">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1400" class="tab-img" data-tab="2">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1400" class="tab-img" data-tab="3">
+                <img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=1400" class="tab-img" data-tab="4">
+            </div>
+            <div class="tabs-content">
+                <div class="tab-item active" data-tab="1">
+                    <div class="tab-header">
+                        <span>Introduction</span>
+                        <span>+</span>
+                    </div>
+                    <div class="tab-body">
+                        <p>As a full-service lighting solutions provider, FTECH Solutions Sdn Bhd (FTECH) delivers comprehensive expertise across all aspects of lighting design, site management, cabling works, installation, and maintenance.</p>
+                    </div>
+                </div>
+                <div class="tab-item" data-tab="2">
+                    <div class="tab-header">
+                        <span>Industry Expertise</span>
+                        <span>+</span>
+                    </div>
+                    <div class="tab-body">
+                        <p>With extensive hands-on experience, FTECH has successfully undertaken a wide range of medium to large-scale projects across multiple sectors. Our proven track record demonstrates our capability to meet complex project requirements with precision and efficiency.</p>
+                    </div>
+                </div>
+                <div class="tab-item" data-tab="3">
+                    <div class="tab-header">
+                        <span>End-to-End Solutions</span>
+                        <span>+</span>
+                    </div>
+                    <div class="tab-body">
+                        <p>We provide complete lighting solutions for industrial facilities, retail environments, hospitality spaces, distribution centers, and other large-scale developments. From concept to completion, FTECH transforms lighting ideas into practical, efficient, and aesthetically impactful outcomes.</p>
+                    </div>
+                </div>
+                <div class="tab-item" data-tab="4">
+                    <div class="tab-header">
+                        <span>After-Sales Support</span>
+                        <span>+</span>
+                    </div>
+                    <div class="tab-body">
+                        <p>In line with our commitment to service excellence, FTECH offers continuous after-sales support and maintenance to ensure optimal performance and long-term reliability of all installed lighting systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Footer -->
+        <section class="footer-section">
+            <div class="footer-content">
+                <h2>Ready to Start?</h2>
+                <p>With a focus on precision and creativity, we transform every vision into a functional and inspiring reality. Let's discuss your distinctive requirements.</p>
+                <a href="contact.html" class="footer-btn">Get in Touch</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Menu Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+
+            const menuText = menuToggle.querySelector('.menu-text');
+            if (menuOverlay.classList.contains('active')) {
+                menuText.textContent = 'Close';
+            } else {
+                menuText.textContent = 'Menu';
+            }
+        });
+
+        // Horizontal Scroll Logic
+        const fullpage = document.getElementById('fullpage');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const nextSectionBtn = document.getElementById('nextSectionBtn');
+        const prevSectionBtn = document.getElementById('prevSectionBtn');
+        let currentSection = 0;
+        const totalSections = 5;
+        let isScrolling = false;
+
+        function updateSection(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSections) index = totalSections - 1;
+            
+            currentSection = index;
+            
+            // Update transform
+            fullpage.style.transform = `translateX(-${currentSection * 100}vw)`;
+            
+            // Update indicators
+            indicators.forEach((dot, i) => {
+                if (i === currentSection) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+
+            // Update Arrows
+            if (currentSection === totalSections - 1) {
+                nextSectionBtn.style.opacity = '0.5';
+                nextSectionBtn.style.pointerEvents = 'none';
+            } else {
+                nextSectionBtn.style.opacity = '1';
+                nextSectionBtn.style.pointerEvents = 'auto';
+            }
+
+            prevSectionBtn.style.opacity = '1';
+            prevSectionBtn.style.pointerEvents = 'auto';
+        }
+
+        // Wheel Event
+        window.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+
+            if (e.deltaY > 0) {
+                if (currentSection < totalSections - 1) {
+                    isScrolling = true;
+                    updateSection(currentSection + 1);
+                    setTimeout(() => isScrolling = false, 800);
+                }
+            } else {
+                if (currentSection > 0) {
+                    isScrolling = true;
+                    updateSection(currentSection - 1);
+                    setTimeout(() => isScrolling = false, 800);
+                }
+            }
+        });
+
+        // Touch Events
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        window.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: false });
+
+        window.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: false });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchStartX - touchEndX > swipeThreshold) {
+                if (currentSection < totalSections - 1) updateSection(currentSection + 1);
+            }
+            if (touchEndX - touchStartX > swipeThreshold) {
+                if (currentSection > 0) updateSection(currentSection - 1);
+            }
+        }
+
+        // Click Events
+        nextSectionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            updateSection(currentSection + 1);
+        });
+
+        prevSectionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentSection === 0) {
+                window.location.href = 'home.html';
+            } else {
+                updateSection(currentSection - 1);
+            }
+        });
+
+        indicators.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                updateSection(index);
+            });
+        });
+
+        // --- Section 27: Editorial Parallax ---
+        const editorialSection = document.getElementById('editorialSection');
+        if (editorialSection) {
+            editorialSection.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth - e.pageX * 2) / 100;
+                const y = (window.innerHeight - e.pageY * 2) / 100;
+                
+                const bg = editorialSection.querySelector('.editorial-bg');
+                const text = editorialSection.querySelector('.editorial-text-col');
+                
+                if(bg) bg.style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
+                if(text) text.style.transform = `translate(${-x * 2}px, ${-y * 2}px)`;
+            });
+        }
+
+        // --- Section 29: Dynamic Tabs ---
+        const tabItems = document.querySelectorAll('.tab-item');
+        const tabImages = document.querySelectorAll('.tab-img');
+
+        tabItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                // Remove active class from all items
+                tabItems.forEach(t => t.classList.remove('active'));
+                tabImages.forEach(img => img.classList.remove('active'));
+
+                // Add active class to current
+                item.classList.add('active');
+                const tabId = item.getAttribute('data-tab');
+                const targetImg = document.querySelector(`.tab-img[data-tab="${tabId}"]`);
+                if (targetImg) targetImg.classList.add('active');
+            });
+        });
+
+        // Initialize
+        updateSection(0);
+
+    </script>
+</body>
+</html>

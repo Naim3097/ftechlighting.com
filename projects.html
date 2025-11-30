@@ -440,374 +440,123 @@
             font-weight: 400;
         }
 
-        /* ====== SECTION 3: TRIPTYCH SHOWCASE (Replaces Slider) ====== */
-        .triptych-section {
+        /* ====== QUAD PANEL LAYOUT (Used for Sections 3, 4, 5) ====== */
+        .quad-section {
             height: 100vh;
             display: flex;
-            background: #0f0c0c;
-            padding: 0;
+            background: #000;
             overflow: hidden;
         }
 
-        .triptych-col {
+        .quad-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            transition: flex 0.5s ease;
+            height: 100%;
+        }
+
+        .quad-col:last-child {
+            border-right: none;
+        }
+
+        .quad-col:hover {
+            flex: 1.2; /* Slight expansion on hover */
+        }
+
+        .quad-image-wrapper {
             flex: 1;
             position: relative;
-            height: 100%;
-            transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-            border-right: 1px solid rgba(255,255,255,0.1);
             overflow: hidden;
+            width: 100%;
         }
 
-        .triptych-col:last-child { border-right: none; }
-        
-        .triptych-col:hover { flex: 1.5; }
-
-        .triptych-img {
-            position: absolute;
-            inset: 0;
+        .quad-image-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%) brightness(0.6);
-            transition: filter 0.6s, transform 1.2s;
+            transition: transform 0.8s ease;
+            filter: grayscale(100%) brightness(0.8);
         }
 
-        .triptych-col:hover .triptych-img {
-            filter: grayscale(0%) brightness(0.9);
-            transform: scale(1.05);
-        }
-
-        .triptych-info {
-            position: absolute;
-            bottom: 120px;
-            left: 40px;
-            right: 40px;
-            z-index: 2;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .triptych-col:hover .triptych-info {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .triptych-info h3 {
-            font-size: 2.5rem;
-            color: var(--beige-light);
-            margin-bottom: 10px;
-            font-weight: 300;
-            line-height: 1;
-        }
-
-        .triptych-info p {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.7);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .triptych-number {
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            font-size: 1.5rem;
-            color: var(--primary-burgundy);
-            z-index: 2;
-            font-weight: 700;
-        }
-
-        /* ====== SECTION 4: MORPHING GRID (Section 13) - Grid ====== */
-        .morphing-grid {
-            height: 100vh;
-            background: linear-gradient(135deg, var(--beige-light) 0%, var(--beige-alt) 100%);
-            padding: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .morph-container {
-            width: 100%;
-            max-width: 1500px;
-            height: 80vh;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            gap: 3px;
-            transition: grid-template-columns 1s cubic-bezier(0.19, 1, 0.22, 1), grid-template-rows 1s cubic-bezier(0.19, 1, 0.22, 1);
-            background: var(--burgundy-dark);
-        }
-
-        /* Layout 1: Featured Masonry (default) */
-        .morph-container .morph-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-        .morph-container .morph-item:nth-child(2) { grid-column: span 1; grid-row: span 1; }
-        .morph-container .morph-item:nth-child(3) { grid-column: span 1; grid-row: span 1; }
-        .morph-container .morph-item:nth-child(4) { grid-column: span 2; grid-row: span 1; }
-
-        /* Layout 2: Gallery Showcase - Even 2x4 grid */
-        .morph-container.layout-2 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
-        .morph-container.layout-2 .morph-item:nth-child(1) { grid-column: span 1; grid-row: span 1; }
-        .morph-container.layout-2 .morph-item:nth-child(2) { grid-column: span 1; grid-row: span 1; }
-        .morph-container.layout-2 .morph-item:nth-child(3) { grid-column: span 1; grid-row: span 1; }
-        .morph-container.layout-2 .morph-item:nth-child(4) { grid-column: span 1; grid-row: span 1; }
-
-        .morph-item {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            transition: grid-column 1s cubic-bezier(0.19, 1, 0.22, 1), grid-row 1s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            background: var(--burgundy-dark);
-        }
-
-        .morph-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(15, 10, 10, 0.4) 0%, transparent 60%);
-            opacity: 1;
-            transition: opacity 0.6s;
-            z-index: 1;
-        }
-
-        .morph-item:hover::before {
-            opacity: 0;
-        }
-
-        .morph-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(80%) brightness(0.85);
-            transform: scale(1);
-            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), filter 1s cubic-bezier(0.19, 1, 0.22, 1);
-            will-change: transform, filter;
-        }
-
-        .morph-item:hover img {
-            filter: grayscale(0%) brightness(1);
+        .quad-col:hover .quad-image-wrapper img {
             transform: scale(1.1);
+            filter: grayscale(0%) brightness(1);
         }
 
-        .morph-label {
-            position: absolute;
-            bottom: 40px;
-            left: 40px;
-            color: var(--beige-light);
-            font-size: 1.5rem;
-            font-weight: 200;
-            letter-spacing: -0.5px;
-            opacity: 0;
-            transform: translateY(25px);
-            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 2;
-        }
-
-        .morph-item:hover .morph-label {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .morph-controls {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 10;
-        }
-
-        .morph-btn {
-            width: 14px;
-            height: 14px;
-            border: 1px solid rgba(130, 0, 0, 0.4);
-            background: transparent;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative;
-        }
-
-        .morph-btn::before {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            background: var(--primary-burgundy);
-            border-radius: 50%;
-            transform: scale(0);
-            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .morph-btn.active {
-            border-color: var(--primary-burgundy);
-        }
-
-        .morph-btn.active::before {
-            transform: scale(1);
-        }
-
-        /* ====== SECTION 5: PROJECT INDEX (Replaces Timeline) ====== */
-        .project-index-section {
-            height: 100vh;
-            background: var(--beige-light);
-            padding: 0; /* Remove padding to use full layout */
-            display: flex;
-            overflow: hidden;
-        }
-
-        .index-list-wrapper {
-            flex: 1.2;
-            padding: 120px 60px 120px 80px;
+        .quad-footer {
+            height: 140px;
+            background: #000;
+            padding: 30px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            position: relative;
+            border-top: 1px solid rgba(255,255,255,0.1);
             z-index: 2;
-            background: var(--beige-light); /* Ensure it covers the image if needed */
-        }
-
-        .index-preview-wrapper {
-            flex: 0.8;
             position: relative;
-            overflow: hidden;
-            background: #000;
-            border-left: 1px solid var(--primary-burgundy);
         }
 
-        .preview-image {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transform: scale(1.1);
-            transition: opacity 0.5s ease, transform 0.8s ease;
-            filter: grayscale(20%);
+        .quad-header-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
         }
 
-        .preview-image.active {
-            opacity: 1;
-            transform: scale(1);
+        .quad-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-burgundy);
+            line-height: 1;
         }
 
-        .preview-placeholder {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: rgba(255,255,255,0.3);
+        .quad-title {
+            font-size: 1.4rem;
+            color: #fff;
+            font-weight: 400;
+            line-height: 1.1;
+        }
+
+        .quad-subtitle {
+            font-size: 0.75rem;
+            color: #888;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.9rem;
-            pointer-events: none;
+            margin-left: 0;
         }
 
-        .index-header {
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--primary-burgundy);
-            padding-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
+        /* Mobile Responsive for Quad Layout */
+        @media (max-width: 768px) {
+            .quad-section {
+                flex-direction: column;
+                height: auto;
+            }
 
-        .index-header h2 {
-            font-size: 4rem;
-            color: var(--primary-burgundy);
-            font-weight: 200;
-            line-height: 0.9;
-            letter-spacing: -2px;
-        }
+            .quad-col {
+                width: 100%;
+                height: 500px; /* Fixed height for mobile items */
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                flex: none; /* Disable flex growing */
+            }
 
-        .index-header p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            max-width: 300px;
-            text-align: right;
-        }
+            .quad-col:hover {
+                flex: none;
+            }
 
-        .project-list-container {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 20px;
-        }
-
-        /* Custom Scrollbar */
-        .project-list-container::-webkit-scrollbar { width: 6px; }
-        .project-list-container::-webkit-scrollbar-track { background: rgba(130,0,0,0.1); }
-        .project-list-container::-webkit-scrollbar-thumb { background: var(--primary-burgundy); border-radius: 3px; }
-
-        .project-row {
-            display: grid;
-            grid-template-columns: 0.5fr 2fr 1fr 1fr;
-            padding: 30px 0; /* Increased padding */
-            border-bottom: 1px solid rgba(130,0,0,0.1);
-            align-items: center;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            cursor: pointer;
-            color: var(--text-dark);
-            text-decoration: none;
-            position: relative;
-        }
-
-        .project-row:hover {
-            background: transparent; /* Removed background change for cleaner look */
-            padding-left: 20px;
-            border-bottom-color: var(--primary-burgundy);
-        }
-
-        .project-row .year { 
-            font-weight: 700; 
-            color: var(--accent-burgundy); 
-            font-size: 0.9rem;
-            opacity: 0.7;
-        }
-        
-        .project-row .name { 
-            font-size: 1.8rem; /* Larger name */
-            font-weight: 300; 
-            letter-spacing: -0.5px;
-            transition: color 0.3s;
-        }
-
-        .project-row:hover .name {
-            color: var(--primary-burgundy);
-        }
-
-        .project-row .loc { 
-            font-size: 0.85rem; 
-            color: var(--text-secondary); 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-        }
-        .project-row .type { font-size: 0.9rem; color: var(--text-secondary); text-align: right; }
-
-        /* View Project Indicator */
-        .project-row::after {
-            content: 'View Project →';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--primary-burgundy);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .project-row:hover::after {
-            opacity: 1;
-        }
-        
-        .project-row:hover .type {
-            opacity: 0; /* Hide type to show "View Project" */
+            .quad-image-wrapper img {
+                filter: grayscale(0%) brightness(1); /* Always color on mobile */
+            }
+            
+            .quad-footer {
+                height: auto;
+                padding: 20px;
+            }
+            
+            .quad-number { font-size: 2rem; }
+            .quad-title { font-size: 1.2rem; }
         }
 
         /* ====== FOOTER ====== */
@@ -1006,121 +755,159 @@
             </div>
         </section>
 
-        <!-- Section 3: Showcase (Triptych Showcase) -->
-        <section class="triptych-section">
-            <div class="triptych-col">
-                <div class="triptych-img"><img src="assets/sections/projects/aria klcc kuala lumpur.jpg" alt="Aria KLCC"></div>
-                <div class="triptych-number">01</div>
-                <div class="triptych-info">
-                    <h3>Aria KLCC</h3>
-                    <p>Luxury Residential Lighting</p>
+        <!-- Section 3: Showcase (Quad Layout) -->
+        <section class="quad-section">
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/aria klcc kuala lumpur.jpg" alt="Aria KLCC">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">01</span>
+                        <h3 class="quad-title">Aria KLCC</h3>
+                    </div>
+                    <p class="quad-subtitle">Luxury Residential Lighting</p>
                 </div>
             </div>
-            <div class="triptych-col">
-                <div class="triptych-img"><img src="assets/sections/projects/mercedes showroom puchong.webp" alt="Mercedes Showroom"></div>
-                <div class="triptych-number">02</div>
-                <div class="triptych-info">
-                    <h3>Mercedes Showroom</h3>
-                    <p>Automotive Retail Experience</p>
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/mercedes showroom puchong.webp" alt="Mercedes Showroom">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">02</span>
+                        <h3 class="quad-title">Mercedes Showroom</h3>
+                    </div>
+                    <p class="quad-subtitle">Automotive Retail Experience</p>
                 </div>
             </div>
-            <div class="triptych-col">
-                <div class="triptych-img"><img src="assets/sections/projects/versis medini johor.jpg" alt="Versis Medini"></div>
-                <div class="triptych-number">03</div>
-                <div class="triptych-info">
-                    <h3>Versis Medini</h3>
-                    <p>Commercial Landscape</p>
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/versis medini johor.jpg" alt="Versis Medini">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">03</span>
+                        <h3 class="quad-title">Versis Medini</h3>
+                    </div>
+                    <p class="quad-subtitle">Commercial Landscape</p>
+                </div>
+            </div>
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/autohaus setia alam selangor.jpg" alt="Autohaus Setia Alam">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">04</span>
+                        <h3 class="quad-title">Autohaus Setia Alam</h3>
+                    </div>
+                    <p class="quad-subtitle">Showroom Lighting</p>
                 </div>
             </div>
         </section>
 
-        <!-- Section 4: Grid (Morphing Grid) -->
-        <section class="morphing-grid">
-            <div class="morph-container" id="morphContainer">
-                <div class="morph-item">
+        <!-- Section 4: Grid (Quad Layout) -->
+        <section class="quad-section">
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
                     <img src="assets/sections/projects/sterling drug (malaya) sdn bhd.jpeg" alt="Sterling Drug">
-                    <div class="morph-label">Sterling Drug (Selangor)</div>
                 </div>
-                <div class="morph-item">
-                    <img src="assets/sections/projects/hornbill skyways hangar sarawak.jpg" alt="Hornbill Skyways">
-                    <div class="morph-label">Hornbill Skyways (Sarawak)</div>
-                </div>
-                <div class="morph-item">
-                    <img src="assets/sections/projects/kuching port authority sarawak.jpeg" alt="Kuching Port">
-                    <div class="morph-label">Kuching Port Authority</div>
-                </div>
-                <div class="morph-item">
-                    <img src="assets/sections/projects/sime darby business centre singapore.webp" alt="Sime Darby">
-                    <div class="morph-label">Sime Darby (Singapore)</div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">01</span>
+                        <h3 class="quad-title">Sterling Drug</h3>
+                    </div>
+                    <p class="quad-subtitle">Industrial Facility (Selangor)</p>
                 </div>
             </div>
-            <div class="morph-controls">
-                <button class="morph-btn active" data-layout="1"></button>
-                <button class="morph-btn" data-layout="2"></button>
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/hornbill skyways hangar sarawak.jpg" alt="Hornbill Skyways">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">02</span>
+                        <h3 class="quad-title">Hornbill Skyways</h3>
+                    </div>
+                    <p class="quad-subtitle">Aviation Hangar (Sarawak)</p>
+                </div>
+            </div>
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/kuching port authority sarawak.jpeg" alt="Kuching Port">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">03</span>
+                        <h3 class="quad-title">Kuching Port</h3>
+                    </div>
+                    <p class="quad-subtitle">Port Authority (Sarawak)</p>
+                </div>
+            </div>
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/sime darby business centre singapore.webp" alt="Sime Darby">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">04</span>
+                        <h3 class="quad-title">Sime Darby</h3>
+                    </div>
+                    <p class="quad-subtitle">Business Centre (Singapore)</p>
+                </div>
             </div>
         </section>
 
-        <!-- Section 5: Project Index (Replaces Timeline) -->
-        <section class="project-index-section">
-            <div class="index-list-wrapper">
-                <div class="index-header">
-                    <h2>Selected Works</h2>
-                    <p>A curated list of our lighting design and engineering projects across Malaysia and Singapore.</p>
+        <!-- Section 5: Project Index (Quad Layout) -->
+        <section class="quad-section">
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/maslee express pontian johor.jpg" alt="Maslee Pontian">
                 </div>
-                <div class="project-list-container">
-                    <a href="#" class="project-row" data-img="assets/sections/projects/maslee express pontian johor.jpg">
-                        <div class="year">2022</div>
-                        <div class="name">Maslee Pontian</div>
-                        <div class="loc">Johor</div>
-                        <div class="type">Interior Lighting</div>
-                    </a>
-                    <a href="#" class="project-row" data-img="assets/sections/projects/autohaus setia alam selangor.jpg">
-                        <div class="year">2021</div>
-                        <div class="name">Autohaus Setia Alam</div>
-                        <div class="loc">Selangor</div>
-                        <div class="type">Showroom Lighting</div>
-                    </a>
-                    <a href="#" class="project-row" data-img="assets/sections/projects/akasa cheras south balakong.jpg">
-                        <div class="year">2020</div>
-                        <div class="name">Akasa Cheras South</div>
-                        <div class="loc">Selangor</div>
-                        <div class="type">Exterior & Landscape</div>
-                    </a>
-                    <a href="#" class="project-row" data-img="assets/sections/projects/one @ changi city singapore.jpg">
-                        <div class="year">2019</div>
-                        <div class="name">One @ Changi City</div>
-                        <div class="loc">Singapore</div>
-                        <div class="type">Commercial Hub</div>
-                    </a>
-                    <a href="#" class="project-row" data-img="assets/sections/projects/menara hap seng 3 kuala lumpur.jpg">
-                        <div class="year">2019</div>
-                        <div class="name">Menara Hap Seng 3</div>
-                        <div class="loc">Kuala Lumpur</div>
-                        <div class="type">Facade & Interior</div>
-                    </a>
-                    <a href="#" class="project-row" data-img="assets/sections/projects/UPECA.jpg">
-                        <div class="year">2018</div>
-                        <div class="name">UPECA Aerotech</div>
-                        <div class="loc">Selangor</div>
-                        <div class="type">Industrial Lighting</div>
-                    </a>
-                    <a href="#" class="project-row" data-img="assets/sections/projects/hornbill skyways hangar sarawak.jpg">
-                        <div class="year">2018</div>
-                        <div class="name">Hornbill Skyways Hangar</div>
-                        <div class="loc">Sarawak</div>
-                        <div class="type">Aviation Facility</div>
-                    </a>
-                    <a href="#" class="project-row" data-img="assets/sections/projects/kuching port authority sarawak.jpeg">
-                        <div class="year">2017</div>
-                        <div class="name">Kuching Port Authority</div>
-                        <div class="loc">Sarawak</div>
-                        <div class="type">Port Lighting</div>
-                    </a>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">01</span>
+                        <h3 class="quad-title">Maslee Pontian</h3>
+                    </div>
+                    <p class="quad-subtitle">Interior Lighting (Johor)</p>
                 </div>
             </div>
-            <div class="index-preview-wrapper">
-                <div class="preview-placeholder">Hover to Preview</div>
-                <img src="" alt="Preview" class="preview-image" id="previewImage">
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/akasa cheras south balakong.jpg" alt="Akasa Cheras">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">02</span>
+                        <h3 class="quad-title">Akasa Cheras</h3>
+                    </div>
+                    <p class="quad-subtitle">Exterior & Landscape</p>
+                </div>
+            </div>
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/one @ changi city singapore.jpg" alt="One @ Changi City">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">03</span>
+                        <h3 class="quad-title">One @ Changi City</h3>
+                    </div>
+                    <p class="quad-subtitle">Commercial Hub (Singapore)</p>
+                </div>
+            </div>
+            <div class="quad-col">
+                <div class="quad-image-wrapper">
+                    <img src="assets/sections/projects/UPECA.jpg" alt="UPECA Aerotech">
+                </div>
+                <div class="quad-footer">
+                    <div class="quad-header-group">
+                        <span class="quad-number">04</span>
+                        <h3 class="quad-title">UPECA Aerotech</h3>
+                    </div>
+                    <p class="quad-subtitle">Industrial Lighting</p>
+                </div>
             </div>
         </section>
 
@@ -1198,28 +985,6 @@
             if (window.innerWidth <= 768) return; // Disable on mobile
             if (isScrolling) return;
 
-            // Check if we are in the Project Index section (Section 5, index 4)
-            // and if we are scrolling vertically within it
-            if (currentSection === 4) {
-                const listContainer = document.querySelector('.project-list-container');
-                if (listContainer) {
-                    // Check if the list is actually scrollable
-                    const isScrollable = listContainer.scrollHeight > listContainer.clientHeight;
-                    
-                    if (isScrollable) {
-                        // Use a small buffer (2px) for scroll detection to account for subpixel rendering
-                        const atBottom = (listContainer.scrollHeight - listContainer.scrollTop) <= (listContainer.clientHeight + 2);
-                        const atTop = listContainer.scrollTop <= 0;
-
-                        if (e.deltaY > 0 && !atBottom) {
-                            return; // Allow default vertical scroll
-                        } else if (e.deltaY < 0 && !atTop) {
-                            return; // Allow default vertical scroll
-                        }
-                    }
-                }
-            }
-
             if (e.deltaY > 0) {
                 if (currentSection < totalSections - 1) {
                     isScrolling = true;
@@ -1282,47 +1047,6 @@
         indicators.forEach((dot, index) => {
             dot.addEventListener('click', () => {
                 updateSection(index);
-            });
-        });
-
-        // --- Triptych Logic (Hover only, no JS needed but keeping structure clean) ---
-        // The CSS handles the hover expansion.
-
-        // --- Morphing Grid Logic ---
-        const morphContainer = document.getElementById('morphContainer');
-        const morphBtns = document.querySelectorAll('.morph-btn');
-
-        morphBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                morphBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const layout = btn.getAttribute('data-layout');
-                if (layout === '1') {
-                    morphContainer.classList.remove('layout-2');
-                } else {
-                    morphContainer.classList.add('layout-2');
-                }
-            });
-        });
-
-        // --- Project Index Preview Logic ---
-        const projectRows = document.querySelectorAll('.project-row');
-        const previewImage = document.getElementById('previewImage');
-
-        projectRows.forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                if (window.innerWidth <= 768) return; // Disable on mobile
-                const imgSrc = row.getAttribute('data-img');
-                if (imgSrc) {
-                    previewImage.src = imgSrc;
-                    previewImage.classList.add('active');
-                }
-            });
-
-            row.addEventListener('mouseleave', () => {
-                // Optional: Keep the last image or fade out
-                // previewImage.classList.remove('active'); 
             });
         });
 

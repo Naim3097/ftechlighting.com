@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FTECH - Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-burgundy: #820000;
+            --burgundy-dark: #2a0a0a;
+            --beige-light: #FBF1E5;
+            --beige-alt: #FBF4E9;
+            --text-dark: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --accent-burgundy: #87181a;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #050505;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ====== HORIZONTAL SCROLL CONTAINER ====== */
+        #fullpage {
+            display: flex;
+            width: 400vw; /* 4 Sections: Hero, Competencies, Services, Footer */
+            height: 100vh;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            will-change: transform;
+        }
+
+        section {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ====== NAVIGATION ====== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 50px;
+            z-index: 10000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            mix-blend-mode: normal;
+        }
+
+        .logo {
+            display: block;
+            width: 120px;
+            pointer-events: auto;
+            /* Smart contrast: White on dark, Black on light */
+            mix-blend-mode: difference; 
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* Force the burgundy logo to be pure white for maximum contrast */
+            filter: brightness(0) invert(1); 
+        }
+
+        /* ====== MENU TOGGLE ====== */
+        .menu-toggle {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            z-index: 20001; /* Above overlay */
+            mix-blend-mode: difference;
+            color: #fff;
+        }
+
+        .menu-text {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .hamburger {
+            width: 40px;
+            height: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+        }
+
+        .hamburger span:nth-child(1) { width: 100%; }
+        .hamburger span:nth-child(2) { width: 70%; }
+
+        .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
+
+        /* Active State for Hamburger */
+        .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+
+        /* ====== MENU OVERLAY ====== */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--burgundy-dark);
+            z-index: 20000;
+            transform: translateY(-100%);
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .menu-overlay.active {
+            transform: translateY(0);
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-link {
+            font-size: 4rem;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 200;
+            letter-spacing: -1px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.1;
+        }
+
+        .menu-link span {
+            font-size: 1rem;
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            opacity: 0;
+            transition: all 0.4s ease;
+            color: var(--primary-burgundy);
+            font-weight: 700;
+        }
+
+        .menu-link:hover {
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .menu-link:hover span {
+            opacity: 1;
+            right: -20px;
+        }
+
+        .menu-footer {
+            position: absolute;
+            bottom: 50px;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+
+        /* Responsive Menu */
+        @media (max-width: 768px) {
+            .menu-link { font-size: 2.5rem; }
+        }
+
+        /* ====== NAVIGATION ARROWS & INDICATORS ====== */
+        .nav-arrows {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            z-index: 9999;
+        }
+
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(130, 0, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            color: var(--primary-burgundy);
+            background: rgba(251, 241, 229, 0.8);
+            backdrop-filter: blur(5px);
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .nav-arrow:hover {
+            background: var(--primary-burgundy);
+            color: var(--beige-light);
+            border-color: var(--primary-burgundy);
+            transform: scale(1.1);
+        }
+
+        .page-indicators {
+            position: fixed;
+            top: 50%;
+            right: 40px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+            pointer-events: auto;
+        }
+
+        .indicator-dot {
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .indicator-dot.active {
+            background: #fff;
+            transform: scale(1.5);
+        }
+
+        /* ====== SECTION 1: MASK HERO (Section 11) ====== */
+        .mask-hero {
+            height: 100vh;
+            position: relative;
+            background: #0a0808;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .mask-hero h1 {
+            font-size: 18vw;
+            font-weight: 700;
+            color: var(--beige-light);
+            position: relative;
+            z-index: 2;
+            mix-blend-mode: difference;
+            letter-spacing: -8px;
+            user-select: none;
+            transition: letter-spacing 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            margin: 0;
+            line-height: 0.8;
+        }
+
+        .mask-hero:hover h1 {
+            letter-spacing: -4px; /* Reduced from 0px to keep it tighter/cleaner */
+        }
+
+        .mask-hero-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+        }
+
+        .mask-hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(10, 8, 8, 0.4) 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 1.5s;
+        }
+
+        .mask-hero:hover .mask-hero-bg::before {
+            opacity: 1;
+        }
+
+        .mask-hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            clip-path: circle(25% at 50% 50%);
+            transform: scale(1);
+            transition: clip-path 1.8s cubic-bezier(0.19, 1, 0.22, 1), transform 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: clip-path, transform;
+        }
+
+        .mask-hero:hover .mask-hero-bg img {
+            clip-path: circle(75% at 50% 50%);
+            transform: scale(1.05);
+        }
+
+        .hero-subtitle {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--beige-light);
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            z-index: 3;
+        }
+
+        /* ====== SECTION 2: STRIP EXPAND (Section 23) - Core Competencies ====== */
+        .strip-section {
+            height: 100vh;
+            display: flex;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .strip-item {
+            flex: 1;
+            position: relative;
+            transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+
+        .strip-item:last-child {
+            border-right: none;
+        }
+
+        .strip-item:hover {
+            flex: 4; /* Wider expansion */
+        }
+
+        .strip-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.4);
+            transition: filter 0.6s, transform 1.2s;
+            transform: scale(1.1);
+        }
+
+        .strip-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+
+        .strip-item:hover .strip-bg {
+            filter: grayscale(0%) brightness(0.8);
+            transform: scale(1);
+        }
+
+        /* Darken non-hovered items */
+        .strip-section:hover .strip-item:not(:hover) .strip-bg {
+            filter: grayscale(100%) brightness(0.2);
+        }
+
+        .strip-content {
+            position: absolute;
+            bottom: 120px; /* Increased from 60px to avoid nav overlap */
+            left: 60px;
+            right: 60px;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition-delay: 0.1s;
+            max-width: 600px;
+        }
+
+        .strip-item:hover .strip-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.3s; /* Wait for expansion */
+        }
+
+        .strip-content h3 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+            line-height: 1.1;
+            color: var(--beige-light);
+        }
+
+        .strip-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .strip-num {
+            position: absolute;
+            bottom: -20px;
+            right: 0px;
+            font-size: 180px;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(255,255,255,0.1);
+            z-index: 1;
+            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            line-height: 1;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .strip-item:hover .strip-num {
+            opacity: 0.1;
+            transform: translateY(-50px) scale(1.1);
+            -webkit-text-stroke: 2px rgba(255,255,255,0.05);
+        }
+
+        .strip-vertical-text {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-90deg);
+            transform-origin: left bottom;
+            white-space: nowrap;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.5);
+            transition: opacity 0.3s;
+            opacity: 1;
+        }
+
+        .strip-item:hover .strip-vertical-text {
+            opacity: 0;
+        }
+
+        /* ====== SECTION 3: ACCORDION EXPAND (Section 15) - Services & Solutions ====== */
+        .accordion-section {
+            height: 100vh;
+            display: flex;
+            background: var(--beige-light);
+            overflow: hidden;
+        }
+
+        .accordion-panel {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid var(--primary-burgundy);
+            transition: flex 1s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: pointer;
+        }
+
+        .accordion-panel:last-child {
+            border-right: none;
+        }
+
+        .accordion-panel.expanded {
+            flex: 4;
+        }
+
+        .accordion-bg {
+            position: absolute;
+            inset: 0;
+        }
+
+        .accordion-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(42, 10, 10, 0.6); /* Burgundy tint */
+            z-index: 1;
+            transition: opacity 0.8s;
+        }
+
+        .accordion-panel.expanded .accordion-bg::before {
+            opacity: 0.3;
+        }
+
+        .accordion-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.5);
+            transform: scale(1);
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), filter 1s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform, filter;
+        }
+
+        .accordion-panel.expanded .accordion-bg img {
+            filter: grayscale(0%) brightness(0.8);
+            transform: scale(1.08);
+        }
+
+        .accordion-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--beige-light);
+            white-space: nowrap;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .accordion-panel.expanded .accordion-title {
+            transform: translate(-50%, -50%) rotate(0deg) scale(1);
+            font-size: 56px; /* Larger title */
+            top: 25%; /* Adjusted position */
+            letter-spacing: -2px;
+            text-transform: none;
+            font-weight: 200; /* Thinner font for elegance */
+        }
+
+        .accordion-content {
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            right: 10%;
+            color: var(--beige-light);
+            opacity: 0;
+            transform: translateY(35px);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1) 0.3s;
+            z-index: 2;
+        }
+
+        .accordion-panel.expanded .accordion-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .accordion-content::before {
+            content: '';
+            width: 50px;
+            height: 1px;
+            background: var(--beige-light);
+            display: block;
+            margin-bottom: 25px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+        }
+
+        .accordion-panel.expanded .accordion-content::before {
+            transform: scaleX(1);
+        }
+
+        .accordion-content p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-bottom: 20px;
+            color: rgba(251, 241, 229, 0.9);
+        }
+
+        .service-capabilities {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.6s;
+        }
+
+        .accordion-panel.expanded .service-capabilities {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-capabilities li {
+            font-size: 0.9rem;
+            color: rgba(251, 241, 229, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .service-capabilities li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--primary-burgundy);
+            border-radius: 50%;
+        }
+
+        /* ====== FOOTER ====== */
+        .footer-section {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .footer-content h2 {
+            font-size: 6vw;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-content p {
+            font-size: 18px;
+            font-weight: 300;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+
+        .footer-btn {
+            padding: 20px 60px;
+            border: 1px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .footer-btn:hover {
+            background: var(--primary-burgundy);
+            color: #fff;
+            border-color: var(--primary-burgundy);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 20px; }
+            #fullpage { width: 400vw; height: 100vh; flex-direction: row; }
+            
+            /* Mask Hero Mobile */
+            .mask-hero h1 { font-size: 24vw; }
+            .hero-subtitle { font-size: 0.9rem; bottom: 150px; }
+
+            /* Strip Expand Mobile */
+            .strip-section { flex-direction: column; }
+            .strip-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .strip-vertical-text { transform: rotate(0); bottom: auto; top: 50%; left: 20px; transform: translateY(-50%); }
+            .strip-content h3 { font-size: 1.8rem; }
+            .strip-content { bottom: 20px; left: 20px; right: 20px; }
+
+            /* Accordion Mobile */
+            .accordion-section { flex-direction: column; }
+            .accordion-panel { border-right: none; border-bottom: 1px solid var(--primary-burgundy); }
+            .accordion-title { transform: translate(-50%, -50%) rotate(0); font-size: 1.2rem; }
+            .accordion-panel.expanded .accordion-title { top: 15%; font-size: 2rem; }
+            .accordion-content { bottom: 20px; left: 20px; right: 20px; }
+            .accordion-content p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="home.html" class="logo">
+            <img src="../assets/logo/logo no tagline.png" alt="FTECH">
+        </a>
+        <div class="menu-toggle" id="menuToggle">
+            <span class="menu-text">Menu</span>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="home.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
+        </div>
+        <div class="menu-footer">
+            <p>FTECH Solutions Sdn Bhd</p>
+            <p>Kuala Lumpur • Johor • Sarawak • Singapore</p>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <a href="#" class="nav-arrow" id="prevSectionBtn">←</a>
+        <a href="#" class="nav-arrow" id="nextSectionBtn">→</a>
+    </div>
+
+    <!-- Page Indicators -->
+    <div class="page-indicators">
+        <div class="indicator-dot active" data-index="0"></div>
+        <div class="indicator-dot" data-index="1"></div>
+        <div class="indicator-dot" data-index="2"></div>
+        <div class="indicator-dot" data-index="3"></div>
+    </div>
+
+    <div id="fullpage">
+        <!-- Section 1: Hero (Mask Hero) -->
+        <section class="mask-hero">
+            <h1>SERVICES</h1>
+            <div class="hero-subtitle">Comprehensive Lighting Solutions</div>
+            <div class="mask-hero-bg">
+                <img src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=1600" alt="Services Background">
+            </div>
+        </section>
+
+        <!-- Section 2: Core Competencies (Strip Expand) -->
+        <section class="strip-section">
+            <!-- Strip 1 -->
+            <div class="strip-item">
+                <div class="strip-bg">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600" alt="Control Systems">
+                </div>
+                <div class="strip-num">01</div>
+                <div class="strip-vertical-text">CONTROL SYSTEMS</div>
+                <div class="strip-content">
+                    <h3>Control System Design & Integration</h3>
+                    <p>Supported by a team of dedicated lighting designers and engineers, FTECH delivers advanced control system design and seamless integration to address the growing technical and digital demands of modern lighting environments. Our expertise ensures efficient, adaptable, and intelligent lighting systems aligned with today's smart infrastructure standards.</p>
+                </div>
+            </div>
+            <!-- Strip 2 -->
+            <div class="strip-item">
+                <div class="strip-bg">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600" alt="Lighting Design">
+                </div>
+                <div class="strip-num">02</div>
+                <div class="strip-vertical-text">LIGHTING DESIGN</div>
+                <div class="strip-content">
+                    <h3>Interior & Exterior Lighting Design</h3>
+                    <p>FTECH offers complete lighting design services for both interior and exterior applications. Utilizing advanced lighting software and cutting-edge technologies, our experienced team develops high-impact lighting schemes that enhance functionality, comfort, and visual appeal across diverse environments.</p>
+                </div>
+            </div>
+            <!-- Strip 3 -->
+            <div class="strip-item">
+                <div class="strip-bg">
+                    <img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=1600" alt="Contract Services">
+                </div>
+                <div class="strip-num">03</div>
+                <div class="strip-vertical-text">CONTRACT SERVICES</div>
+                <div class="strip-content">
+                    <h3>Comprehensive Contract Services</h3>
+                    <p>We provide end-to-end contract services, covering all phases from conceptual design to installation and maintenance. Our structured project management approach ensures quality, efficiency, and compliance with industry standards—delivering reliable lighting solutions for commercial, industrial, and public facilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Services & Solutions (Accordion Expand) -->
+        <section class="accordion-section">
+            <!-- Panel 1 -->
+            <div class="accordion-panel expanded">
+                <div class="accordion-bg">
+                    <img src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?q=80&w=1200" alt="Conceptual">
+                </div>
+                <div class="accordion-title">Conceptual</div>
+                <div class="accordion-content">
+                    <h3>Conceptual Lighting Design</h3>
+                    <p>Creating powerful experiences, we reinforce creative concepts through interplay of structural form.</p>
+                    <ul class="service-capabilities">
+                        <li>Visual Narrative</li>
+                        <li>Mood Boarding</li>
+                        <li>3D Visualization</li>
+                        <li>Design Strategy</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Panel 2 -->
+            <div class="accordion-panel">
+                <div class="accordion-bg">
+                    <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?q=80&w=1200" alt="Bespoke">
+                </div>
+                <div class="accordion-title">Bespoke</div>
+                <div class="accordion-content">
+                    <h3>Bespoke Customization</h3>
+                    <p>Our customized and bespoke lighting services is central to our business here at FTECH.</p>
+                    <ul class="service-capabilities">
+                        <li>Custom Fabrication</li>
+                        <li>Material Selection</li>
+                        <li>Prototyping</li>
+                        <li>Unique Fixtures</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Panel 3 -->
+            <div class="accordion-panel">
+                <div class="accordion-bg">
+                    <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1200" alt="Architectural">
+                </div>
+                <div class="accordion-title">Architectural</div>
+                <div class="accordion-content">
+                    <h3>Architectural Lighting</h3>
+                    <p>Bringing together the art, science and technology, adding architectural lighting to property.</p>
+                    <ul class="service-capabilities">
+                        <li>Facade Lighting</li>
+                        <li>Landscape Integration</li>
+                        <li>Heritage Buildings</li>
+                        <li>Urban Planning</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Panel 4 -->
+            <div class="accordion-panel">
+                <div class="accordion-bg">
+                    <img src="https://images.unsplash.com/photo-1513506003011-3b03c80165bd?q=80&w=1200" alt="Commercial">
+                </div>
+                <div class="accordion-title">Commercial</div>
+                <div class="accordion-content">
+                    <h3>Commercial & Residential</h3>
+                    <p>A full-service commercial and residential lighting contractor and E&E group of companies.</p>
+                    <ul class="service-capabilities">
+                        <li>Office Spaces</li>
+                        <li>Retail Environments</li>
+                        <li>Luxury Homes</li>
+                        <li>Hospitality</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Panel 5 -->
+            <div class="accordion-panel">
+                <div class="accordion-bg">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200" alt="Installation">
+                </div>
+                <div class="accordion-title">Installation</div>
+                <div class="accordion-content">
+                    <h3>Design & Installation</h3>
+                    <p>Covering all stages from lighting, consultancy and feasibility studies to design, testing and installation.</p>
+                    <ul class="service-capabilities">
+                        <li>Project Management</li>
+                        <li>Testing & Commissioning</li>
+                        <li>Maintenance</li>
+                        <li>Safety Compliance</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Footer -->
+        <section class="footer-section">
+            <div class="footer-content">
+                <h2>Ready to Start?</h2>
+                <p>With a focus on precision and creativity, we transform every vision into a functional and inspiring reality. Let's discuss your distinctive requirements.</p>
+                <a href="contact.html" class="footer-btn">Get in Touch</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Menu Toggle Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+
+            const menuText = menuToggle.querySelector('.menu-text');
+            if (menuOverlay.classList.contains('active')) {
+                menuText.textContent = 'Close';
+            } else {
+                menuText.textContent = 'Menu';
+            }
+        });
+
+        // Horizontal Scroll Logic
+        const fullpage = document.getElementById('fullpage');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const nextSectionBtn = document.getElementById('nextSectionBtn');
+        const prevSectionBtn = document.getElementById('prevSectionBtn');
+        let currentSection = 0;
+        const totalSections = 4;
+        let isScrolling = false;
+
+        function updateSection(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSections) index = totalSections - 1;
+            
+            currentSection = index;
+            
+            // Update transform
+            fullpage.style.transform = `translateX(-${currentSection * 100}vw)`;
+            
+            // Update indicators
+            indicators.forEach((dot, i) => {
+                if (i === currentSection) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+
+            // Update Arrows
+            if (currentSection === totalSections - 1) {
+                nextSectionBtn.style.opacity = '0.5';
+                nextSectionBtn.style.pointerEvents = 'none';
+            } else {
+                nextSectionBtn.style.opacity = '1';
+                nextSectionBtn.style.pointerEvents = 'auto';
+            }
+
+            prevSectionBtn.style.opacity = '1';
+            prevSectionBtn.style.pointerEvents = 'auto';
+        }
+
+        // Wheel Event
+        window.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+
+            if (e.deltaY > 0) {
+                if (currentSection < totalSections - 1) {
+                    isScrolling = true;
+                    updateSection(currentSection + 1);
+                    setTimeout(() => isScrolling = false, 800);
+                }
+            } else {
+                if (currentSection > 0) {
+                    isScrolling = true;
+                    updateSection(currentSection - 1);
+                    setTimeout(() => isScrolling = false, 800);
+                }
+            }
+        });
+
+        // Touch Events
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        window.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: false });
+
+        window.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: false });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchStartX - touchEndX > swipeThreshold) {
+                if (currentSection < totalSections - 1) updateSection(currentSection + 1);
+            }
+            if (touchEndX - touchStartX > swipeThreshold) {
+                if (currentSection > 0) updateSection(currentSection - 1);
+            }
+        }
+
+        // Click Events
+        nextSectionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            updateSection(currentSection + 1);
+        });
+
+        prevSectionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentSection === 0) {
+                window.location.href = 'home.html';
+            } else {
+                updateSection(currentSection - 1);
+            }
+        });
+
+        indicators.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                updateSection(index);
+            });
+        });
+
+        // --- Accordion Logic ---
+        const accordionPanels = document.querySelectorAll('.accordion-panel');
+        accordionPanels.forEach(panel => {
+            panel.addEventListener('click', () => {
+                accordionPanels.forEach(p => p.classList.remove('expanded'));
+                panel.classList.add('expanded');
+            });
+        });
+
+        // --- Hero Parallax ---
+        const heroSection = document.querySelector('.mask-hero');
+        const heroBg = document.querySelector('.mask-hero-bg img');
+        
+        if (heroSection && heroBg) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth - e.pageX * 2) / 50;
+                const y = (window.innerHeight - e.pageY * 2) / 50;
+                heroBg.style.transform = `scale(1.05) translate(${x}px, ${y}px)`;
+            });
+            
+            heroSection.addEventListener('mouseleave', () => {
+                heroBg.style.transform = `scale(1)`;
+            });
+        }
+
+        // Initialize
+        updateSection(0);
+    </script>
+</body>
+</html>
