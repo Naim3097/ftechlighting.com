@@ -461,15 +461,37 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            html { scroll-behavior: smooth; }
+            html { 
+                scroll-behavior: smooth; 
+                overflow-x: hidden;
+            }
             body {
                 overflow-y: auto;
                 height: auto;
                 width: 100%;
                 overflow-x: hidden;
                 scroll-snap-type: y mandatory;
+                position: relative;
             }
 
+            /* Reset Horizontal Scroll Layout */
+            #fullpage { 
+                width: 100%; 
+                height: auto; 
+                display: block; /* Stack vertically */
+                transform: none !important; 
+            }
+            
+            section { 
+                height: auto; 
+                min-height: 100vh; 
+                width: 100%; 
+                overflow: hidden; /* Prevent inner overflow */
+                scroll-snap-align: start;
+                position: relative;
+            }
+
+            /* Header / Nav */
             nav { 
                 position: absolute;
                 top: 0;
@@ -477,57 +499,76 @@
                 width: 100%;
                 padding: 30px 20px; 
                 background: transparent;
-                backdrop-filter: none;
-                border-bottom: none;
                 pointer-events: none;
             }
 
             .logo, .menu-toggle { pointer-events: auto; }
+            .logo { width: 90px; mix-blend-mode: difference; }
+            .logo img { filter: brightness(0) invert(1); }
+            .menu-toggle { mix-blend-mode: difference; color: #fff; }
+            .hamburger span { background: #fff; }
 
-            /* Mobile Nav Elements - Match Home Page */
-            .logo {
-                width: 100px;
-                mix-blend-mode: difference;
-            }
-            .logo img { 
-                filter: brightness(0) invert(1);
-            }
-            
-            .menu-toggle { 
-                mix-blend-mode: difference;
-                color: #fff; 
-            }
-            .hamburger span { 
-                background: #fff; 
-            }
-            
-            #fullpage { 
-                width: 100%; 
-                height: auto; 
-                flex-direction: column; 
-                transform: none !important;
-            }
-            
-            section { 
-                height: auto; 
-                min-height: 100vh; 
-                width: 100%; 
-                overflow: visible; 
-                flex-shrink: 0;
-                scroll-snap-align: start;
-            }
-
-            /* Hide Desktop Navigation Controls */
+            /* Hide Desktop Controls */
             .nav-arrows, .page-indicators { display: none; }
-            
-            .contact-hero h1 { font-size: 15vw; }
-            
-            .locations-section { padding: 40px 20px; height: auto; }
-            .locations-grid { grid-template-columns: 1fr; gap: 40px; }
-            
-            .form-section { height: auto; padding: 40px 0; }
-            .form-container { padding: 30px; margin: 20px; max-width: 100%; }
-            .form-header h2 { font-size: 2rem; }
+
+            /* --- Section Specifics --- */
+
+            /* Hero */
+            .contact-hero {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            .contact-hero h1 { 
+                font-size: 18vw; 
+                line-height: 0.9;
+            }
+            .contact-hero p {
+                font-size: 1rem;
+                margin-top: 20px;
+                padding: 0 20px;
+            }
+
+            /* Locations */
+            .locations-section { 
+                padding: 80px 20px; 
+                height: auto; 
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+            }
+            .locations-grid { 
+                grid-template-columns: 1fr; 
+                gap: 30px; 
+                width: 100%;
+            }
+            .location-card {
+                padding-top: 20px;
+                transform: none !important; /* Disable hover lift on mobile */
+            }
+            .location-card h3 { font-size: 2rem; }
+
+            /* Form */
+            .form-section { 
+                height: auto; 
+                min-height: 100vh;
+                padding: 80px 20px; 
+                display: flex;
+                align-items: center;
+            }
+            .form-container { 
+                padding: 30px 20px; 
+                margin: 0; 
+                max-width: 100%; 
+                width: 100%;
+                background: rgba(255,255,255,0.05); /* Slightly more visible on mobile */
+            }
+            .form-header h2 { font-size: 2.5rem; }
+            .contact-form { gap: 30px; }
+            .submit-btn { padding: 15px 30px; font-size: 1rem; }
         }
     </style>
 </head>
