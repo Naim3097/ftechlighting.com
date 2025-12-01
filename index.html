@@ -401,6 +401,13 @@
         .accordion-cta:hover::after {
             transform: translateX(5px);
         }
+        
+        /* Premium Active State (Mobile Touch) */
+        .accordion-cta:active {
+            opacity: 0.7;
+            transform: scale(0.98);
+            transition: all 0.1s ease;
+        }
 
         /* Curtain Panels (Overlay) */
         .curtain-panels {
@@ -462,6 +469,64 @@
             pointer-events: none;
         }
 
+        /* Scroll Indicator (Mobile) */
+        .scroll-indicator {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+            opacity: 0.8;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .scroll-mouse {
+            width: 20px;
+            height: 32px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 2px;
+            height: 6px;
+            background: #fff;
+            border-radius: 2px;
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 2s infinite;
+        }
+
+        .scroll-text {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes scrollWheel {
+            0% { top: 6px; opacity: 1; height: 6px; }
+            100% { top: 18px; opacity: 0; height: 2px; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.8; }
+        }
+
+        /* Global Tap Highlight Removal */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 1200px) {
             nav { padding: 0 40px; }
@@ -471,6 +536,10 @@
         @media (max-width: 768px) {
             .mobile-hero-background {
                 display: block;
+            }
+            
+            .scroll-indicator {
+                display: flex;
             }
 
             html { scroll-behavior: smooth; }
@@ -632,6 +701,15 @@
     <!-- Hero Section (Curtain Reveal + Accordion) -->
     <section class="curtain-reveal">
         <div class="mobile-hero-background"></div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span class="scroll-text">Scroll</span>
+        </div>
+
         <div class="curtain-bg">
             <!-- Accordion Section -->
             <section class="accordion-section">
@@ -647,7 +725,7 @@
                     <div class="accordion-content">
                         <h2>Delivering Values<br>Solving Complexities</h2>
                         <p>Holistic & Innovative Lighting Solutions. We craft lighting solutions that transform industrial and commercial spaces into experiences.</p>
-                        <a href="#" class="accordion-cta">Explore FTECH</a>
+                        <a href="#" class="accordion-cta" id="exploreBtn">Explore FTECH</a>
                     </div>
                 </div>
 
@@ -793,6 +871,44 @@
                     });
                 });
             }
+
+            // Explore Button Logic
+            const exploreBtn = document.getElementById('exploreBtn');
+            if (exploreBtn) {
+                exploreBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation(); // Prevent panel click event
+                    
+                    // Find the About Us panel (index 1)
+                    const aboutPanel = document.querySelector('.accordion-panel[data-index="1"]');
+                    if (aboutPanel) {
+                        // Collapse all
+                        accordionPanels.forEach(p => p.classList.remove('expanded'));
+                        // Expand About Us
+                        aboutPanel.classList.add('expanded');
+                        
+                        // Scroll to it on mobile
+                        if (window.innerWidth <= 768) {
+                            setTimeout(() => {
+                                aboutPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 300);
+                        }
+                    }
+                });
+            }
+
+            // Scroll Indicator Fade Out
+            window.addEventListener('scroll', () => {
+                const scrollIndicator = document.querySelector('.scroll-indicator');
+                if (scrollIndicator) {
+                    if (window.scrollY > 100) {
+                        scrollIndicator.style.opacity = '0';
+                        scrollIndicator.style.transition = 'opacity 0.5s';
+                    } else {
+                        scrollIndicator.style.opacity = '0.8';
+                    }
+                }
+            });
         });
     </script>
 </body>
