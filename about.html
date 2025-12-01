@@ -634,15 +634,37 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            html { scroll-behavior: smooth; }
+            html { 
+                scroll-behavior: smooth; 
+                overflow-x: hidden;
+            }
             body {
                 overflow-y: auto;
                 height: auto;
                 width: 100%;
                 overflow-x: hidden;
                 scroll-snap-type: y mandatory;
+                position: relative;
             }
 
+            /* Reset Horizontal Scroll Layout */
+            #fullpage { 
+                width: 100%; 
+                height: auto; 
+                display: block; /* Stack vertically */
+                transform: none !important; 
+            }
+            
+            section { 
+                height: auto; 
+                min-height: 100vh; 
+                width: 100%; 
+                overflow: hidden; /* Prevent inner overflow */
+                scroll-snap-align: start;
+                position: relative;
+            }
+
+            /* Header / Nav */
             nav { 
                 position: absolute;
                 top: 0;
@@ -650,74 +672,151 @@
                 width: 100%;
                 padding: 30px 20px; 
                 background: transparent;
-                backdrop-filter: none;
-                border-bottom: none;
                 pointer-events: none;
             }
 
             .logo, .menu-toggle { pointer-events: auto; }
+            .logo { width: 90px; mix-blend-mode: difference; }
+            .logo img { filter: brightness(0) invert(1); }
+            .menu-toggle { mix-blend-mode: difference; color: #fff; }
+            .hamburger span { background: #fff; }
 
-            /* Mobile Nav Elements - Match Home Page */
-            .logo {
-                width: 100px;
-                mix-blend-mode: difference;
-            }
-            .logo img { 
-                filter: brightness(0) invert(1);
-            }
-            
-            .menu-toggle { 
-                mix-blend-mode: difference;
-                color: #fff; 
-            }
-            .hamburger span { 
-                background: #fff; 
-            }
-            
-            .focus-content h2 { font-size: 15vw; }
-            .focus-overlay-text { bottom: 40px; left: 20px; right: 20px; }
-            .focus-overlay-text h3 { font-size: 32px; }
-            
-            #fullpage { 
-                width: 100%; 
-                height: auto; 
-                flex-direction: column; 
-                transform: none !important; /* Disable JS transform */
-            }
-            
-            section { 
-                height: auto; 
-                min-height: 100vh; 
-                width: 100%; 
-                overflow: visible; 
-                flex-shrink: 0;
-                scroll-snap-align: start;
-            }
-
-            /* Hide Desktop Navigation Controls */
+            /* Hide Desktop Controls */
             .nav-arrows, .page-indicators { display: none; }
-            
-            /* Editorial Mobile */
-            .editorial-section { height: auto; padding: 100px 0; }
-            .editorial-content { flex-direction: column; padding: 0 20px; }
-            .editorial-text-col { padding: 30px; transform: none; margin-bottom: 30px; }
-            .editorial-img-col { height: 300px; width: 100%; }
-            .editorial-text-col h2 { font-size: 2.5rem; }
 
-            /* Glass Insights Mobile */
-            .glass-insights-section { height: auto; padding: 100px 0; }
-            .glass-cards-container { grid-template-columns: 1fr; padding: 0 20px; gap: 20px; }
-            .glass-card { padding: 25px; transform: none !important; }
+            /* --- Section Specifics --- */
+
+            /* Hero (Focus) */
+            .focus-section {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            .focus-content h2 { 
+                font-size: 18vw; /* Larger for impact */
+                line-height: 0.9;
+            }
+            .focus-overlay-text {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                margin-top: 40px;
+                padding: 0 20px;
+                transform: none;
+                opacity: 1;
+                text-align: center;
+            }
+            .focus-overlay-text h3 {
+                font-size: 2rem;
+                margin-bottom: 15px;
+                -webkit-text-stroke: 0.5px var(--beige-light); /* Thinner stroke for mobile */
+            }
+            .focus-overlay-text p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            /* Editorial */
+            .editorial-section {
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* Center content vertically */
+            }
+            .editorial-bg {
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 100%;
+                z-index: 0;
+                filter: grayscale(20%) contrast(1.1) brightness(0.6); /* Darken for text readability */
+            }
+            .editorial-content {
+                flex-direction: column;
+                padding: 0 20px;
+                gap: 0;
+                height: auto;
+                width: 100%;
+                z-index: 2;
+            }
+            .editorial-img-col {
+                display: none; /* Hide redundant image on mobile */
+            }
+            .editorial-text-col {
+                margin: 0;
+                padding: 40px 30px;
+                background: rgba(251, 241, 229, 0.95);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(130, 0, 0, 0.1);
+                transform: none;
+                border-radius: 4px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+            .editorial-text-col h2 { font-size: 2rem; margin-bottom: 20px; }
+            .editorial-text-col p { font-size: 1rem; }
+
+            /* Glass Insights */
+            .glass-insights-section {
+                padding: 80px 20px;
+                height: auto;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+            }
+            .glass-cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 0;
+                width: 100%;
+            }
+            .glass-card {
+                padding: 30px;
+                background: rgba(42, 10, 10, 0.7); /* Darker for readability */
+                backdrop-filter: blur(20px);
+                transform: none !important;
+                border: 1px solid rgba(255,255,255,0.15);
+            }
             .glass-card h3 { font-size: 1.5rem; }
 
-            /* Dynamic Tabs Mobile */
-            .dynamic-tabs-section { height: auto; flex-direction: column; }
-            .tabs-visual { height: 40vh; flex: none; width: 100%; }
-            .tabs-content { height: auto; flex: none; width: 100%; padding: 40px 20px; }
-            .tab-header { font-size: 1.2rem; }
-            
+            /* Dynamic Tabs */
+            .dynamic-tabs-section {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+            }
+            .tabs-visual {
+                height: 35vh;
+                width: 100%;
+                position: relative;
+                flex: none;
+            }
+            .tabs-content {
+                padding: 30px 20px;
+                flex: 1;
+                background: var(--burgundy-dark);
+                width: 100%;
+                height: auto;
+            }
+            .tab-item {
+                padding: 20px 10px;
+            }
+            .tab-header {
+                font-size: 1.1rem;
+            }
+            .tab-body {
+                font-size: 0.95rem;
+            }
+
             /* Footer */
-            .footer-section { height: 50vh; min-height: 400px; }
+            .footer-section {
+                height: 60vh; /* Give it some presence */
+                padding: 40px 20px;
+                min-height: 400px;
+            }
+            .footer-content h2 { font-size: 3rem; }
+            .footer-content p { font-size: 1rem; }
         }
     </style>
 </head>
