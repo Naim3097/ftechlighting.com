@@ -312,6 +312,23 @@
             transform: translateY(0);
         }
 
+        /* --- Split Image Effect --- */
+        /* Desktop: Split the image horizontally */
+        @media (min-width: 769px) {
+            .accordion-panel:nth-child(1) .accordion-bg img { object-position: 0% 50%; }
+            .accordion-panel:nth-child(2) .accordion-bg img { object-position: 25% 50%; }
+            .accordion-panel:nth-child(3) .accordion-bg img { object-position: 50% 50%; }
+            .accordion-panel:nth-child(4) .accordion-bg img { object-position: 75% 50%; }
+            .accordion-panel:nth-child(5) .accordion-bg img { object-position: 100% 50%; }
+        }
+
+        /* Mobile: Center the portrait image */
+        @media (max-width: 768px) {
+            .accordion-bg img {
+                object-position: center center !important;
+            }
+        }
+
         .accordion-content::before {
             content: '';
             width: 50px;
@@ -590,7 +607,10 @@
                 <!-- Panel 1: Main Home -->
                 <div class="accordion-panel expanded" data-index="0">
                     <div class="accordion-bg">
-                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920" alt="FTECH Lighting">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
+                            <img src="assets/sections/about/hero.jpg" alt="FTECH Lighting">
+                        </picture>
                     </div>
                     <div class="accordion-title">Welcome</div>
                     <div class="accordion-content">
@@ -603,7 +623,10 @@
                 <!-- Panel 2: About Us -->
                 <div class="accordion-panel" data-index="1">
                     <div class="accordion-bg">
-                        <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1920" alt="About Us">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
+                            <img src="assets/sections/about/hero.jpg" alt="About Us">
+                        </picture>
                     </div>
                     <div class="accordion-title">About Us</div>
                     <div class="accordion-content">
@@ -616,7 +639,10 @@
                 <!-- Panel 3: Our Services -->
                 <div class="accordion-panel" data-index="2">
                     <div class="accordion-bg">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920" alt="Our Services">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
+                            <img src="assets/sections/about/hero.jpg" alt="Our Services">
+                        </picture>
                     </div>
                     <div class="accordion-title">Services</div>
                     <div class="accordion-content">
@@ -629,7 +655,10 @@
                 <!-- Panel 4: Featured Projects -->
                 <div class="accordion-panel" data-index="3">
                     <div class="accordion-bg">
-                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1920" alt="Featured Projects">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
+                            <img src="assets/sections/about/hero.jpg" alt="Featured Projects">
+                        </picture>
                     </div>
                     <div class="accordion-title">Projects</div>
                     <div class="accordion-content">
@@ -642,7 +671,10 @@
                 <!-- Panel 5: Contact Us -->
                 <div class="accordion-panel" data-index="4">
                     <div class="accordion-bg">
-                        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1920" alt="Contact Us">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
+                            <img src="assets/sections/about/hero.jpg" alt="Contact Us">
+                        </picture>
                     </div>
                     <div class="accordion-title">Contact</div>
                     <div class="accordion-content">
