@@ -519,6 +519,11 @@
                 opacity: 0;
             }
 
+            /* Hide Welcome title when collapsed on mobile */
+            .accordion-panel[data-index="0"]:not(.expanded) .accordion-title {
+                display: none;
+            }
+
             .accordion-content { 
                 bottom: 30px; 
                 left: 20px; 
@@ -583,7 +588,7 @@
             <!-- Accordion Section -->
             <section class="accordion-section">
                 <!-- Panel 1: Main Home -->
-                <div class="accordion-panel" data-index="0">
+                <div class="accordion-panel expanded" data-index="0">
                     <div class="accordion-bg">
                         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920" alt="FTECH Lighting">
                     </div>
@@ -724,11 +729,6 @@
                         }
                     });
                 });
-                
-                // Expand first panel by default after curtain reveal
-                setTimeout(() => {
-                    accordionPanels[0].classList.add('expanded');
-                }, 1500); 
             }
         });
     </script>
