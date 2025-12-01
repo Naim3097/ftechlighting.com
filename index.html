@@ -436,28 +436,43 @@
         }
 
         @media (max-width: 768px) {
+            html { scroll-behavior: smooth; }
             body {
                 height: auto;
                 overflow-y: auto;
+                scroll-snap-type: y mandatory;
             }
 
             nav { 
-                padding: 20px; 
-                background: rgba(251, 241, 229, 0.95);
-                backdrop-filter: blur(10px);
-                border-bottom: 1px solid rgba(0,0,0,0.05);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 30px 20px; 
+                background: transparent;
+                backdrop-filter: none;
+                border-bottom: none;
+                pointer-events: none;
             }
 
-            /* Mobile Nav Elements */
-            .logo, .menu-toggle { mix-blend-mode: normal; }
-            .logo img { filter: none; transition: filter 0.3s; }
-            .logo:hover img { filter: brightness(0) invert(1); }
+            .logo, .menu-toggle { pointer-events: auto; }
+
+            /* Mobile Nav Elements - Match Home Page */
+            .logo {
+                width: 100px;
+                mix-blend-mode: difference;
+            }
+            .logo img { 
+                filter: brightness(0) invert(1);
+            }
             
-            .menu-toggle { color: var(--primary-burgundy); transition: color 0.3s; }
-            .hamburger span { background: var(--primary-burgundy); transition: background 0.3s; }
-            
-            .menu-toggle:hover { color: #fff; }
-            .menu-toggle:hover .hamburger span { background: #fff; }
+            .menu-toggle { 
+                mix-blend-mode: difference;
+                color: #fff; 
+            }
+            .hamburger span { 
+                background: #fff; 
+            }
 
             .curtain-reveal {
                 height: auto;
@@ -471,7 +486,7 @@
             
             .accordion-section { 
                 flex-direction: column; 
-                padding-top: 80px; /* Space for nav */
+                padding-top: 0; /* Removed padding */
                 background: #000;
                 height: auto;
             }
@@ -483,6 +498,7 @@
                 border-right: none; 
                 border-bottom: 1px solid rgba(255,255,255,0.1); 
                 flex: none; /* Disable flex growing */
+                scroll-snap-align: start;
             }
 
             .accordion-panel.expanded {
