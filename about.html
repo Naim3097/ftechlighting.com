@@ -35,7 +35,7 @@
             display: flex;
             width: 500vw; /* 5 Sections: Hero, Editorial, Glass, Tabs, Footer */
             height: 100vh;
-            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            transition: transform 0.7s cubic-bezier(0.645, 0.045, 0.355, 1.000);
             will-change: transform;
         }
 
@@ -1148,20 +1148,23 @@
 
             if (isScrolling) return;
 
+            // Add a threshold to prevent accidental triggers on sensitive trackpads
+            if (Math.abs(e.deltaY) < 15) return;
+
             if (e.deltaY > 0) {
                 if (currentSection < totalSections - 1) {
                     isScrolling = true;
                     updateSection(currentSection + 1);
-                    setTimeout(() => isScrolling = false, 800);
+                    setTimeout(() => isScrolling = false, 700);
                 } else {
                     // Redirect to next page (Services)
-                    window.location.href = 'services.html';
+                    window.location.href = 'services';
                 }
             } else {
                 if (currentSection > 0) {
                     isScrolling = true;
                     updateSection(currentSection - 1);
-                    setTimeout(() => isScrolling = false, 800);
+                    setTimeout(() => isScrolling = false, 700);
                 }
             }
         }, { passive: false });
@@ -1200,7 +1203,7 @@
         prevSectionBtn.addEventListener('click', (e) => {
             e.preventDefault();
             if (currentSection === 0) {
-                window.location.href = 'index.html';
+                window.location.href = '/';
             } else {
                 updateSection(currentSection - 1);
             }
