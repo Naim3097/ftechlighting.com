@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTECH Brand Identity & Completion Report</title>
+    <title>FTECH Comprehensive Design System</title>
     <style>
         :root {
+            /* Brand Colors */
             --primary-burgundy: #820000;
             --burgundy-dark: #2a0a0a;
             --burgundy-alt: #811517;
@@ -14,9 +15,12 @@
             --text-dark: #1a1a1a;
             --text-light: #f5f5f5;
             --bg-black: #050505;
+            
+            /* UI Variables */
             --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --card-radius: 16px;
+            --card-radius: 4px;
+            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
         * {
@@ -24,7 +28,7 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: var(--font-main);
             background-color: var(--bg-black);
             color: var(--text-light);
             margin: 0;
@@ -33,403 +37,526 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 40px;
         }
 
         /* Header */
         header {
-            text-align: center;
-            padding: 60px 0;
             border-bottom: 1px solid var(--glass-border);
-            margin-bottom: 60px;
-            background: radial-gradient(circle at center, #2a0a0a 0%, #050505 70%);
+            padding-bottom: 40px;
+            margin-bottom: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
         }
 
         h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin: 0;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #fff, #ccc);
+            line-height: 1;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, #fff, #999);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .subtitle {
-            color: var(--primary-burgundy);
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .header-meta {
+            text-align: right;
+            color: #666;
+            font-family: monospace;
+        }
+
+        .domain-badge {
+            display: inline-block;
+            background: var(--primary-burgundy);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
             margin-top: 10px;
+            text-decoration: none;
         }
 
         /* Section Styling */
         section {
-            margin-bottom: 80px;
+            margin-bottom: 120px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+
+        .section-number {
+            font-size: 1.2rem;
+            color: var(--primary-burgundy);
+            font-weight: bold;
+            margin-right: 15px;
+            font-family: monospace;
         }
 
         .section-title {
             font-size: 2rem;
-            border-left: 4px solid var(--primary-burgundy);
-            padding-left: 20px;
-            margin-bottom: 30px;
+            margin: 0;
             color: #fff;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        /* Cards */
-        .card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--card-radius);
-            padding: 30px;
-            backdrop-filter: blur(10px);
-        }
+        /* Grid System */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
 
-        /* Color Palette Grid */
-        .color-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .color-card {
-            background: var(--glass-bg);
-            border-radius: 12px;
+        /* Component Card */
+        .component-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
             overflow: hidden;
-            border: 1px solid var(--glass-border);
-            transition: transform 0.2s;
+            transition: transform 0.3s;
         }
-
-        .color-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .swatch {
-            height: 120px;
-            width: 100%;
-        }
-
-        .color-info {
-            padding: 15px;
-        }
-
-        .color-name {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            color: #fff;
-        }
-
-        .color-hex {
-            font-family: monospace;
-            color: #888;
-            font-size: 0.9rem;
-            display: block;
-        }
-
-        .color-usage {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 8px;
-            display: block;
-        }
-
-        /* Typography Showcase */
-        .type-showcase {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .type-example h1 {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin: 0 0 20px 0;
-            -webkit-text-fill-color: initial;
-            color: #fff;
-        }
-
-        .type-example h2 {
-            font-size: 2.5rem;
-            color: var(--primary-burgundy);
-            margin: 0 0 15px 0;
-        }
-
-        .type-example p {
-            font-size: 1.1rem;
-            color: #ccc;
-            max-width: 60ch;
-        }
-
-        .font-meta {
-            font-family: monospace;
-            color: #666;
-            border-top: 1px solid var(--glass-border);
-            padding-top: 20px;
-            margin-top: 20px;
-        }
-
-        /* Logo Grid */
-        .logo-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .logo-box {
-            background: #1a1a1a; /* Dark bg for light logo */
+        .component-card:hover { border-color: #333; }
+        
+        .component-preview {
             padding: 40px;
-            border-radius: var(--card-radius);
+            background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+            background-size: 20px 20px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 1px solid var(--glass-border);
+            min-height: 200px;
+            position: relative;
         }
-
-        .logo-box.light {
-            background: #f5f5f5; /* Light bg for dark logo */
-        }
-
-        .logo-box img {
-            max-width: 80%;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        .logo-label {
-            font-size: 0.9rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* UI Elements */
-        .ui-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .btn-example {
-            display: inline-block;
-            padding: 15px 40px;
-            background: var(--primary-burgundy);
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        .nav-example {
-            background: var(--burgundy-dark);
+        
+        .component-meta {
             padding: 20px;
-            border-bottom: 1px solid var(--primary-burgundy);
-            color: white;
+            border-top: 1px solid #222;
+            background: #0a0a0a;
+        }
+        
+        .component-name {
             font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: #fff;
+            display: block;
+            margin-bottom: 5px;
         }
-
-        /* File Structure */
-        .structure-tree {
-            font-family: monospace;
-            background: #111;
-            padding: 20px;
-            border-radius: 8px;
-            color: #0f0;
-            overflow-x: auto;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px;
+        
+        .component-desc {
+            font-size: 0.8rem;
             color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid var(--glass-border);
-            margin-top: 60px;
         }
+
+        /* --- 1. BRAND ASSETS --- */
+        .logo-box img { max-width: 150px; height: auto; }
+        .color-swatch { height: 100px; width: 100%; border-radius: 4px; margin-bottom: 10px; }
+        
+        /* --- 2. TYPOGRAPHY --- */
+        .type-preview { text-align: left; width: 100%; }
+        .h1-ex { font-size: 3rem; font-weight: 700; line-height: 1.1; margin: 0; }
+        .h2-ex { font-size: 2rem; font-weight: 700; margin: 0; color: var(--primary-burgundy); }
+        .body-ex { font-size: 1rem; color: #ccc; }
+
+        /* --- 3. NAVIGATION --- */
+        /* Hamburger */
+        .hamburger-demo { width: 40px; height: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+        .hamburger-demo span { display: block; height: 2px; background: #fff; width: 100%; }
+        .hamburger-demo span:nth-child(2) { width: 70%; }
+        
+        /* Arrows */
+        .arrow-demo {
+            width: 50px; height: 50px; border: 1px solid rgba(130, 0, 0, 0.3); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: var(--primary-burgundy);
+            background: rgba(251, 241, 229, 0.8); font-size: 20px;
+        }
+        
+        /* Dots */
+        .dots-demo { display: flex; flex-direction: column; gap: 15px; }
+        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.3); border-radius: 50%; }
+        .dot.active { background: #fff; transform: scale(1.5); }
+
+        /* --- 4. BUTTONS & LINKS --- */
+        .btn { padding: 15px 30px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; font-size: 0.8rem; border: none; cursor: pointer; }
+        .btn-primary { background: var(--primary-burgundy); color: #fff; }
+        .btn-outline { background: transparent; border: 1px solid #fff; color: #fff; }
+        .btn-text { background: transparent; color: #fff; border-bottom: 1px solid var(--primary-burgundy); padding: 0 0 5px 0; }
+
+        /* --- 5. CARDS & CONTAINERS --- */
+        /* Glass Card */
+        .glass-card-demo {
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1); border-left: 3px solid var(--primary-burgundy); width: 100%;
+        }
+        
+        /* Location Card */
+        .loc-card-demo {
+            background: transparent; border: 1px solid #333; padding: 20px; width: 100%; text-align: center;
+        }
+        .loc-tag { background: var(--primary-burgundy); color: #fff; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; }
+
+        /* Project Thumb */
+        .proj-thumb-demo {
+            width: 100%; height: 150px; background: #222; position: relative; overflow: hidden;
+        }
+        .proj-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; opacity: 1;
+        }
+
+        /* --- 6. INTERACTIVE MODULES --- */
+        /* Accordion */
+        .accordion-demo { width: 100%; display: flex; height: 150px; }
+        .acc-panel { flex: 1; border-right: 1px solid #333; background: #111; position: relative; transition: flex 0.3s; }
+        .acc-panel:hover { flex: 3; background: #222; }
+        .acc-text { writing-mode: vertical-rl; transform: rotate(180deg); padding: 10px; color: #666; }
+
+        /* Tabs */
+        .tabs-demo { width: 100%; }
+        .tab-head { display: flex; border-bottom: 1px solid #333; margin-bottom: 10px; }
+        .tab-item { padding: 10px; cursor: pointer; color: #666; font-size: 0.8rem; }
+        .tab-item.active { color: var(--primary-burgundy); border-bottom: 2px solid var(--primary-burgundy); }
+
+        /* Form */
+        .input-demo {
+            background: transparent; border: none; border-bottom: 1px solid #444; width: 100%; padding: 10px 0; color: #fff;
+        }
+        .input-demo:focus { outline: none; border-bottom-color: var(--primary-burgundy); }
+
+        /* Mask Text */
+        .mask-text-demo {
+            font-size: 3rem; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+            background: linear-gradient(to right, #fff, #fff); -webkit-background-clip: text; background-clip: text;
+            background-size: 0% 100%; background-repeat: no-repeat; transition: background-size 0.5s;
+        }
+        .mask-text-demo:hover { background-size: 100% 100%; }
+
+        /* Popup */
+        .popup-demo {
+            background: rgba(15, 10, 10, 0.95); border: 1px solid #333; padding: 15px; width: 200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Scroll Indicator */
+        .scroll-demo {
+            width: 20px; height: 35px; border: 2px solid rgba(255,255,255,0.3); border-radius: 20px; position: relative;
+        }
+        .scroll-dot {
+            width: 4px; height: 4px; background: #fff; border-radius: 50%; position: absolute; top: 5px; left: 50%;
+            transform: translateX(-50%); animation: scrollDrop 2s infinite;
+        }
+        @keyframes scrollDrop { 0% { top: 5px; opacity: 1; } 100% { top: 25px; opacity: 0; } }
 
         @media (max-width: 768px) {
-            .type-showcase, .logo-grid {
-                grid-template-columns: 1fr;
-            }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
             h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <div class="subtitle">Brand Identity & Completion Report</div>
-            <h1>FTECH Solutions</h1>
-            <p style="color: #888; margin-top: 10px;">Production Ready • v1.0 • December 2025</p>
-        </div>
-    </header>
-
     <div class="container">
+        <header>
+            <div>
+                <h1>FTECH Design System</h1>
+                <div class="subtitle">Comprehensive Component Library & Brand Guidelines</div>
+            </div>
+            <div class="header-meta">
+                <div>v2.1 Extended</div>
+                <div>Dec 9, 2025</div>
+                <a href="https://ftechlighting.com" class="domain-badge" target="_blank">ftechlighting.com</a>
+            </div>
+        </header>
 
-        <!-- 1. Brand Colors -->
+        <!-- 1. BRAND IDENTITY -->
         <section>
-            <h2 class="section-title">01. Color Palette</h2>
-            <div class="color-grid">
-                <!-- Primary -->
-                <div class="color-card">
-                    <div class="swatch" style="background-color: #820000;"></div>
-                    <div class="color-info">
-                        <span class="color-name">Primary Burgundy</span>
-                        <span class="color-hex">#820000</span>
-                        <span class="color-usage">Buttons, Highlights, Active States</span>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title">Brand Identity</h2>
+            </div>
+            <div class="grid-3">
+                <div class="component-card">
+                    <div class="component-preview logo-box">
+                        <img src="assets/logo/logo no tagline.png" style="filter: brightness(0) invert(1);" alt="Primary Logo">
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Primary Logo</span>
+                        <span class="component-desc">White inverted for dark backgrounds.</span>
                     </div>
                 </div>
-                <!-- Dark -->
-                <div class="color-card">
-                    <div class="swatch" style="background-color: #2a0a0a;"></div>
-                    <div class="color-info">
-                        <span class="color-name">Burgundy Dark</span>
-                        <span class="color-hex">#2a0a0a</span>
-                        <span class="color-usage">Overlays, Deep Backgrounds</span>
+                <div class="component-card">
+                    <div class="component-preview logo-box" style="background: #fff;">
+                        <img src="assets/logo/logo with tagline.png" alt="Secondary Logo">
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Secondary Logo</span>
+                        <span class="component-desc">Full color for light backgrounds.</span>
                     </div>
                 </div>
-                <!-- Black -->
-                <div class="color-card">
-                    <div class="swatch" style="background-color: #050505;"></div>
-                    <div class="color-info">
-                        <span class="color-name">Rich Black</span>
-                        <span class="color-hex">#050505</span>
-                        <span class="color-usage">Main Background</span>
+                <div class="component-card">
+                    <div class="component-preview" style="display: block; padding: 20px;">
+                        <div class="color-swatch" style="background: #820000;"></div>
+                        <div class="color-swatch" style="background: #2a0a0a;"></div>
+                        <div class="color-swatch" style="background: #FBF1E5;"></div>
                     </div>
-                </div>
-                <!-- Light -->
-                <div class="color-card">
-                    <div class="swatch" style="background-color: #FBF1E5;"></div>
-                    <div class="color-info">
-                        <span class="color-name" style="color: #1a1a1a">Beige Light</span>
-                        <span class="color-hex">#FBF1E5</span>
-                        <span class="color-usage">Text Contrast, Light Sections</span>
+                    <div class="component-meta">
+                        <span class="component-name">Core Palette</span>
+                        <span class="component-desc">Burgundy (#820000), Dark (#2a0a0a), Beige (#FBF1E5).</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. Typography -->
+        <!-- 2. TYPOGRAPHY -->
         <section>
-            <h2 class="section-title">02. Typography</h2>
-            <div class="card type-showcase">
-                <div class="type-example">
-                    <h1>Industrial<br>Precision.</h1>
-                    <h2>Lighting Solutions</h2>
-                    <p>The FTECH website utilizes a clean, neo-grotesque sans-serif typeface to convey modernity and engineering excellence. Typography scales fluidly across devices using CSS clamp() functions.</p>
-                </div>
-                <div class="font-meta">
-                    <p><strong>Font Family:</strong> 'Helvetica Neue', Helvetica, Arial, sans-serif</p>
-                    <p><strong>Weights:</strong> 400 (Regular), 700 (Bold)</p>
-                    <p><strong>Headings:</strong> clamp(3rem, 8vw, 6rem)</p>
-                    <p><strong>Body:</strong> 1rem - 1.2rem</p>
-                </div>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">Typography</h2>
             </div>
-        </section>
-
-        <!-- 3. Logo Usage -->
-        <section>
-            <h2 class="section-title">03. Logo Usage</h2>
-            <div class="logo-grid">
-                <div class="logo-box">
-                    <!-- Using filter to simulate the white logo used in nav -->
-                    <img src="assets/logo/logo no tagline.png" style="filter: brightness(0) invert(1);" alt="Primary Logo White">
-                    <span class="logo-label">Primary (Navigation)</span>
-                    <p style="color: #666; font-size: 0.8rem; margin-top: 10px;">Used with <code>mix-blend-mode: difference</code></p>
-                </div>
-                <div class="logo-box light">
-                    <img src="assets/logo/logo with tagline.png" alt="Secondary Logo Color">
-                    <span class="logo-label">Secondary (Brand)</span>
-                    <p style="color: #666; font-size: 0.8rem; margin-top: 10px;">Used on About page & Social Cards</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. UI Components -->
-        <section>
-            <h2 class="section-title">04. UI Components</h2>
-            <div class="ui-grid">
-                <div class="card">
-                    <h3 style="color: #888; margin-top: 0;">Buttons</h3>
-                    <a href="#" class="btn-example">Explore FTECH</a>
-                    <p style="font-size: 0.9rem; color: #666;">Sharp corners, uppercase text, high contrast.</p>
-                </div>
-                <div class="card">
-                    <h3 style="color: #888; margin-top: 0;">Navigation Bar</h3>
-                    <div class="nav-example">
-                        <span>FTECH</span>
-                        <span>☰</span>
-                    </div>
-                    <p style="font-size: 0.9rem; color: #666; margin-top: 15px;">Fixed top, Z-Index 20002, Burgundy bottom border.</p>
-                </div>
-                <div class="card">
-                    <h3 style="color: #888; margin-top: 0;">"Dark Glass" Card</h3>
-                    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 20px; border-left: 3px solid #820000;">
-                        <h4 style="margin: 0; color: #fff;">Vision</h4>
-                        <p style="font-size: 0.8rem; margin-bottom: 0;">To be the leading provider...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. Technical Structure -->
-        <section>
-            <h2 class="section-title">05. Technical Architecture</h2>
-            <div class="card">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-                    <div>
-                        <h3 style="color: var(--primary-burgundy);">File Structure</h3>
-                        <div class="structure-tree">
-root/
-├── index.html (Home)
-├── about.html
-├── services.html
-├── projects.html
-├── contact.html
-├── assets/
-└── projects/
-    ├── menara-hap-seng-3.html
-    ├── mercedes-showroom.html
-    └── ... (16 total)
+            <div class="grid-2">
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="type-preview">
+                            <h1 class="h1-ex">Industrial<br>Precision.</h1>
                         </div>
                     </div>
-                    <div>
-                        <h3 style="color: var(--primary-burgundy);">Optimization Stats</h3>
-                        <ul style="list-style: none; padding: 0;">
-                            <li style="margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
-                                <strong style="color: #fff;">SEO:</strong><br>
-                                <span style="color: #888;">Meta Tags, Open Graph, Twitter Cards implemented on all 21 pages.</span>
-                            </li>
-                            <li style="margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
-                                <strong style="color: #fff;">Performance:</strong><br>
-                                <span style="color: #888;">Lazy loading (loading="lazy"), Priority fetching for Hero images.</span>
-                            </li>
-                            <li style="margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 10px;">
-                                <strong style="color: #fff;">Mobile:</strong><br>
-                                <span style="color: #888;">Fully responsive stack layout, touch-optimized navigation.</span>
-                            </li>
-                        </ul>
+                    <div class="component-meta">
+                        <span class="component-name">Display Heading (H1)</span>
+                        <span class="component-desc">Helvetica Neue Bold. Fluid scaling.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="type-preview">
+                            <h2 class="h2-ex">Lighting Solutions</h2>
+                            <p class="body-ex">FTECH delivers holistic and innovative lighting solutions.</p>
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Content Typography</span>
+                        <span class="component-desc">H2 (Burgundy) + Body (Light Grey).</span>
                     </div>
                 </div>
             </div>
         </section>
 
-    </div>
+        <!-- 3. NAVIGATION SYSTEM -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title">Navigation System</h2>
+            </div>
+            <div class="grid-4">
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="hamburger-demo"><span></span><span></span><span></span></div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Hamburger Menu</span>
+                        <span class="component-desc">Animated toggle for main nav.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="arrow-demo">→</div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Nav Arrow</span>
+                        <span class="component-desc">Floating directional navigation.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="dots-demo">
+                            <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Page Indicators</span>
+                        <span class="component-desc">Vertical scroll position tracker.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="scroll-demo"><div class="scroll-dot"></div></div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Scroll Indicator</span>
+                        <span class="component-desc">Animated prompt for user action.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <footer>
-        &copy; 2025 FTECH Solutions Sdn Bhd. All Rights Reserved.
-    </footer>
+        <!-- 4. BUTTONS & ACTIONS -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title">Buttons & Actions</h2>
+            </div>
+            <div class="grid-3">
+                <div class="component-card">
+                    <div class="component-preview">
+                        <button class="btn btn-primary">Explore FTECH</button>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Primary Button</span>
+                        <span class="component-desc">Solid burgundy. Main CTAs.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <button class="btn btn-outline">View Project</button>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Outline Button</span>
+                        <span class="component-desc">Secondary actions, transparent bg.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <button class="btn btn-text">Read More →</button>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Text Link</span>
+                        <span class="component-desc">Inline navigation with underline.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CARDS & CONTAINERS -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title">Cards & Containers</h2>
+            </div>
+            <div class="grid-3">
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="glass-card-demo">
+                            <h4 style="margin:0; color:#fff;">Vision</h4>
+                            <p style="margin:5px 0 0; font-size:0.8rem; color:#ccc;">Leading provider...</p>
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Glass Card</span>
+                        <span class="component-desc">Frosted glass effect with border accent.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="loc-card-demo">
+                            <span class="loc-tag">HQ</span>
+                            <h4 style="margin:10px 0; color:#fff;">Selangor</h4>
+                            <p style="margin:0; font-size:0.8rem; color:#666;">Malaysia</p>
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Location Card</span>
+                        <span class="component-desc">Bordered card for contact info.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="proj-thumb-demo">
+                            <div class="proj-overlay">
+                                <span style="color:#fff; font-weight:bold;">PROJECT NAME</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Project Thumbnail</span>
+                        <span class="component-desc">Image container with hover overlay.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. INTERACTIVE MODULES -->
+        <section>
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <h2 class="section-title">Interactive Modules</h2>
+            </div>
+            <div class="grid-auto">
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="accordion-demo">
+                            <div class="acc-panel"><div class="acc-text">Home</div></div>
+                            <div class="acc-panel" style="flex:3; background:#222;"><div class="acc-text">About</div></div>
+                            <div class="acc-panel"><div class="acc-text">Services</div></div>
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Accordion Menu</span>
+                        <span class="component-desc">Expandable panels for home navigation.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="tabs-demo">
+                            <div class="tab-head">
+                                <div class="tab-item active">Intro</div>
+                                <div class="tab-item">Expertise</div>
+                                <div class="tab-item">Support</div>
+                            </div>
+                            <div style="color:#ccc; font-size:0.8rem;">Tab Content Area...</div>
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Dynamic Tabs</span>
+                        <span class="component-desc">Switchable content areas.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div style="width:100%;">
+                            <input type="text" class="input-demo" placeholder="Enter your email...">
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Form Input</span>
+                        <span class="component-desc">Minimalist underline style.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="mask-text-demo">MASK</div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Mask Text Effect</span>
+                        <span class="component-desc">Text fill animation on hover.</span>
+                    </div>
+                </div>
+                <div class="component-card">
+                    <div class="component-preview">
+                        <div class="popup-demo">
+                            <h5 style="margin:0 0 5px 0; color:#fff;">Privacy</h5>
+                            <div style="display:flex; gap:5px;">
+                                <div style="background:#820000; width:40px; height:15px;"></div>
+                                <div style="border:1px solid #fff; width:40px; height:15px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="component-meta">
+                        <span class="component-name">Privacy Popup</span>
+                        <span class="component-desc">Fixed bottom-right notification.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer style="border-top: 1px solid #222; padding-top: 40px; text-align: center; color: #666; font-size: 0.9rem;">
+            &copy; 2025 FTECH Solutions Sdn Bhd. All Rights Reserved.
+        </footer>
+    </div>
 
 </body>
 </html>
