@@ -54,7 +54,7 @@
             left: 0;
             width: 100%;
             padding: 40px 50px;
-            z-index: 10000;
+            z-index: 20002;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -119,9 +119,18 @@
         .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
 
         /* Active State for Hamburger */
+        .menu-toggle.active {
+            mix-blend-mode: normal;
+        }
         .menu-toggle.active .menu-text { opacity: 1; }
-        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
-        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(1) { 
+            transform: translateY(4px) rotate(45deg); 
+            width: 100%; 
+        }
+        .menu-toggle.active .hamburger span:nth-child(2) { 
+            transform: translateY(-4px) rotate(-45deg); 
+            width: 100%; 
+        }
 
         /* ====== MENU OVERLAY ====== */
         .menu-overlay {
@@ -150,7 +159,7 @@
         }
 
         .menu-link {
-            font-size: 4rem;
+            font-size: clamp(2rem, 3vw, 3rem);
             color: rgba(255,255,255,0.3);
             text-decoration: none;
             text-transform: uppercase;
@@ -289,7 +298,7 @@
         }
 
         .contact-hero h1 {
-            font-size: 12vw;
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 900;
             line-height: 0.8;
             letter-spacing: -5px;
@@ -570,7 +579,46 @@
             .contact-form { gap: 30px; }
             .submit-btn { padding: 15px 30px; font-size: 1rem; }
         }
+        /* Large Screens */
+        @media (min-width: 1921px) {
+            .contact-hero h1 { font-size: 15vw; }
+            .contact-hero p { font-size: 2rem; }
+            .location-card h3 { font-size: 2.5rem; }
+            .location-card p { font-size: 1.2rem; }
+            .form-header h2 { font-size: 4rem; }
+            .form-input { font-size: 1.2rem; height: 60px; }
+        }
+
+        /* Short Screens (Landscape Mobile/Tablet) */
+        @media (max-height: 600px) and (min-width: 769px) {
+            .locations-grid { gap: 20px; padding: 0 40px; }
+            .form-container { padding: 40px; }
+            .nav-arrows { bottom: 20px; }
+            .page-indicators { right: 20px; }
+        }
     </style>
+
+    <!-- SEO & Social Meta Tags -->
+    <link rel="icon" type="image/png" href="assets/logo/logo no tagline.png">
+    <meta name="description" content="Get in touch with FTECH Solutions for consultations, quotes, and lighting design inquiries. Serving Malaysia and Singapore.">
+    <meta name="keywords" content="lighting design, architectural lighting, FTECH, lighting solutions, LED, engineering, Kuala Lumpur, Singapore, Malaysia">
+    <meta name="author" content="FTECH Solutions Sdn Bhd">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ftechlighting.com/contact.html">
+    <meta property="og:title" content="FTECH - Contact Us">
+    <meta property="og:description" content="Get in touch with FTECH Solutions for consultations, quotes, and lighting design inquiries. Serving Malaysia and Singapore.">
+    <meta property="og:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ftechlighting.com/contact.html">
+    <meta property="twitter:title" content="FTECH - Contact Us">
+    <meta property="twitter:description" content="Get in touch with FTECH Solutions for consultations, quotes, and lighting design inquiries. Serving Malaysia and Singapore.">
+    <meta property="twitter:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+    
+    <link rel="preconnect" href="https://images.unsplash.com">
 </head>
 <body>
     <!-- Navigation -->
@@ -748,6 +796,10 @@
         // Wheel Event
         window.addEventListener('wheel', (e) => {
             if (window.innerWidth <= 768) return; // Disable on mobile
+            
+            // Prevent default scrolling behavior to avoid fighting with the transform
+            e.preventDefault();
+
             if (isScrolling) return;
 
             if (e.deltaY > 0) {
@@ -763,7 +815,7 @@
                     setTimeout(() => isScrolling = false, 800);
                 }
             }
-        });
+        }, { passive: false });
 
         // Touch Events
         let touchStartX = 0;

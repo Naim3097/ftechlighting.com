@@ -54,7 +54,7 @@
             left: 0;
             width: 100%;
             padding: 40px 50px;
-            z-index: 10000;
+            z-index: 20002;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -119,9 +119,18 @@
         .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
 
         /* Active State for Hamburger */
+        .menu-toggle.active {
+            mix-blend-mode: normal;
+        }
         .menu-toggle.active .menu-text { opacity: 1; }
-        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
-        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(1) { 
+            transform: translateY(4px) rotate(45deg); 
+            width: 100%; 
+        }
+        .menu-toggle.active .hamburger span:nth-child(2) { 
+            transform: translateY(-4px) rotate(-45deg); 
+            width: 100%; 
+        }
 
         /* ====== MENU OVERLAY ====== */
         .menu-overlay {
@@ -150,7 +159,7 @@
         }
 
         .menu-link {
-            font-size: 4rem;
+            font-size: clamp(2rem, 3vw, 3rem);
             color: rgba(255,255,255,0.3);
             text-decoration: none;
             text-transform: uppercase;
@@ -284,6 +293,20 @@
             transform: scale(1);
         }
 
+        .focus-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 25%, transparent 60%);
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .focus-section:hover .focus-gradient {
+            opacity: 1;
+        }
+
         .focus-content {
             position: relative;
             z-index: 2;
@@ -300,7 +323,7 @@
         }
 
         .focus-content h2 {
-            font-size: 12vw;
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 900;
             letter-spacing: -0.05em;
             line-height: 0.8;
@@ -326,7 +349,7 @@
         }
 
         .focus-overlay-text h3 {
-            font-size: 72px;
+            font-size: clamp(2rem, 4vw, 3.5rem);
             font-weight: 700;
             margin-bottom: 25px;
             line-height: 0.9;
@@ -364,7 +387,7 @@
             left: -10%;
             width: 120%;
             height: 120%;
-            background-image: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2400');
+            background-image: url('assets/sections/about/editorial.jpg');
             background-size: cover;
             background-position: center;
             filter: grayscale(20%) contrast(1.1);
@@ -384,14 +407,15 @@
 
         .editorial-text-col {
             flex: 1;
-            background: rgba(251, 241, 229, 0.85);
+            background: rgba(15, 10, 10, 0.65); /* Dark glass background */
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 60px;
-            border: 1px solid rgba(130, 0, 0, 0.1);
+            border: 1px solid rgba(251, 241, 229, 0.1); /* Subtle beige border */
             transform: translateY(30px);
             transition: transform 0.1s ease-out;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            color: var(--text-dark);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            color: var(--beige-light);
         }
 
         .editorial-img-col {
@@ -404,20 +428,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            filter: brightness(0.9);
         }
 
         .editorial-text-col h2 {
             font-size: 3.5rem;
-            color: var(--primary-burgundy);
+            color: #fff;
             margin-bottom: 30px;
             line-height: 1;
             font-weight: 300;
+            letter-spacing: -1px;
         }
 
         .editorial-text-col p {
             font-size: 1.15rem;
-            color: var(--text-dark);
+            color: rgba(251, 241, 229, 0.9);
             margin-bottom: 25px;
             line-height: 1.8;
             font-weight: 300;
@@ -429,7 +455,7 @@
             margin-right: 15px;
             line-height: 0.8;
             font-weight: 700;
-            color: var(--primary-burgundy);
+            color: #fff;
         }
 
         /* ====== SECTION 28: GLASS INSIGHTS ====== */
@@ -437,7 +463,7 @@
             height: 100vh;
             position: relative;
             overflow: hidden;
-            background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2400');
+            background-image: url('assets/sections/about/vision.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -464,16 +490,16 @@
         }
 
         .glass-card {
-            background: rgba(42, 10, 10, 0.4); /* True Glass Effect */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 10, 10, 0.65); /* Match Editorial Dark Glass */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(251, 241, 229, 0.1);
             padding: 50px 40px;
             color: white;
             transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
             cursor: pointer;
             transform-style: preserve-3d;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         .glass-card:hover {
@@ -696,7 +722,7 @@
                 text-align: center;
             }
             .focus-content h2 { 
-                font-size: 18vw; /* Larger for impact */
+                font-size: clamp(3rem, 12vw, 5rem); /* Optimized for mobile */
                 line-height: 0.9;
             }
             .focus-overlay-text {
@@ -731,7 +757,7 @@
                 position: absolute;
                 top: 0; left: 0; width: 100%; height: 100%;
                 z-index: 0;
-                filter: grayscale(20%) contrast(1.1) brightness(0.6); /* Darken for text readability */
+                filter: grayscale(20%) contrast(1.1) brightness(0.4); /* Darker for text readability */
             }
             .editorial-content {
                 flex-direction: column;
@@ -747,36 +773,65 @@
             .editorial-text-col {
                 margin: 0;
                 padding: 40px 30px;
-                background: rgba(251, 241, 229, 0.95);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(130, 0, 0, 0.1);
+                background: rgba(15, 10, 10, 0.75); /* Dark glass background */
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                border: 1px solid rgba(251, 241, 229, 0.1);
                 transform: none;
                 border-radius: 4px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+                color: var(--beige-light);
             }
-            .editorial-text-col h2 { font-size: 2rem; margin-bottom: 20px; }
-            .editorial-text-col p { font-size: 1rem; }
+            .editorial-text-col h2 { 
+                font-size: 2rem; 
+                margin-bottom: 20px; 
+                color: #fff;
+            }
+            .editorial-text-col p { 
+                font-size: 1rem; 
+                color: rgba(251, 241, 229, 0.9);
+            }
+            .editorial-text-col p:first-of-type::first-letter {
+                color: #fff;
+            }
 
             /* Glass Insights */
             .glass-insights-section {
-                padding: 80px 20px;
+                padding: 80px 20px 120px 20px; /* Added bottom padding */
                 height: auto;
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
+                position: relative;
+            }
+            /* Gradient Fade at Bottom of Vision Section */
+            .glass-insights-section::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 150px;
+                background: linear-gradient(to bottom, transparent, #050505);
+                z-index: 3;
+                pointer-events: none;
             }
             .glass-cards-container {
                 grid-template-columns: 1fr;
                 gap: 20px;
                 padding: 0;
                 width: 100%;
+                position: relative;
+                z-index: 4; /* Above the fade */
             }
             .glass-card {
                 padding: 30px;
-                background: rgba(42, 10, 10, 0.7); /* Darker for readability */
-                backdrop-filter: blur(20px);
+                background: rgba(15, 10, 10, 0.75); /* Match Editorial */
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
                 transform: none !important;
-                border: 1px solid rgba(255,255,255,0.15);
+                border: 1px solid rgba(251, 241, 229, 0.1);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             }
             .glass-card h3 { font-size: 1.5rem; }
 
@@ -785,6 +840,19 @@
                 flex-direction: column;
                 height: auto;
                 min-height: 100vh;
+                position: relative;
+            }
+            /* Gradient Fade at Top of Tabs Section */
+            .dynamic-tabs-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100px;
+                background: linear-gradient(to bottom, #050505, transparent);
+                z-index: 5;
+                pointer-events: none;
             }
             .tabs-visual {
                 height: 35vh;
@@ -818,7 +886,47 @@
             .footer-content h2 { font-size: 3rem; }
             .footer-content p { font-size: 1rem; }
         }
+
+        /* Large Screens */
+        @media (min-width: 1921px) {
+            .editorial-text-col h2 { font-size: 5rem; }
+            .editorial-text-col p { font-size: 1.4rem; }
+            .glass-content h2 { font-size: 5rem; }
+            .glass-content p { font-size: 1.4rem; }
+            .tab-item h3 { font-size: 2.5rem; }
+            .tab-item p { font-size: 1.2rem; }
+        }
+
+        /* Short Screens (Landscape Mobile/Tablet) */
+        @media (max-height: 600px) and (min-width: 769px) {
+            .editorial-content { padding: 0 5%; }
+            .glass-content { padding: 40px; }
+            .nav-arrows { bottom: 20px; }
+            .page-indicators { right: 20px; }
+        }
     </style>
+
+    <!-- SEO & Social Meta Tags -->
+    <link rel="icon" type="image/png" href="assets/logo/logo no tagline.png">
+    <meta name="description" content="Learn about FTECH Solutions, a team of dedicated professionals committed to excellence in lighting design, engineering, and comprehensive site management.">
+    <meta name="keywords" content="lighting design, architectural lighting, FTECH, lighting solutions, LED, engineering, Kuala Lumpur, Singapore, Malaysia">
+    <meta name="author" content="FTECH Solutions Sdn Bhd">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ftechlighting.com/about.html">
+    <meta property="og:title" content="FTECH - About Us">
+    <meta property="og:description" content="Learn about FTECH Solutions, a team of dedicated professionals committed to excellence in lighting design, engineering, and comprehensive site management.">
+    <meta property="og:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ftechlighting.com/about.html">
+    <meta property="twitter:title" content="FTECH - About Us">
+    <meta property="twitter:description" content="Learn about FTECH Solutions, a team of dedicated professionals committed to excellence in lighting design, engineering, and comprehensive site management.">
+    <meta property="twitter:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+    
+    <link rel="preconnect" href="https://images.unsplash.com">
 </head>
 <body>
     <!-- Navigation -->
@@ -868,7 +976,8 @@
     <div id="fullpage">
         <!-- Section 1: Focus Mode (Hero) -->
         <section class="focus-section">
-            <div class="focus-bg" style="background-image: url('assets/sections/about/hero.jpg');"></div>
+            <div class="focus-bg" style="background-image: url('assets/sections/about/hero.jpeg');"></div>
+            <div class="focus-gradient"></div>
             <div class="focus-content">
                 <h2>About<br>Us</h2>
             </div>
@@ -889,7 +998,7 @@
                     <p>The company's capabilities also encompass the design and installation of both indoor and outdoor lighting systems for various facilities, including office buildings, public transportation terminals, convention and event centers, educational institutions, libraries, and parliamentary complexes.</p>
                 </div>
                 <div class="editorial-img-col">
-                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1400" alt="FTECH Office">
+                    <img src="assets/sections/about/editorial right container image.jpg" alt="FTECH Office" fetchpriority="high">
                 </div>
             </div>
         </section>
@@ -919,10 +1028,10 @@
         <!-- Section 4: Dynamic Tabs (Section 29) -->
         <section class="dynamic-tabs-section">
             <div class="tabs-visual">
-                <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1600" class="tab-img active" data-tab="1">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1400" class="tab-img" data-tab="2">
-                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1400" class="tab-img" data-tab="3">
-                <img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=1400" class="tab-img" data-tab="4">
+                <img src="assets/logo/logo with tagline.png" class="tab-img active" data-tab="1" loading="lazy" style="object-fit: contain; padding: 10%; background-color: #050505;">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1400" class="tab-img" data-tab="2" fetchpriority="high">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1400" class="tab-img" data-tab="3" fetchpriority="high">
+                <img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=1400" class="tab-img" data-tab="4" fetchpriority="high">
             </div>
             <div class="tabs-content">
                 <div class="tab-item active" data-tab="1">
@@ -1033,6 +1142,10 @@
         // Wheel Event
         window.addEventListener('wheel', (e) => {
             if (window.innerWidth <= 768) return; // Disable on mobile
+            
+            // Prevent default scrolling behavior to avoid fighting with the transform
+            e.preventDefault();
+
             if (isScrolling) return;
 
             if (e.deltaY > 0) {
@@ -1040,6 +1153,9 @@
                     isScrolling = true;
                     updateSection(currentSection + 1);
                     setTimeout(() => isScrolling = false, 800);
+                } else {
+                    // Redirect to next page (Services)
+                    window.location.href = 'services.html';
                 }
             } else {
                 if (currentSection > 0) {
@@ -1048,7 +1164,7 @@
                     setTimeout(() => isScrolling = false, 800);
                 }
             }
-        });
+        }, { passive: false });
 
         // Touch Events
         let touchStartX = 0;

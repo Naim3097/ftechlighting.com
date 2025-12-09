@@ -54,7 +54,7 @@
             left: 0;
             width: 100%;
             padding: 40px 50px;
-            z-index: 10000;
+            z-index: 20002;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -119,9 +119,18 @@
         .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
 
         /* Active State for Hamburger */
+        .menu-toggle.active {
+            mix-blend-mode: normal;
+        }
         .menu-toggle.active .menu-text { opacity: 1; }
-        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
-        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(1) { 
+            transform: translateY(4px) rotate(45deg); 
+            width: 100%; 
+        }
+        .menu-toggle.active .hamburger span:nth-child(2) { 
+            transform: translateY(-4px) rotate(-45deg); 
+            width: 100%; 
+        }
 
         /* ====== MENU OVERLAY ====== */
         .menu-overlay {
@@ -150,7 +159,7 @@
         }
 
         .menu-link {
-            font-size: 4rem;
+            font-size: clamp(2rem, 3vw, 3rem);
             color: rgba(255,255,255,0.3);
             text-decoration: none;
             text-transform: uppercase;
@@ -272,7 +281,7 @@
         }
 
         .mask-hero h1 {
-            font-size: 18vw;
+            font-size: clamp(4rem, 12vw, 8rem);
             font-weight: 700;
             color: var(--beige-light);
             position: relative;
@@ -386,10 +395,16 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
             filter: grayscale(100%) brightness(0.4);
             transition: filter 0.6s, transform 1.2s;
             transform: scale(1.1);
+        }
+
+        .strip-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
 
         .strip-bg::after {
@@ -831,7 +846,8 @@
                 transition: height 0.6s cubic-bezier(0.19, 1, 0.22, 1); /* Smooth height transition */
             }
             .accordion-panel.expanded {
-                height: 600px; /* Fixed expanded height */
+                height: auto; /* Allow growth */
+                min-height: 600px; /* Minimum expanded height */
                 flex: none;
             }
             .accordion-title { 
@@ -855,7 +871,46 @@
             /* Footer */
             .footer-section { height: 50vh; min-height: 400px; }
         }
+
+        /* Large Screens */
+        @media (min-width: 1921px) {
+            .strip-content h3 { font-size: 4rem; }
+            .strip-content p { font-size: 1.4rem; }
+            .accordion-title { font-size: 32px; }
+            .accordion-panel.expanded .accordion-title { font-size: 72px; }
+            .accordion-content p { font-size: 1.4rem; }
+            .service-capabilities li { font-size: 1.1rem; }
+        }
+
+        /* Short Screens (Landscape Mobile/Tablet) */
+        @media (max-height: 600px) and (min-width: 769px) {
+            .strip-content { bottom: 80px; }
+            .accordion-content { bottom: 5%; }
+            .nav-arrows { bottom: 20px; }
+            .page-indicators { right: 20px; }
+        }
     </style>
+
+    <!-- SEO & Social Meta Tags -->
+    <link rel="icon" type="image/png" href="assets/logo/logo no tagline.png">
+    <meta name="description" content="Explore FTECH's services: from conceptual lighting design and bespoke customization to installation, testing, and commissioning.">
+    <meta name="keywords" content="lighting design, architectural lighting, FTECH, lighting solutions, LED, engineering, Kuala Lumpur, Singapore, Malaysia">
+    <meta name="author" content="FTECH Solutions Sdn Bhd">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ftechlighting.com/services.html">
+    <meta property="og:title" content="FTECH - Our Services">
+    <meta property="og:description" content="Explore FTECH's services: from conceptual lighting design and bespoke customization to installation, testing, and commissioning.">
+    <meta property="og:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ftechlighting.com/services.html">
+    <meta property="twitter:title" content="FTECH - Our Services">
+    <meta property="twitter:description" content="Explore FTECH's services: from conceptual lighting design and bespoke customization to installation, testing, and commissioning.">
+    <meta property="twitter:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+    
 </head>
 <body>
     <!-- Navigation -->
@@ -907,7 +962,7 @@
             <h1>SERVICES</h1>
             <div class="hero-subtitle">Comprehensive Lighting Solutions</div>
             <div class="mask-hero-bg">
-                <img src="assets/sections/service & solution/commercial and residential lighting/2.jpg" alt="Services Background">
+                <img src="assets/sections/service & solution/servicehome.jpeg" alt="Services Background" fetchpriority="high">
             </div>
         </section>
 
@@ -916,7 +971,7 @@
             <!-- Strip 1 -->
             <div class="strip-item">
                 <div class="strip-bg">
-                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600" alt="Control Systems">
+                    <img src="assets/sections/core competencies/Control System Design and Integration.jpg" alt="Control Systems" fetchpriority="high">
                 </div>
                 <div class="strip-num">01</div>
                 <div class="strip-vertical-text">CONTROL SYSTEMS</div>
@@ -928,7 +983,7 @@
             <!-- Strip 2 -->
             <div class="strip-item">
                 <div class="strip-bg">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600" alt="Lighting Design">
+                    <img src="assets/sections/core competencies/Interior and Exterior Lighting Design.jpg" alt="Lighting Design" fetchpriority="high">
                 </div>
                 <div class="strip-num">02</div>
                 <div class="strip-vertical-text">LIGHTING DESIGN</div>
@@ -940,7 +995,7 @@
             <!-- Strip 3 -->
             <div class="strip-item">
                 <div class="strip-bg">
-                    <img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=1600" alt="Contract Services">
+                    <img src="assets/sections/core competencies/Comprehensive Contract Services.jpg" alt="Contract Services" fetchpriority="high">
                 </div>
                 <div class="strip-num">03</div>
                 <div class="strip-vertical-text">CONTRACT SERVICES</div>
@@ -956,7 +1011,7 @@
             <!-- Panel 1 -->
             <div class="accordion-panel expanded">
                 <div class="accordion-bg">
-                    <img src="assets/sections/service & solution/conceptual lighting design/1.jpg" alt="Conceptual">
+                    <img src="assets/sections/service & solution/conceptual lighting design/1.jpg" alt="Conceptual" fetchpriority="high">
                 </div>
                 <div class="accordion-num">04</div>
                 <div class="accordion-title">Conceptual</div>
@@ -974,7 +1029,7 @@
             <!-- Panel 2 -->
             <div class="accordion-panel">
                 <div class="accordion-bg">
-                    <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?q=80&w=1200" alt="Bespoke">
+                    <img src="assets/sections/service & solution/bespoke lighting fitting customization/1.jpg" alt="Bespoke" fetchpriority="high">
                 </div>
                 <div class="accordion-num">05</div>
                 <div class="accordion-title">Bespoke</div>
@@ -992,7 +1047,7 @@
             <!-- Panel 3 -->
             <div class="accordion-panel">
                 <div class="accordion-bg">
-                    <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1200" alt="Architectural">
+                    <img src="assets/sections/service & solution/architectural lighting/2.jpg" alt="Architectural" fetchpriority="high">
                 </div>
                 <div class="accordion-num">06</div>
                 <div class="accordion-title">Architectural</div>
@@ -1010,7 +1065,7 @@
             <!-- Panel 4 -->
             <div class="accordion-panel">
                 <div class="accordion-bg">
-                    <img src="https://images.unsplash.com/photo-1513506003011-3b03c80165bd?q=80&w=1200" alt="Commercial">
+                    <img src="assets/sections/service & solution/commercial and residential lighting/2.jpg" alt="Commercial" fetchpriority="high">
                 </div>
                 <div class="accordion-num">07</div>
                 <div class="accordion-title">Commercial</div>
@@ -1028,7 +1083,7 @@
             <!-- Panel 5 -->
             <div class="accordion-panel">
                 <div class="accordion-bg">
-                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=1200" alt="Installation">
+                    <img src="assets/sections/service & solution/design, installation, testing & commissioning/1.jpg" alt="Installation" fetchpriority="high">
                 </div>
                 <div class="accordion-num">08</div>
                 <div class="accordion-title">Installation</div>
@@ -1112,6 +1167,10 @@
         // Wheel Event
         window.addEventListener('wheel', (e) => {
             if (window.innerWidth <= 768) return; // Disable on mobile
+            
+            // Prevent default scrolling behavior to avoid fighting with the transform
+            e.preventDefault();
+
             if (isScrolling) return;
 
             if (e.deltaY > 0) {
@@ -1119,6 +1178,9 @@
                     isScrolling = true;
                     updateSection(currentSection + 1);
                     setTimeout(() => isScrolling = false, 800);
+                } else {
+                    // Redirect to next page (Projects)
+                    window.location.href = 'projects.html';
                 }
             } else {
                 if (currentSection > 0) {

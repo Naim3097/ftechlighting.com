@@ -40,7 +40,7 @@
             left: 0;
             width: 100%;
             padding: 40px 50px;
-            z-index: 10000;
+            z-index: 20002;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -106,9 +106,91 @@
         .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
 
         /* Active State for Hamburger */
+        .menu-toggle.active {
+            mix-blend-mode: normal;
+        }
         .menu-toggle.active .menu-text { opacity: 1; }
-        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
-        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(1) { 
+            transform: translateY(4px) rotate(45deg); 
+            width: 100%; 
+        }
+        .menu-toggle.active .hamburger span:nth-child(2) { 
+            transform: translateY(-4px) rotate(-45deg); 
+            width: 100%; 
+        }
+
+        /* ====== PRIVACY POPUP ====== */
+        .privacy-popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: rgba(15, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            z-index: 99999;
+            transform: translateY(150%);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .privacy-popup.active {
+            transform: translateY(0);
+        }
+
+        .privacy-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-burgundy);
+        }
+
+        .privacy-content p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .privacy-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .privacy-btn {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .privacy-btn.accept {
+            background: var(--primary-burgundy);
+            color: #fff;
+        }
+
+        .privacy-btn.close {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+        }
+
+        .privacy-btn:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .privacy-popup {
+                width: calc(100% - 40px);
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+            }
+        }
 
         /* ====== MENU OVERLAY ====== */
         .menu-overlay {
@@ -137,7 +219,7 @@
         }
 
         .menu-link {
-            font-size: 4rem;
+            font-size: clamp(2rem, 3vw, 3rem);
             color: rgba(255,255,255,0.3);
             text-decoration: none;
             text-transform: uppercase;
@@ -256,9 +338,9 @@
         .desktop-hero-background {
             position: absolute;
             inset: 0;
-            background-image: url('assets/sections/home/desktophero.jpg');
-            background-size: cover;
-            background-position: center;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             z-index: 0;
             display: none;
         }
@@ -306,7 +388,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-90deg);
-            font-size: 36px;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
             font-weight: 200;
             color: var(--beige-light);
             white-space: nowrap;
@@ -362,7 +444,7 @@
         }
 
         .accordion-content h2 {
-            font-size: 72px;
+            font-size: clamp(2rem, 4vw, 3.5rem);
             font-weight: 700;
             margin-bottom: 25px;
             line-height: 0.9;
@@ -683,6 +765,27 @@
             }
         }
     </style>
+
+    <!-- SEO & Social Meta Tags -->
+    <link rel="icon" type="image/png" href="assets/logo/logo no tagline.png">
+    <meta name="description" content="FTECH delivers holistic and innovative lighting solutions, transforming industrial and commercial spaces into experiences. Based in Kuala Lumpur, Johor, Sarawak, and Singapore.">
+    <meta name="keywords" content="lighting design, architectural lighting, FTECH, lighting solutions, LED, engineering, Kuala Lumpur, Singapore, Malaysia">
+    <meta name="author" content="FTECH Solutions Sdn Bhd">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ftechlighting.com/index.html">
+    <meta property="og:title" content="FTECH - Holistic & Innovative Lighting Solutions">
+    <meta property="og:description" content="FTECH delivers holistic and innovative lighting solutions, transforming industrial and commercial spaces into experiences. Based in Kuala Lumpur, Johor, Sarawak, and Singapore.">
+    <meta property="og:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ftechlighting.com/index.html">
+    <meta property="twitter:title" content="FTECH - Holistic & Innovative Lighting Solutions">
+    <meta property="twitter:description" content="FTECH delivers holistic and innovative lighting solutions, transforming industrial and commercial spaces into experiences. Based in Kuala Lumpur, Johor, Sarawak, and Singapore.">
+    <meta property="twitter:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+    
 </head>
 <body>
     <!-- Navigation (Minimalist) -->
@@ -717,7 +820,9 @@
     <!-- Hero Section (Curtain Reveal + Accordion) -->
     <section class="curtain-reveal">
         <div class="mobile-hero-background"></div>
-        <div class="desktop-hero-background"></div>
+        <video class="desktop-hero-background" autoplay muted loop playsinline poster="assets/sections/home/desktophero.jpeg">
+            <source src="assets/sections/home/videobg.mp4" type="video/mp4">
+        </video>
         
         <!-- Scroll Indicator -->
         <div class="scroll-indicator">
@@ -735,7 +840,7 @@
                     <div class="accordion-bg">
                         <picture>
                             <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
-                            <img src="assets/sections/home/desktophero.jpg" alt="FTECH Lighting">
+                            <img src="assets/sections/home/desktophero.jpg" alt="FTECH Lighting" fetchpriority="high">
                         </picture>
                     </div>
                     <div class="accordion-title">Welcome</div>
@@ -751,7 +856,7 @@
                     <div class="accordion-bg">
                         <picture>
                             <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
-                            <img src="assets/sections/home/desktophero.jpg" alt="About Us">
+                            <img src="assets/sections/home/desktophero.jpg" alt="About Us" fetchpriority="high">
                         </picture>
                     </div>
                     <div class="accordion-title">About Us</div>
@@ -767,7 +872,7 @@
                     <div class="accordion-bg">
                         <picture>
                             <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
-                            <img src="assets/sections/home/desktophero.jpg" alt="Our Services">
+                            <img src="assets/sections/home/desktophero.jpg" alt="Our Services" fetchpriority="high">
                         </picture>
                     </div>
                     <div class="accordion-title">Services</div>
@@ -783,7 +888,7 @@
                     <div class="accordion-bg">
                         <picture>
                             <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
-                            <img src="assets/sections/home/desktophero.jpg" alt="Featured Projects">
+                            <img src="assets/sections/home/desktophero.jpg" alt="Featured Projects" fetchpriority="high">
                         </picture>
                     </div>
                     <div class="accordion-title">Projects</div>
@@ -799,7 +904,7 @@
                     <div class="accordion-bg">
                         <picture>
                             <source media="(max-width: 768px)" srcset="assets/sections/home/mobilehero.jpg">
-                            <img src="assets/sections/home/desktophero.jpg" alt="Contact Us">
+                            <img src="assets/sections/home/desktophero.jpg" alt="Contact Us" fetchpriority="high">
                         </picture>
                     </div>
                     <div class="accordion-title">Contact</div>
@@ -824,6 +929,18 @@
         </div>
     </section>
 
+    <!-- Privacy Popup -->
+    <div id="privacyPopup" class="privacy-popup">
+        <div class="privacy-content">
+            <h3>Data Privacy</h3>
+            <p>We use cookies to ensure you get the best experience on our website. By continuing to browse, you agree to our use of cookies and data privacy policy.</p>
+            <div class="privacy-buttons">
+                <button id="acceptPrivacy" class="privacy-btn accept">Accept</button>
+                <button id="closePrivacy" class="privacy-btn close">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Menu Toggle Logic
         const menuToggle = document.getElementById('menuToggle');
@@ -840,6 +957,26 @@
             } else {
                 menuText.textContent = 'Menu';
             }
+        });
+
+        // Privacy Popup Logic
+        const privacyPopup = document.getElementById('privacyPopup');
+        const acceptPrivacy = document.getElementById('acceptPrivacy');
+        const closePrivacy = document.getElementById('closePrivacy');
+
+        if (!localStorage.getItem('privacyAccepted')) {
+            setTimeout(() => {
+                privacyPopup.classList.add('active');
+            }, 2000);
+        }
+
+        acceptPrivacy.addEventListener('click', () => {
+            localStorage.setItem('privacyAccepted', 'true');
+            privacyPopup.classList.remove('active');
+        });
+
+        closePrivacy.addEventListener('click', () => {
+            privacyPopup.classList.remove('active');
         });
 
         // Trigger Curtain Animation on Load

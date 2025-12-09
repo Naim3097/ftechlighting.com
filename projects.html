@@ -54,7 +54,7 @@
             left: 0;
             width: 100%;
             padding: 40px 50px;
-            z-index: 10000;
+            z-index: 20002;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -119,9 +119,18 @@
         .menu-toggle:hover .hamburger span:nth-child(2) { width: 100%; }
 
         /* Active State for Hamburger */
+        .menu-toggle.active {
+            mix-blend-mode: normal;
+        }
         .menu-toggle.active .menu-text { opacity: 1; }
-        .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); width: 100%; }
-        .menu-toggle.active .hamburger span:nth-child(2) { transform: rotate(-45deg) translate(1px, -1px); width: 100%; }
+        .menu-toggle.active .hamburger span:nth-child(1) { 
+            transform: translateY(4px) rotate(45deg); 
+            width: 100%; 
+        }
+        .menu-toggle.active .hamburger span:nth-child(2) { 
+            transform: translateY(-4px) rotate(-45deg); 
+            width: 100%; 
+        }
 
         /* ====== MENU OVERLAY ====== */
         .menu-overlay {
@@ -150,7 +159,7 @@
         }
 
         .menu-link {
-            font-size: 4rem;
+            font-size: clamp(2rem, 3vw, 3rem);
             color: rgba(255,255,255,0.3);
             text-decoration: none;
             text-transform: uppercase;
@@ -318,6 +327,17 @@
         .slice-strip:nth-child(4) img { left: -60vw; }
         .slice-strip:nth-child(5) img { left: -80vw; }
 
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%, rgba(5,5,5,0.8) 90%, #050505 100%);
+            z-index: 5;
+            pointer-events: none;
+        }
+
         .slice-content {
             position: absolute;
             top: 50%;
@@ -326,7 +346,8 @@
             z-index: 10;
             text-align: center;
             color: #fff;
-            mix-blend-mode: difference;
+            /* mix-blend-mode removed for better visibility */
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
             opacity: 0;
             transition: opacity 1s 1.5s;
         }
@@ -336,7 +357,7 @@
         }
 
         .slice-content h1 {
-            font-size: 12vw;
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 900;
             line-height: 0.8;
             letter-spacing: -5px;
@@ -718,7 +739,53 @@
             /* Footer */
             .footer-section { height: 50vh; min-height: 400px; }
         }
-    </style>
+
+        /* Large Screens */
+        @media (min-width: 1921px) {
+            .quad-title { font-size: 2.5rem; }
+            .quad-subtitle { font-size: 1.2rem; }
+            .quad-number { font-size: 1.5rem; }
+            .showcase-title { font-size: 8rem; }
+            .showcase-location { font-size: 1.5rem; }
+        }
+
+        /* Short Screens (Landscape Mobile/Tablet) */
+        @media (max-height: 600px) and (min-width: 769px) {
+            .quad-footer { bottom: 20px; left: 20px; right: 20px; }
+            .nav-arrows { bottom: 20px; }
+            .page-indicators { right: 20px; }
+        }
+    
+        .project-link {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+</style>
+
+    <!-- SEO & Social Meta Tags -->
+    <link rel="icon" type="image/png" href="assets/logo/logo no tagline.png">
+    <meta name="description" content="Browse FTECH's portfolio of award-winning projects, featuring luxury residential, commercial, industrial, and landscape lighting solutions.">
+    <meta name="keywords" content="lighting design, architectural lighting, FTECH, lighting solutions, LED, engineering, Kuala Lumpur, Singapore, Malaysia">
+    <meta name="author" content="FTECH Solutions Sdn Bhd">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ftechlighting.com/projects.html">
+    <meta property="og:title" content="FTECH - Projects Portfolio">
+    <meta property="og:description" content="Browse FTECH's portfolio of award-winning projects, featuring luxury residential, commercial, industrial, and landscape lighting solutions.">
+    <meta property="og:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ftechlighting.com/projects.html">
+    <meta property="twitter:title" content="FTECH - Projects Portfolio">
+    <meta property="twitter:description" content="Browse FTECH's portfolio of award-winning projects, featuring luxury residential, commercial, industrial, and landscape lighting solutions.">
+    <meta property="twitter:image" content="https://ftechlighting.com/assets/logo/logo%20with%20tagline.png">
+    
 </head>
 <body>
     <!-- Navigation -->
@@ -772,34 +839,35 @@
         <section class="slice-section active">
             <div class="slice-strip">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="assets/sections/projects/mobilehero.jpg">
-                    <img src="assets/sections/projects/hero.jpg" alt="Hero 1">
+                    <source media="(max-width: 768px)" srcset="assets/sections/projects/heroo.jpeg">
+                    <img src="assets/sections/projects/heroo.jpeg" alt="Hero 1" fetchpriority="high">
                 </picture>
             </div>
             <div class="slice-strip">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="assets/sections/projects/mobilehero.jpg">
-                    <img src="assets/sections/projects/hero.jpg" alt="Hero 2">
+                    <source media="(max-width: 768px)" srcset="assets/sections/projects/heroo.jpeg">
+                    <img src="assets/sections/projects/heroo.jpeg" alt="Hero 2" fetchpriority="high">
                 </picture>
             </div>
             <div class="slice-strip">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="assets/sections/projects/mobilehero.jpg">
-                    <img src="assets/sections/projects/hero.jpg" alt="Hero 3">
+                    <source media="(max-width: 768px)" srcset="assets/sections/projects/heroo.jpeg">
+                    <img src="assets/sections/projects/heroo.jpeg" alt="Hero 3" fetchpriority="high">
                 </picture>
             </div>
             <div class="slice-strip">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="assets/sections/projects/mobilehero.jpg">
-                    <img src="assets/sections/projects/hero.jpg" alt="Hero 4">
+                    <source media="(max-width: 768px)" srcset="assets/sections/projects/heroo.jpeg">
+                    <img src="assets/sections/projects/heroo.jpeg" alt="Hero 4" fetchpriority="high">
                 </picture>
             </div>
             <div class="slice-strip">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="assets/sections/projects/mobilehero.jpg">
-                    <img src="assets/sections/projects/hero.jpg" alt="Hero 5">
+                    <source media="(max-width: 768px)" srcset="assets/sections/projects/heroo.jpeg">
+                    <img src="assets/sections/projects/heroo.jpeg" alt="Hero 5" fetchpriority="high">
                 </picture>
             </div>
+            <div class="hero-overlay"></div>
             <div class="slice-content">
                 <h1>PROJECTS</h1>
             </div>
@@ -809,7 +877,7 @@
         <section class="diagonal-section">
             <div class="diagonal-bg"></div>
             <div class="diagonal-image">
-                <img src="assets/sections/projects/aria klcc kuala lumpur.jpg" alt="Aria KLCC">
+                <img src="assets/sections/projects/aria klcc kuala lumpur.jpg" alt="Aria KLCC" fetchpriority="high">
             </div>
             <div class="diagonal-content">
                 <h2>Aria<br>KLCC</h2>
@@ -826,8 +894,9 @@
         <!-- Section 3: Showcase (Quad Layout) -->
         <section class="quad-section">
             <div class="quad-col">
+                <a href="projects/menara-hap-seng-3.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/menara hap seng 3 kuala lumpur.jpg" alt="Menara Hap Seng 3">
+                    <img src="assets/sections/projects/menara hap seng 3 kuala lumpur.jpg" alt="Menara Hap Seng 3" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -836,10 +905,12 @@
                     </div>
                     <p class="quad-subtitle">Facade & Interior</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/mercedes-showroom.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/mercedes showroom puchong.webp" alt="Mercedes Showroom">
+                    <img src="assets/sections/projects/mercedes showroom puchong.webp" alt="Mercedes Showroom" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -848,10 +919,12 @@
                     </div>
                     <p class="quad-subtitle">Automotive Retail Experience</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/versis-medini.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/versis medini johor.jpg" alt="Versis Medini">
+                    <img src="assets/sections/projects/versis medini johor.jpg" alt="Versis Medini" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -860,10 +933,12 @@
                     </div>
                     <p class="quad-subtitle">Commercial Landscape</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/autohaus-setia-alam.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/autohaus setia alam selangor.jpg" alt="Autohaus Setia Alam">
+                    <img src="assets/sections/projects/autohaus setia alam selangor.jpg" alt="Autohaus Setia Alam" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -872,14 +947,16 @@
                     </div>
                     <p class="quad-subtitle">Showroom Lighting</p>
                 </div>
+            </a>
             </div>
         </section>
 
         <!-- Section 4: Grid (Quad Layout) -->
         <section class="quad-section">
             <div class="quad-col">
+                <a href="projects/sterling-drug.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/sterling drug (malaya) sdn bhd.jpeg" alt="Sterling Drug" loading="lazy">
+                    <img src="assets/sections/projects/sterling drug (malaya) sdn bhd.jpeg" alt="Sterling Drug" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -888,10 +965,12 @@
                     </div>
                     <p class="quad-subtitle">Industrial Facility (Selangor)</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/hornbill-skyways.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/hornbill skyways hangar sarawak.jpg" alt="Hornbill Skyways" loading="lazy">
+                    <img src="assets/sections/projects/hornbill skyways hangar sarawak.jpg" alt="Hornbill Skyways" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -900,10 +979,12 @@
                     </div>
                     <p class="quad-subtitle">Aviation Hangar (Sarawak)</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/kuching-port.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/kuching port authority sarawak.jpeg" alt="Kuching Port" loading="lazy">
+                    <img src="assets/sections/projects/kuching port authority sarawak.jpeg" alt="Kuching Port" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -912,10 +993,12 @@
                     </div>
                     <p class="quad-subtitle">Port Authority (Sarawak)</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/sime-darby.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/sime darby business centre singapore.webp" alt="Sime Darby" loading="lazy">
+                    <img src="assets/sections/projects/sime darby business centre singapore.webp" alt="Sime Darby" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -924,14 +1007,16 @@
                     </div>
                     <p class="quad-subtitle">Business Centre (Singapore)</p>
                 </div>
+            </a>
             </div>
         </section>
 
         <!-- Section 5: Project Index (Quad Layout) -->
         <section class="quad-section">
             <div class="quad-col">
+                <a href="projects/maslee-pontian.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/maslee express pontian johor.jpg" alt="Maslee Pontian" loading="lazy">
+                    <img src="assets/sections/projects/maslee express pontian johor.jpg" alt="Maslee Pontian" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -940,10 +1025,12 @@
                     </div>
                     <p class="quad-subtitle">Interior Lighting (Johor)</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/akasa-cheras.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/akasa cheras south balakong.jpg" alt="Akasa Cheras" loading="lazy">
+                    <img src="assets/sections/projects/akasa cheras south balakong.jpg" alt="Akasa Cheras" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -952,10 +1039,12 @@
                     </div>
                     <p class="quad-subtitle">Exterior & Landscape</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/one-changi-city.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/one @ changi city singapore.jpg" alt="One @ Changi City" loading="lazy">
+                    <img src="assets/sections/projects/one @ changi city singapore.jpg" alt="One @ Changi City" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -964,10 +1053,12 @@
                     </div>
                     <p class="quad-subtitle">Commercial Hub (Singapore)</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/upeca-aerotech.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/UPECA.jpg" alt="UPECA Aerotech" loading="lazy">
+                    <img src="assets/sections/projects/UPECA.jpg" alt="UPECA Aerotech" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -976,14 +1067,16 @@
                     </div>
                     <p class="quad-subtitle">Industrial Lighting</p>
                 </div>
+            </a>
             </div>
         </section>
 
         <!-- Section 6: Additional Projects (Quad Layout) -->
         <section class="quad-section">
             <div class="quad-col">
+                <a href="projects/cmc-materials.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/cmc materials singapore.jpeg" alt="CMC Materials" loading="lazy">
+                    <img src="assets/sections/projects/cmc materials singapore.jpeg" alt="CMC Materials" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -992,10 +1085,12 @@
                     </div>
                     <p class="quad-subtitle">Industrial Facility (Singapore)</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/hap-seng-industrial-park.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/hap seng industrial park selangor.jpg" alt="Hap Seng Industrial Park" loading="lazy">
+                    <img src="assets/sections/projects/hap seng industrial park selangor.jpg" alt="Hap Seng Industrial Park" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -1004,10 +1099,12 @@
                     </div>
                     <p class="quad-subtitle">Industrial Park (Selangor)</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/independent-oil-terminal.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/independent oil terminal sarawak.jpg" alt="Independent Oil Terminal" loading="lazy">
+                    <img src="assets/sections/projects/independent oil terminal sarawak.jpg" alt="Independent Oil Terminal" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -1016,10 +1113,12 @@
                     </div>
                     <p class="quad-subtitle">Oil & Gas Facility (Sarawak)</p>
                 </div>
+            </a>
             </div>
             <div class="quad-col">
+                <a href="projects/singapore-botanic-gardens.html" class="project-link">
                 <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/singapore botanic gardens bukit timah gate.jpg" alt="Singapore Botanic Gardens" loading="lazy">
+                    <img src="assets/sections/projects/singapore botanic gardens bukit timah gate.jpg" alt="Singapore Botanic Gardens" fetchpriority="high">
                 </div>
                 <div class="quad-footer">
                     <div class="quad-header-group">
@@ -1028,6 +1127,7 @@
                     </div>
                     <p class="quad-subtitle">Landscape (Singapore)</p>
                 </div>
+            </a>
             </div>
         </section>
 
@@ -1103,6 +1203,10 @@
         // Wheel Event
         window.addEventListener('wheel', (e) => {
             if (window.innerWidth <= 768) return; // Disable on mobile
+            
+            // Prevent default scrolling behavior to avoid fighting with the transform
+            e.preventDefault();
+
             if (isScrolling) return;
 
             if (e.deltaY > 0) {
@@ -1110,6 +1214,9 @@
                     isScrolling = true;
                     updateSection(currentSection + 1);
                     setTimeout(() => isScrolling = false, 800);
+                } else {
+                    // Redirect to next page (Contact)
+                    window.location.href = 'contact.html';
                 }
             } else {
                 if (currentSection > 0) {
