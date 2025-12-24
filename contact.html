@@ -66,16 +66,20 @@
             display: block;
             width: 120px;
             pointer-events: auto;
-            /* Smart contrast: White on dark, Black on light */
-            mix-blend-mode: difference; 
+            transition: all 0.3s ease;
         }
 
         .logo img {
             width: 100%;
             height: auto;
             display: block;
-            /* Force the burgundy logo to be pure white for maximum contrast */
-            filter: brightness(0) invert(1); 
+            /* Default: Original Brand Color (Burgundy) */
+            filter: none; 
+        }
+        
+        /* Active State for Logo (White on Overlay) */
+        .logo.active img {
+            filter: brightness(0) invert(1);
         }
 
         /* ====== MENU TOGGLE ====== */
@@ -86,8 +90,7 @@
             gap: 15px;
             cursor: pointer;
             z-index: 20001; /* Above overlay */
-            mix-blend-mode: difference;
-            color: #fff;
+            color: #940003; /* Burgundy */
         }
 
         .menu-text {
@@ -109,7 +112,7 @@
         .hamburger span {
             display: block;
             height: 2px;
-            background: #fff;
+            background: #940003; /* Burgundy */
             transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
         }
 
@@ -120,9 +123,12 @@
 
         /* Active State for Hamburger */
         .menu-toggle.active {
-            mix-blend-mode: normal;
+            color: #fff;
         }
         .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span {
+            background: #fff;
+        }
         .menu-toggle.active .hamburger span:nth-child(1) { 
             transform: translateY(4px) rotate(45deg); 
             width: 100%; 
@@ -623,7 +629,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="/" class="logo">
+        <a href="index.html" class="logo">
             <img src="assets/logo/logo no tagline.png" alt="FTECH">
         </a>
         <div class="menu-toggle" id="menuToggle">
@@ -638,11 +644,11 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="/" class="menu-link">Home <span>01</span></a>
-            <a href="about" class="menu-link">About <span>02</span></a>
-            <a href="services" class="menu-link">Services <span>03</span></a>
-            <a href="projects" class="menu-link">Projects <span>04</span></a>
-            <a href="contact" class="menu-link">Contact <span>05</span></a>
+            <a href="index.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
         </div>
         <div class="menu-footer">
             <p>FTECH Solutions Sdn Bhd</p>
@@ -718,10 +724,12 @@
         // Menu Toggle Logic
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
+        const logo = document.querySelector('.logo');
 
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
+            logo.classList.toggle('active');
 
             const menuText = menuToggle.querySelector('.menu-text');
             if (menuOverlay.classList.contains('active')) {

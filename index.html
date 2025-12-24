@@ -53,16 +53,20 @@
             display: block;
             width: 120px;
             pointer-events: auto;
-            /* Smart contrast: White on dark, Black on light */
-            mix-blend-mode: difference; 
+            transition: all 0.3s ease;
         }
 
         .logo img {
             width: 100%;
             height: auto;
             display: block;
-            /* Force the burgundy logo to be pure white for maximum contrast */
-            filter: brightness(0) invert(1); 
+            /* Default: Original Brand Color (Burgundy) */
+            filter: none; 
+        }
+        
+        /* Active State for Logo (White on Overlay) */
+        .logo.active img {
+            filter: brightness(0) invert(1);
         }
 
         /* ====== MENU TOGGLE ====== */
@@ -73,8 +77,7 @@
             gap: 15px;
             cursor: pointer;
             z-index: 20001; /* Above overlay */
-            mix-blend-mode: difference;
-            color: #fff;
+            color: #940003; /* Burgundy */
         }
 
         .menu-text {
@@ -96,7 +99,7 @@
         .hamburger span {
             display: block;
             height: 2px;
-            background: #fff;
+            background: #940003; /* Burgundy */
             transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
         }
 
@@ -107,9 +110,12 @@
 
         /* Active State for Hamburger */
         .menu-toggle.active {
-            mix-blend-mode: normal;
+            color: #fff;
         }
         .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span {
+            background: #fff;
+        }
         .menu-toggle.active .hamburger span:nth-child(1) { 
             transform: translateY(4px) rotate(45deg); 
             width: 100%; 
@@ -445,20 +451,16 @@
 
         .accordion-content h2 {
             font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 700;
+            font-weight: 900;
             margin-bottom: 25px;
             line-height: 0.9;
             letter-spacing: -2px;
-            color: transparent;
-            -webkit-text-stroke: 1px var(--beige-light);
-            text-stroke: 1px var(--beige-light);
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: color 0.4s ease;
+            color: var(--beige-light);
+            text-transform: uppercase;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
 
-        .accordion-panel:hover .accordion-content h2 {
-            color: rgba(251, 241, 229, 0.1);
-        }
+        /* Removed hover effect for text outline */
 
         .accordion-content p {
             font-size: 17px;
@@ -664,18 +666,25 @@
             /* Mobile Nav Elements - Match Home Page */
             .logo {
                 width: 100px;
-                mix-blend-mode: difference;
             }
             .logo img { 
+                filter: none;
+            }
+            .logo.active img {
                 filter: brightness(0) invert(1);
             }
             
             .menu-toggle { 
-                mix-blend-mode: difference;
-                color: #fff; 
+                color: #940003; 
             }
             .hamburger span { 
-                background: #fff; 
+                background: #940003; 
+            }
+            .menu-toggle.active {
+                color: #fff;
+            }
+            .menu-toggle.active .hamburger span {
+                background: #fff;
             }
 
             .curtain-reveal {
@@ -790,7 +799,7 @@
 <body>
     <!-- Navigation (Minimalist) -->
     <nav>
-        <a href="/" class="logo">
+        <a href="index.html" class="logo">
             <img src="assets/logo/logo no tagline.png" alt="FTECH">
         </a>
         <div class="menu-toggle" id="menuToggle">
@@ -805,11 +814,11 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="/" class="menu-link">Home <span>01</span></a>
-            <a href="about" class="menu-link">About <span>02</span></a>
-            <a href="services" class="menu-link">Services <span>03</span></a>
-            <a href="projects" class="menu-link">Projects <span>04</span></a>
-            <a href="contact" class="menu-link">Contact <span>05</span></a>
+            <a href="index.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
         </div>
         <div class="menu-footer">
             <p>FTECH Solutions Sdn Bhd</p>
@@ -863,7 +872,7 @@
                     <div class="accordion-content">
                         <h2>Who We Are</h2>
                         <p>We are a team of dedicated professionals committed to excellence in lighting design and engineering. Discover our story and philosophy.</p>
-                        <a href="about" class="accordion-cta">Read Our Story</a>
+                        <a href="about.html" class="accordion-cta">Read Our Story</a>
                     </div>
                 </div>
 
@@ -879,7 +888,7 @@
                     <div class="accordion-content">
                         <h2>What We Do</h2>
                         <p>From conceptual design to installation and commissioning, we offer a comprehensive range of lighting services tailored to your needs.</p>
-                        <a href="services" class="accordion-cta">View Services</a>
+                        <a href="services.html" class="accordion-cta">View Services</a>
                     </div>
                 </div>
 
@@ -895,7 +904,7 @@
                     <div class="accordion-content">
                         <h2>Our Work</h2>
                         <p>Explore our portfolio of award-winning projects across various sectors, showcasing our expertise and innovation.</p>
-                        <a href="projects" class="accordion-cta">View Portfolio</a>
+                        <a href="projects.html" class="accordion-cta">View Portfolio</a>
                     </div>
                 </div>
 
@@ -911,7 +920,7 @@
                     <div class="accordion-content">
                         <h2>Get in Touch</h2>
                         <p>Ready to transform your space? Connect with our team for consultations, quotes, and lighting design inquiries.</p>
-                        <a href="contact" class="accordion-cta">Contact Us</a>
+                        <a href="contact.html" class="accordion-cta">Contact Us</a>
                     </div>
                 </div>
             </section>
@@ -945,10 +954,12 @@
         // Menu Toggle Logic
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
+        const logo = document.querySelector('.logo');
 
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
+            logo.classList.toggle('active');
             
             // Update text based on state
             const menuText = menuToggle.querySelector('.menu-text');
@@ -1001,26 +1012,43 @@
                     });
                 });
 
-                // Mobile Click
+                // Click Logic (Desktop & Mobile)
                 accordionPanels.forEach(panel => {
                     panel.addEventListener('click', (e) => {
-                        if (window.innerWidth <= 768) {
-                            // If clicking a CTA link, let it pass through
-                            if (e.target.classList.contains('accordion-cta')) return;
+                        // Find the CTA link
+                        const cta = panel.querySelector('.accordion-cta');
+                        
+                        // If clicking the CTA itself, let it handle the event naturally
+                        if (e.target.classList.contains('accordion-cta')) return;
 
-                            // If already expanded, do nothing (or maybe collapse? No, keep it open)
-                            if (panel.classList.contains('expanded')) return;
-
-                            // Collapse all
-                            accordionPanels.forEach(p => p.classList.remove('expanded'));
-                            
-                            // Expand clicked
-                            panel.classList.add('expanded');
-                            
-                            // Scroll to it slightly
-                            setTimeout(() => {
-                                panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }, 300);
+                        // Desktop: Always navigate on click
+                        if (window.innerWidth > 768) {
+                            if (cta) {
+                                if (cta.id === 'exploreBtn') {
+                                    cta.click(); // Trigger the specific handler for Explore button
+                                } else {
+                                    window.location.href = cta.href;
+                                }
+                            }
+                        } 
+                        // Mobile: Navigate only if already expanded
+                        else {
+                            if (panel.classList.contains('expanded')) {
+                                if (cta) {
+                                    if (cta.id === 'exploreBtn') {
+                                        cta.click();
+                                    } else {
+                                        window.location.href = cta.href;
+                                    }
+                                }
+                            } else {
+                                // Expand logic
+                                accordionPanels.forEach(p => p.classList.remove('expanded'));
+                                panel.classList.add('expanded');
+                                setTimeout(() => {
+                                    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }, 300);
+                            }
                         }
                     });
                 });

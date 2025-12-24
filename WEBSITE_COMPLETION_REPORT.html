@@ -3,560 +3,602 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTECH Comprehensive Design System</title>
+    <title>FTECH Design System v4.0 - Comprehensive</title>
     <style>
+        /* =========================================
+           CORE VARIABLES
+           ========================================= */
         :root {
-            /* Brand Colors */
             --primary-burgundy: #820000;
             --burgundy-dark: #2a0a0a;
-            --burgundy-alt: #811517;
             --beige-light: #FBF1E5;
-            --beige-alt: #FBF4E9;
-            --text-dark: #1a1a1a;
-            --text-light: #f5f5f5;
             --bg-black: #050505;
-            
-            /* UI Variables */
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --card-radius: 4px;
             --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             font-family: var(--font-main);
-            background-color: var(--bg-black);
-            color: var(--text-light);
+            background-color: #0a0a0a;
+            color: #fff;
             margin: 0;
             padding: 0;
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 60px 40px;
+        /* =========================================
+           LAYOUT
+           ========================================= */
+        .ds-container { max-width: 1600px; margin: 0 auto; padding: 60px; }
+        
+        .ds-header {
+            border-bottom: 1px solid #333; padding-bottom: 40px; margin-bottom: 60px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+        }
+        .ds-title {
+            font-size: 4rem; font-weight: 700; margin: 0; line-height: 1; letter-spacing: -2px;
+            background: linear-gradient(to right, #fff, #666); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        /* Header */
-        header {
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 40px;
-            margin-bottom: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+        .ds-section { margin-bottom: 100px; }
+        .ds-section-header {
+            display: flex; align-items: center; margin-bottom: 40px; border-bottom: 1px solid #222; padding-bottom: 15px;
         }
+        .ds-section-num { font-family: monospace; color: var(--primary-burgundy); font-size: 1.2rem; margin-right: 15px; }
+        .ds-section-title { font-size: 1.8rem; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
 
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-            line-height: 1;
-            letter-spacing: -2px;
-            background: linear-gradient(to right, #fff, #999);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .header-meta {
-            text-align: right;
-            color: #666;
-            font-family: monospace;
-        }
-
-        .domain-badge {
-            display: inline-block;
-            background: var(--primary-burgundy);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            text-decoration: none;
-        }
-
-        /* Section Styling */
-        section {
-            margin-bottom: 120px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: baseline;
-            margin-bottom: 50px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 20px;
-        }
-
-        .section-number {
-            font-size: 1.2rem;
-            color: var(--primary-burgundy);
-            font-weight: bold;
-            margin-right: 15px;
-            font-family: monospace;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            margin: 0;
-            color: #fff;
-            font-weight: 300;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* Grid System */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-        .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
 
-        /* Component Card */
-        .component-card {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s;
+        /* =========================================
+           COMPONENTS
+           ========================================= */
+        .comp-card { background: #111; border: 1px solid #222; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; }
+        .comp-preview {
+            padding: 40px; min-height: 200px; flex-grow: 1; display: flex; align-items: center; justify-content: center;
+            background-image: radial-gradient(#222 1px, transparent 1px); background-size: 20px 20px; position: relative; overflow: hidden;
         }
-        .component-card:hover { border-color: #333; }
+        .comp-info { padding: 20px; background: #0e0e0e; border-top: 1px solid #222; }
+        .comp-name { display: block; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        .comp-desc { font-size: 0.85rem; color: #999; }
+
+        /* =========================================
+           SPECIFIC DEMOS
+           ========================================= */
+        .swatch { height: 80px; width: 100%; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
         
-        .component-preview {
-            padding: 40px;
-            background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
-            background-size: 20px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 200px;
-            position: relative;
-        }
+        /* Typography */
+        .type-display { font-size: 3rem; font-weight: 700; letter-spacing: -2px; line-height: 1; }
+        .type-menu { font-size: 2rem; font-weight: 200; text-transform: uppercase; letter-spacing: -1px; color: #888; }
+
+        /* Animations */
+        .curtain-demo { display: flex; width: 100%; height: 100%; position: absolute; inset: 0; }
+        .curtain-panel { flex: 1; border-right: 1px solid rgba(255,255,255,0.1); background: #0f0c0c; transition: flex 0.5s ease; display: flex; align-items: center; justify-content: center; }
+        .curtain-panel:hover { flex: 3; background: #1a1a1a; }
         
-        .component-meta {
-            padding: 20px;
-            border-top: 1px solid #222;
-            background: #0a0a0a;
-        }
-        
-        .component-name {
-            font-weight: bold;
-            color: #fff;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .component-desc {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        /* --- 1. BRAND ASSETS --- */
-        .logo-box img { max-width: 150px; height: auto; }
-        .color-swatch { height: 100px; width: 100%; border-radius: 4px; margin-bottom: 10px; }
-        
-        /* --- 2. TYPOGRAPHY --- */
-        .type-preview { text-align: left; width: 100%; }
-        .h1-ex { font-size: 3rem; font-weight: 700; line-height: 1.1; margin: 0; }
-        .h2-ex { font-size: 2rem; font-weight: 700; margin: 0; color: var(--primary-burgundy); }
-        .body-ex { font-size: 1rem; color: #ccc; }
-
-        /* --- 3. NAVIGATION --- */
-        /* Hamburger */
-        .hamburger-demo { width: 40px; height: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
-        .hamburger-demo span { display: block; height: 2px; background: #fff; width: 100%; }
-        .hamburger-demo span:nth-child(2) { width: 70%; }
-        
-        /* Arrows */
-        .arrow-demo {
-            width: 50px; height: 50px; border: 1px solid rgba(130, 0, 0, 0.3); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: var(--primary-burgundy);
-            background: rgba(251, 241, 229, 0.8); font-size: 20px;
-        }
-        
-        /* Dots */
-        .dots-demo { display: flex; flex-direction: column; gap: 15px; }
-        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.3); border-radius: 50%; }
-        .dot.active { background: #fff; transform: scale(1.5); }
-
-        /* --- 4. BUTTONS & LINKS --- */
-        .btn { padding: 15px 30px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; font-size: 0.8rem; border: none; cursor: pointer; }
-        .btn-primary { background: var(--primary-burgundy); color: #fff; }
-        .btn-outline { background: transparent; border: 1px solid #fff; color: #fff; }
-        .btn-text { background: transparent; color: #fff; border-bottom: 1px solid var(--primary-burgundy); padding: 0 0 5px 0; }
-
-        /* --- 5. CARDS & CONTAINERS --- */
-        /* Glass Card */
-        .glass-card-demo {
-            background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 20px;
-            border: 1px solid rgba(255,255,255,0.1); border-left: 3px solid var(--primary-burgundy); width: 100%;
-        }
-        
-        /* Location Card */
-        .loc-card-demo {
-            background: transparent; border: 1px solid #333; padding: 20px; width: 100%; text-align: center;
-        }
-        .loc-tag { background: var(--primary-burgundy); color: #fff; padding: 2px 8px; font-size: 0.6rem; text-transform: uppercase; }
-
-        /* Project Thumb */
-        .proj-thumb-demo {
-            width: 100%; height: 150px; background: #222; position: relative; overflow: hidden;
-        }
-        .proj-overlay {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; opacity: 1;
-        }
-
-        /* --- 6. INTERACTIVE MODULES --- */
-        /* Accordion */
-        .accordion-demo { width: 100%; display: flex; height: 150px; }
-        .acc-panel { flex: 1; border-right: 1px solid #333; background: #111; position: relative; transition: flex 0.3s; }
-        .acc-panel:hover { flex: 3; background: #222; }
-        .acc-text { writing-mode: vertical-rl; transform: rotate(180deg); padding: 10px; color: #666; }
-
-        /* Tabs */
-        .tabs-demo { width: 100%; }
-        .tab-head { display: flex; border-bottom: 1px solid #333; margin-bottom: 10px; }
-        .tab-item { padding: 10px; cursor: pointer; color: #666; font-size: 0.8rem; }
-        .tab-item.active { color: var(--primary-burgundy); border-bottom: 2px solid var(--primary-burgundy); }
-
-        /* Form */
-        .input-demo {
-            background: transparent; border: none; border-bottom: 1px solid #444; width: 100%; padding: 10px 0; color: #fff;
-        }
-        .input-demo:focus { outline: none; border-bottom-color: var(--primary-burgundy); }
-
-        /* Mask Text */
-        .mask-text-demo {
-            font-size: 3rem; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+        .mask-demo { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000; }
+        .mask-text {
+            font-size: 3rem; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.5);
             background: linear-gradient(to right, #fff, #fff); -webkit-background-clip: text; background-clip: text;
             background-size: 0% 100%; background-repeat: no-repeat; transition: background-size 0.5s;
         }
-        .mask-text-demo:hover { background-size: 100% 100%; }
+        .comp-card:hover .mask-text { background-size: 100% 100%; }
 
-        /* Popup */
-        .popup-demo {
-            background: rgba(15, 10, 10, 0.95); border: 1px solid #333; padding: 15px; width: 200px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        /* UI Elements */
+        .demo-hamburger { width: 40px; height: 10px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+        .demo-hamburger span { display: block; height: 2px; background: #fff; width: 100%; transition: 0.3s; }
+        .demo-hamburger span:nth-child(2) { width: 70%; }
+        .comp-card:hover .demo-hamburger span:nth-child(2) { width: 100%; }
 
-        /* Scroll Indicator */
-        .scroll-demo {
-            width: 20px; height: 35px; border: 2px solid rgba(255,255,255,0.3); border-radius: 20px; position: relative;
+        /* =========================================
+           NEW SECTIONS: UX & FLOW
+           ========================================= */
+        .flow-diagram {
+            display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 20px;
+            background: #1a1a1a; border-radius: 8px; margin-bottom: 20px;
         }
-        .scroll-dot {
-            width: 4px; height: 4px; background: #fff; border-radius: 50%; position: absolute; top: 5px; left: 50%;
-            transform: translateX(-50%); animation: scrollDrop 2s infinite;
+        .flow-step {
+            text-align: center; padding: 15px; background: #222; border: 1px solid #333; border-radius: 4px; width: 18%;
         }
-        @keyframes scrollDrop { 0% { top: 5px; opacity: 1; } 100% { top: 25px; opacity: 0; } }
+        .flow-arrow { color: #666; font-size: 1.5rem; }
+        
+        .behavior-card {
+            background: #111; padding: 30px; border-left: 3px solid var(--primary-burgundy); margin-bottom: 20px;
+        }
+        .behavior-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #fff; }
+        .behavior-desc { color: #ccc; font-size: 0.9rem; }
 
-        @media (max-width: 768px) {
-            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-            h1 { font-size: 2.5rem; }
+        .device-mockup {
+            border: 2px solid #333; border-radius: 10px; padding: 10px; background: #000; display: flex; flex-direction: column; align-items: center;
         }
+        .mockup-screen { background: #111; width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; color: #444; font-family: monospace; }
+
+        .img-sample {
+            width: 100%; height: 150px; background-size: cover; background-position: center; filter: grayscale(100%); transition: 0.3s;
+        }
+        .img-sample:hover { filter: grayscale(0%); }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
+    <div class="ds-container">
+        <header class="ds-header">
             <div>
-                <h1>FTECH Design System</h1>
-                <div class="subtitle">Comprehensive Component Library & Brand Guidelines</div>
+                <h1 class="ds-title">FTECH Design System</h1>
+                <div style="color: #666; margin-top: 10px;">v4.0 Comprehensive UX/UI Report</div>
             </div>
-            <div class="header-meta">
-                <div>v2.1 Extended</div>
-                <div>Dec 9, 2025</div>
-                <a href="https://ftechlighting.com" class="domain-badge" target="_blank">ftechlighting.com</a>
+            <div style="text-align: right; color: #666; font-family: monospace;">
+                <div>Theme: Industrial Luxury</div>
+                <div>Mode: Dark / High Contrast</div>
             </div>
         </header>
 
-        <!-- 1. BRAND IDENTITY -->
-        <section>
-            <div class="section-header">
-                <span class="section-number">01</span>
-                <h2 class="section-title">Brand Identity</h2>
-            </div>
-            <div class="grid-3">
-                <div class="component-card">
-                    <div class="component-preview logo-box">
-                        <img src="assets/logo/logo no tagline.png" style="filter: brightness(0) invert(1);" alt="Primary Logo">
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Primary Logo</span>
-                        <span class="component-desc">White inverted for dark backgrounds.</span>
-                    </div>
-                </div>
-                <div class="component-card">
-                    <div class="component-preview logo-box" style="background: #fff;">
-                        <img src="assets/logo/logo with tagline.png" alt="Secondary Logo">
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Secondary Logo</span>
-                        <span class="component-desc">Full color for light backgrounds.</span>
-                    </div>
-                </div>
-                <div class="component-card">
-                    <div class="component-preview" style="display: block; padding: 20px;">
-                        <div class="color-swatch" style="background: #820000;"></div>
-                        <div class="color-swatch" style="background: #2a0a0a;"></div>
-                        <div class="color-swatch" style="background: #FBF1E5;"></div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Core Palette</span>
-                        <span class="component-desc">Burgundy (#820000), Dark (#2a0a0a), Beige (#FBF1E5).</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. TYPOGRAPHY -->
-        <section>
-            <div class="section-header">
-                <span class="section-number">02</span>
-                <h2 class="section-title">Typography</h2>
+        <!-- 1. UI/UX CONCEPT & THEME -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">01</span>
+                <h2 class="ds-section-title">UI/UX Concept & Theme</h2>
             </div>
             <div class="grid-2">
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="type-preview">
-                            <h1 class="h1-ex">Industrial<br>Precision.</h1>
-                        </div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Display Heading (H1)</span>
-                        <span class="component-desc">Helvetica Neue Bold. Fluid scaling.</span>
-                    </div>
+                <div>
+                    <h3 style="color: #fff;">Theme: "Industrial Luxury"</h3>
+                    <p style="color: #ccc;">
+                        The design philosophy centers on <strong>precision, darkness, and illumination</strong>. 
+                        Reflecting the company's core business (lighting), the interface uses a "Dark Mode" default 
+                        to allow content (light) to stand out.
+                    </p>
+                    <ul style="color: #999; line-height: 2;">
+                        <li><strong>Primary:</strong> Deep Black (#050505) & Burgundy (#820000)</li>
+                        <li><strong>Texture:</strong> Glassmorphism (Blur 10px) & Grain</li>
+                        <li><strong>Typography:</strong> Helvetica Neue (Clean, Swiss Style)</li>
+                    </ul>
                 </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="type-preview">
-                            <h2 class="h2-ex">Lighting Solutions</h2>
-                            <p class="body-ex">FTECH delivers holistic and innovative lighting solutions.</p>
-                        </div>
+                <div>
+                    <h3 style="color: #fff;">Core UX Principles</h3>
+                    <div class="behavior-card">
+                        <div class="behavior-title">1. Discovery via Motion</div>
+                        <div class="behavior-desc">Users "discover" content through interaction (hover reveals, scroll expansions). Nothing is static.</div>
                     </div>
-                    <div class="component-meta">
-                        <span class="component-name">Content Typography</span>
-                        <span class="component-desc">H2 (Burgundy) + Body (Light Grey).</span>
+                    <div class="behavior-card">
+                        <div class="behavior-title">2. Cinematic Navigation</div>
+                        <div class="behavior-desc">The site behaves less like a document and more like a film strip, moving horizontally to tell a linear story.</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. NAVIGATION SYSTEM -->
-        <section>
-            <div class="section-header">
-                <span class="section-number">03</span>
-                <h2 class="section-title">Navigation System</h2>
+        <!-- 2. UI/UX FLOW -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">02</span>
+                <h2 class="ds-section-title">User Flow & Navigation</h2>
+            </div>
+            
+            <h4 style="color: #666; text-transform: uppercase;">Desktop Journey (Horizontal)</h4>
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <strong>Landing</strong><br><span style="font-size:0.8rem; color:#888;">Curtain Reveal</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Discovery</strong><br><span style="font-size:0.8rem; color:#888;">Horizontal Scroll</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Detail</strong><br><span style="font-size:0.8rem; color:#888;">Hover Expansion</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <strong>Action</strong><br><span style="font-size:0.8rem; color:#888;">Contact / Form</span>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 40px;">
+                <div class="behavior-card">
+                    <div class="behavior-title">Desktop Scroll Behavior</div>
+                    <div class="behavior-desc">
+                        <strong>Mechanism:</strong> `wheel` event listener transforms vertical scroll delta into horizontal translation.<br>
+                        <strong>Physics:</strong> Cubic-bezier(0.645, 0.045, 0.355, 1.000) for smooth, weighted momentum.<br>
+                        <strong>Snap:</strong> Sections snap to viewport width (100vw) to ensure focused viewing.
+                    </div>
+                </div>
+                <div class="behavior-card">
+                    <div class="behavior-title">Mobile Scroll Behavior</div>
+                    <div class="behavior-desc">
+                        <strong>Mechanism:</strong> Standard vertical scrolling (Native).<br>
+                        <strong>Adaptation:</strong> Horizontal layouts stack vertically. Complex hover effects are replaced by tap-to-reveal or static visibility.<br>
+                        <strong>Navigation:</strong> Hamburger menu becomes primary nav anchor.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TRANSITIONS & ANIMATIONS -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">03</span>
+                <h2 class="ds-section-title">Page & Section Transitions</h2>
+            </div>
+            <div class="grid-3">
+                <div class="comp-card">
+                    <div class="comp-preview" style="height: 250px;">
+                        <div class="curtain-demo">
+                            <div class="curtain-panel"></div><div class="curtain-panel"></div><div class="curtain-panel"></div>
+                        </div>
+                    </div>
+                    <div class="comp-info">
+                        <span class="comp-name">The Curtain (Hero)</span>
+                        <span class="comp-desc"><strong>Trigger:</strong> Page Load / Hover<br><strong>Effect:</strong> Panels expand width-wise.</span>
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-preview" style="height: 250px;">
+                        <div class="mask-demo"><div class="mask-text">MASK</div></div>
+                    </div>
+                    <div class="comp-info">
+                        <span class="comp-name">The Mask (Services)</span>
+                        <span class="comp-desc"><strong>Trigger:</strong> Hover<br><strong>Effect:</strong> Text fill + Letter spacing reduction.</span>
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-preview" style="height: 250px;">
+                        <div style="width:100%; height:100%; background:#000; display:flex; align-items:center; justify-content:center;">
+                            <div style="width:50px; height:50px; border-radius:50%; border:1px solid #820000; display:flex; align-items:center; justify-content:center; color:#820000;">→</div>
+                        </div>
+                    </div>
+                    <div class="comp-info">
+                        <span class="comp-name">Page Transition</span>
+                        <span class="comp-desc"><strong>Trigger:</strong> Link Click<br><strong>Effect:</strong> 800ms overlay slide (Burgundy).</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. MOBILE RESPONSIVENESS -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">04</span>
+                <h2 class="ds-section-title">Mobile Responsiveness</h2>
+            </div>
+            <div class="grid-3">
+                <div class="device-mockup">
+                    <div style="margin-bottom: 10px; color: #fff; font-weight: bold;">Navigation</div>
+                    <div class="mockup-screen">
+                        <div class="demo-hamburger"><span></span><span></span><span></span></div>
+                    </div>
+                    <div style="padding: 15px; color: #999; font-size: 0.8rem; text-align: center;">
+                        Menu collapses to top-right fixed hamburger. Full-screen overlay on toggle.
+                    </div>
+                </div>
+                <div class="device-mockup">
+                    <div style="margin-bottom: 10px; color: #fff; font-weight: bold;">Layout Stack</div>
+                    <div class="mockup-screen" style="flex-direction: column; gap: 5px;">
+                        <div style="width: 80%; height: 20px; background: #333;"></div>
+                        <div style="width: 80%; height: 20px; background: #333;"></div>
+                        <div style="width: 80%; height: 20px; background: #333;"></div>
+                    </div>
+                    <div style="padding: 15px; color: #999; font-size: 0.8rem; text-align: center;">
+                        Grid-2 and Grid-3 layouts convert to single column (Grid-1) for readability.
+                    </div>
+                </div>
+                <div class="device-mockup">
+                    <div style="margin-bottom: 10px; color: #fff; font-weight: bold;">Typography</div>
+                    <div class="mockup-screen">
+                        <div style="font-size: 1.5rem; font-weight: bold; color: #fff;">H1</div>
+                    </div>
+                    <div style="padding: 15px; color: #999; font-size: 0.8rem; text-align: center;">
+                        Font sizes use `clamp()` to scale down automatically. H1 drops from 8rem to 4rem.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. IMAGE SAMPLES -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">05</span>
+                <h2 class="ds-section-title">Imagery Style</h2>
+            </div>
+            <p style="color: #ccc; margin-bottom: 30px;">
+                Images are treated as "Light Sources" in the dark UI. They are often desaturated or high-contrast.
+            </p>
+            <div class="grid-4">
+                <div>
+                    <div class="img-sample" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=500');"></div>
+                    <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">Architectural / Linear</div>
+                </div>
+                <div>
+                    <div class="img-sample" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=500');"></div>
+                    <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">Tech / Cyberpunk</div>
+                </div>
+                <div>
+                    <div class="img-sample" style="background-image: url('https://images.unsplash.com/photo-1517502884422-41e1474b8271?w=500');"></div>
+                    <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">Warm / Interior</div>
+                </div>
+                <div>
+                    <div class="img-sample" style="background-image: url('https://images.unsplash.com/photo-1492551557933-34265f7af79e?w=500');"></div>
+                    <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">Detail / Macro</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. COMPONENT LIBRARY (RETAINED) -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">06</span>
+                <h2 class="ds-section-title">Core Components</h2>
             </div>
             <div class="grid-4">
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="hamburger-demo"><span></span><span></span><span></span></div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Hamburger Menu</span>
-                        <span class="component-desc">Animated toggle for main nav.</span>
+                <div class="comp-card">
+                    <div class="comp-preview" style="padding: 20px; display: block;">
+                        <div class="swatch" style="background: #820000;"></div>
+                        <div class="comp-name">Primary Burgundy</div>
+                        <div class="comp-desc">#820000</div>
                     </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="arrow-demo">→</div>
+                <div class="comp-card">
+                    <div class="comp-preview">
+                        <div class="type-display">Aa</div>
                     </div>
-                    <div class="component-meta">
-                        <span class="component-name">Nav Arrow</span>
-                        <span class="component-desc">Floating directional navigation.</span>
-                    </div>
-                </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="dots-demo">
-                            <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
-                        </div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Page Indicators</span>
-                        <span class="component-desc">Vertical scroll position tracker.</span>
+                    <div class="comp-info">
+                        <span class="comp-name">Helvetica Neue</span>
+                        <span class="comp-desc">Bold / Display</span>
                     </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="scroll-demo"><div class="scroll-dot"></div></div>
+                <div class="comp-card">
+                    <div class="comp-preview">
+                        <button style="background: #820000; color: #fff; border: none; padding: 10px 20px; text-transform: uppercase; font-weight: bold;">BTN</button>
                     </div>
-                    <div class="component-meta">
-                        <span class="component-name">Scroll Indicator</span>
-                        <span class="component-desc">Animated prompt for user action.</span>
+                    <div class="comp-info">
+                        <span class="comp-name">Primary Button</span>
+                        <span class="comp-desc">Solid Fill</span>
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-preview">
+                        <div style="border: 1px solid #fff; color: #fff; padding: 10px 20px; text-transform: uppercase; font-weight: bold;">BTN</div>
+                    </div>
+                    <div class="comp-info">
+                        <span class="comp-name">Outline Button</span>
+                        <span class="comp-desc">Border Only</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 4. BUTTONS & ACTIONS -->
-        <section>
-            <div class="section-header">
-                <span class="section-number">04</span>
-                <h2 class="section-title">Buttons & Actions</h2>
+        <!-- 7. ADVANCED LAYOUT KIT -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">07</span>
+                <h2 class="ds-section-title">Advanced Layout Kit</h2>
+            </div>
+            <p style="color: #999; margin-bottom: 30px;">
+                The FTECH identity relies on four distinct layout engines. Each handles content reveal differently.
+            </p>
+            
+            <div class="grid-2">
+                <!-- The Curtain -->
+                <div class="comp-card">
+                    <div class="comp-info" style="border-bottom: 1px solid #222;">
+                        <span class="comp-name">Layout A: "The Curtain"</span>
+                        <span class="comp-desc">Used on: Home Page</span>
+                    </div>
+                    <div style="padding: 20px; background: #050505; font-family: monospace; font-size: 0.8rem; color: #888; overflow-x: auto;">
+                        .accordion-panel {<br>
+                        &nbsp;&nbsp;flex: 1;<br>
+                        &nbsp;&nbsp;transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1);<br>
+                        &nbsp;&nbsp;border-right: 1px solid rgba(255, 255, 255, 0.05);<br>
+                        }<br>
+                        .accordion-panel:hover { flex: 3; }
+                    </div>
+                </div>
+
+                <!-- The Strip -->
+                <div class="comp-card">
+                    <div class="comp-info" style="border-bottom: 1px solid #222;">
+                        <span class="comp-name">Layout B: "The Strip"</span>
+                        <span class="comp-desc">Used on: Services (Core Competencies)</span>
+                    </div>
+                    <div style="padding: 20px; background: #050505; font-family: monospace; font-size: 0.8rem; color: #888; overflow-x: auto;">
+                        .strip-item {<br>
+                        &nbsp;&nbsp;flex: 1;<br>
+                        &nbsp;&nbsp;transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1);<br>
+                        }<br>
+                        .strip-item:hover { flex: 4; }
+                    </div>
+                </div>
+
+                <!-- The Slice -->
+                <div class="comp-card">
+                    <div class="comp-info" style="border-bottom: 1px solid #222;">
+                        <span class="comp-name">Layout C: "The Slice"</span>
+                        <span class="comp-desc">Used on: Projects Hero</span>
+                    </div>
+                    <div style="padding: 20px; background: #050505; font-family: monospace; font-size: 0.8rem; color: #888; overflow-x: auto;">
+                        .slice-strip {<br>
+                        &nbsp;&nbsp;transform: translateY(100%);<br>
+                        &nbsp;&nbsp;transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);<br>
+                        }<br>
+                        .slice-strip:nth-child(odd) { transform: translateY(-100%); }
+                    </div>
+                </div>
+
+                <!-- The Mask -->
+                <div class="comp-card">
+                    <div class="comp-info" style="border-bottom: 1px solid #222;">
+                        <span class="comp-name">Layout D: "The Mask"</span>
+                        <span class="comp-desc">Used on: Services Hero</span>
+                    </div>
+                    <div style="padding: 20px; background: #050505; font-family: monospace; font-size: 0.8rem; color: #888; overflow-x: auto;">
+                        h1 {<br>
+                        &nbsp;&nbsp;mix-blend-mode: difference;<br>
+                        &nbsp;&nbsp;letter-spacing: -8px;<br>
+                        &nbsp;&nbsp;transition: letter-spacing 1.5s;<br>
+                        }<br>
+                        h1:hover { letter-spacing: -4px; }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. FORM & INPUT KIT -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">08</span>
+                <h2 class="ds-section-title">Form & Input Kit</h2>
+            </div>
+            <div class="grid-2">
+                <div class="comp-card">
+                    <div class="comp-preview" style="background: #000; display: block; padding: 40px;">
+                        <div style="position: relative; margin-bottom: 30px;">
+                            <input type="text" placeholder=" " style="width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding: 15px 0; color: #fff; font-size: 1.2rem; outline: none;">
+                            <label style="position: absolute; top: 15px; left: 0; color: rgba(255,255,255,0.5); pointer-events: none; font-size: 1.2rem;">Name</label>
+                        </div>
+                        <div style="position: relative;">
+                            <input type="text" value="John Doe" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid #FBF1E5; padding: 15px 0; color: #fff; font-size: 1.2rem; outline: none;">
+                            <label style="position: absolute; top: -20px; left: 0; color: #820000; pointer-events: none; font-size: 0.9rem;">Email</label>
+                        </div>
+                    </div>
+                    <div class="comp-info">
+                        <span class="comp-name">Floating Label Input</span>
+                        <span class="comp-desc">State: Default vs Focused/Filled</span>
+                    </div>
+                </div>
+                <div class="comp-card">
+                    <div class="comp-preview" style="background: #000;">
+                        <button style="background: transparent; border: 1px solid #FBF1E5; color: #FBF1E5; padding: 20px 40px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; width: 100%;">
+                            Submit Message
+                        </button>
+                    </div>
+                    <div class="comp-info">
+                        <span class="comp-name">Submit Button</span>
+                        <span class="comp-desc">Hover: Fills with Burgundy (#820000)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. NAVIGATION KIT -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">09</span>
+                <h2 class="ds-section-title">Navigation Kit</h2>
             </div>
             <div class="grid-3">
-                <div class="component-card">
-                    <div class="component-preview">
-                        <button class="btn btn-primary">Explore FTECH</button>
+                <div class="comp-card">
+                    <div class="comp-preview">
+                        <div style="width: 50px; height: 50px; border: 1px solid rgba(130, 0, 0, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #820000; background: rgba(251, 241, 229, 0.8);">→</div>
                     </div>
-                    <div class="component-meta">
-                        <span class="component-name">Primary Button</span>
-                        <span class="component-desc">Solid burgundy. Main CTAs.</span>
-                    </div>
-                </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <button class="btn btn-outline">View Project</button>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Outline Button</span>
-                        <span class="component-desc">Secondary actions, transparent bg.</span>
+                    <div class="comp-info">
+                        <span class="comp-name">Nav Arrow</span>
+                        <span class="comp-desc">Used for horizontal navigation</span>
                     </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <button class="btn btn-text">Read More →</button>
+                <div class="comp-card">
+                    <div class="comp-preview">
+                        <div style="width: 6px; height: 6px; background: #fff; border-radius: 50%; transform: scale(1.5);"></div>
                     </div>
-                    <div class="component-meta">
-                        <span class="component-name">Text Link</span>
-                        <span class="component-desc">Inline navigation with underline.</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. CARDS & CONTAINERS -->
-        <section>
-            <div class="section-header">
-                <span class="section-number">05</span>
-                <h2 class="section-title">Cards & Containers</h2>
-            </div>
-            <div class="grid-3">
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="glass-card-demo">
-                            <h4 style="margin:0; color:#fff;">Vision</h4>
-                            <p style="margin:5px 0 0; font-size:0.8rem; color:#ccc;">Leading provider...</p>
-                        </div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Glass Card</span>
-                        <span class="component-desc">Frosted glass effect with border accent.</span>
+                    <div class="comp-info">
+                        <span class="comp-name">Page Indicator (Active)</span>
+                        <span class="comp-desc">Right-side vertical dots</span>
                     </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="loc-card-demo">
-                            <span class="loc-tag">HQ</span>
-                            <h4 style="margin:10px 0; color:#fff;">Selangor</h4>
-                            <p style="margin:0; font-size:0.8rem; color:#666;">Malaysia</p>
-                        </div>
+                <div class="comp-card">
+                    <div class="comp-preview">
+                        <div style="width: 6px; height: 6px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
                     </div>
-                    <div class="component-meta">
-                        <span class="component-name">Location Card</span>
-                        <span class="component-desc">Bordered card for contact info.</span>
-                    </div>
-                </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="proj-thumb-demo">
-                            <div class="proj-overlay">
-                                <span style="color:#fff; font-weight:bold;">PROJECT NAME</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Project Thumbnail</span>
-                        <span class="component-desc">Image container with hover overlay.</span>
+                    <div class="comp-info">
+                        <span class="comp-name">Page Indicator (Inactive)</span>
+                        <span class="comp-desc">Right-side vertical dots</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 6. INTERACTIVE MODULES -->
-        <section>
-            <div class="section-header">
-                <span class="section-number">06</span>
-                <h2 class="section-title">Interactive Modules</h2>
+        <!-- 10. HEADER & FOOTER KIT -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">10</span>
+                <h2 class="ds-section-title">Header & Footer Kit</h2>
             </div>
-            <div class="grid-auto">
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="accordion-demo">
-                            <div class="acc-panel"><div class="acc-text">Home</div></div>
-                            <div class="acc-panel" style="flex:3; background:#222;"><div class="acc-text">About</div></div>
-                            <div class="acc-panel"><div class="acc-text">Services</div></div>
+            <p style="color: #999; margin-bottom: 30px;">
+                The site uses a "Floating Header" that sits above all content with `mix-blend-mode: difference` to ensure visibility on both light and dark backgrounds.
+            </p>
+
+            <div class="grid-2">
+                <!-- Header -->
+                <div class="comp-card">
+                    <div class="comp-preview" style="background: #888; flex-direction: column; justify-content: flex-start; padding: 0;">
+                        <!-- Light Background Simulation -->
+                        <div style="width: 100%; height: 50%; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+                            <div style="font-weight: bold; color: #000; mix-blend-mode: difference; filter: invert(1);">FTECH LOGO</div>
+                            <div style="color: #000; mix-blend-mode: difference; filter: invert(1);">MENU =</div>
+                        </div>
+                        <!-- Dark Background Simulation -->
+                        <div style="width: 100%; height: 50%; background: #000; display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+                            <div style="font-weight: bold; color: #fff; mix-blend-mode: difference;">FTECH LOGO</div>
+                            <div style="color: #fff; mix-blend-mode: difference;">MENU =</div>
                         </div>
                     </div>
-                    <div class="component-meta">
-                        <span class="component-name">Accordion Menu</span>
-                        <span class="component-desc">Expandable panels for home navigation.</span>
+                    <div class="comp-info">
+                        <span class="comp-name">Smart Contrast Header</span>
+                        <span class="comp-desc">Uses `mix-blend-mode: difference` to auto-adapt color.</span>
                     </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="tabs-demo">
-                            <div class="tab-head">
-                                <div class="tab-item active">Intro</div>
-                                <div class="tab-item">Expertise</div>
-                                <div class="tab-item">Support</div>
-                            </div>
-                            <div style="color:#ccc; font-size:0.8rem;">Tab Content Area...</div>
+
+                <!-- Footer (Menu Overlay) -->
+                <div class="comp-card">
+                    <div class="comp-preview" style="background: #2a0a0a; align-items: flex-end; padding-bottom: 40px;">
+                        <div style="text-align: center; color: rgba(255,255,255,0.4); font-size: 0.8rem; letter-spacing: 1px;">
+                            <div>FTECH LIGHTING LTD</div>
+                            <div>© 2025 ALL RIGHTS RESERVED</div>
                         </div>
                     </div>
-                    <div class="component-meta">
-                        <span class="component-name">Dynamic Tabs</span>
-                        <span class="component-desc">Switchable content areas.</span>
+                    <div class="comp-info">
+                        <span class="comp-name">Overlay Footer</span>
+                        <span class="comp-desc">Appears at the bottom of the full-screen menu.</span>
                     </div>
                 </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div style="width:100%;">
-                            <input type="text" class="input-demo" placeholder="Enter your email...">
-                        </div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Form Input</span>
-                        <span class="component-desc">Minimalist underline style.</span>
-                    </div>
-                </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="mask-text-demo">MASK</div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Mask Text Effect</span>
-                        <span class="component-desc">Text fill animation on hover.</span>
-                    </div>
-                </div>
-                <div class="component-card">
-                    <div class="component-preview">
-                        <div class="popup-demo">
-                            <h5 style="margin:0 0 5px 0; color:#fff;">Privacy</h5>
-                            <div style="display:flex; gap:5px;">
-                                <div style="background:#820000; width:40px; height:15px;"></div>
-                                <div style="border:1px solid #fff; width:40px; height:15px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="component-meta">
-                        <span class="component-name">Privacy Popup</span>
-                        <span class="component-desc">Fixed bottom-right notification.</span>
-                    </div>
+            </div>
+
+            <div style="margin-top: 20px; padding: 20px; background: #111; border: 1px solid #222; border-radius: 6px;">
+                <h4 style="color: #fff; margin-top: 0;">Header Code Structure</h4>
+                <div style="font-family: monospace; color: #888; font-size: 0.8rem;">
+                    &lt;nav&gt;<br>
+                    &nbsp;&nbsp;&lt;a href="index.html" class="logo"&gt;&lt;img src="..."&gt;&lt;/a&gt;<br>
+                    &nbsp;&nbsp;&lt;div class="menu-toggle"&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="menu-text"&gt;MENU&lt;/div&gt;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="hamburger"&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;<br>
+                    &nbsp;&nbsp;&lt;/div&gt;<br>
+                    &lt;/nav&gt;
                 </div>
             </div>
         </section>
 
-        <footer style="border-top: 1px solid #222; padding-top: 40px; text-align: center; color: #666; font-size: 0.9rem;">
-            &copy; 2025 FTECH Solutions Sdn Bhd. All Rights Reserved.
-        </footer>
+        <!-- 11. CSS VARIABLES REFERENCE -->
+        <section class="ds-section">
+            <div class="ds-section-header">
+                <span class="ds-section-num">11</span>
+                <h2 class="ds-section-title">CSS Variables Reference</h2>
+            </div>
+            <div style="background: #111; padding: 30px; border-radius: 6px; font-family: monospace; color: #ccc; border: 1px solid #222;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>--primary-burgundy: #820000;</div>
+                    <div>--burgundy-dark: #2a0a0a;</div>
+                    <div>--burgundy-alt: #811517;</div>
+                    <div>--accent-burgundy: #87181a;</div>
+                    <div>--beige-light: #FBF1E5;</div>
+                    <div>--beige-alt: #FBF4E9;</div>
+                    <div>--text-dark: #1a1a1a;</div>
+                    <div>--text-secondary: #4a4a4a;</div>
+                    <div>--bg-black: #050505;</div>
+                </div>
+            </div>
+        </section>
+
     </div>
-
 </body>
 </html>

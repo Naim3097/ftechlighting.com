@@ -66,16 +66,20 @@
             display: block;
             width: 120px;
             pointer-events: auto;
-            /* Smart contrast: White on dark, Black on light */
-            mix-blend-mode: difference; 
+            transition: all 0.3s ease;
         }
 
         .logo img {
             width: 100%;
             height: auto;
             display: block;
-            /* Force the burgundy logo to be pure white for maximum contrast */
-            filter: brightness(0) invert(1); 
+            /* Default: Original Brand Color (Burgundy) */
+            filter: none; 
+        }
+        
+        /* Active State for Logo (White on Overlay) */
+        .logo.active img {
+            filter: brightness(0) invert(1);
         }
 
         /* ====== MENU TOGGLE ====== */
@@ -86,8 +90,7 @@
             gap: 15px;
             cursor: pointer;
             z-index: 20001; /* Above overlay */
-            mix-blend-mode: difference;
-            color: #fff;
+            color: #940003; /* Burgundy */
         }
 
         .menu-text {
@@ -109,7 +112,7 @@
         .hamburger span {
             display: block;
             height: 2px;
-            background: #fff;
+            background: #940003; /* Burgundy */
             transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
         }
 
@@ -120,9 +123,12 @@
 
         /* Active State for Hamburger */
         .menu-toggle.active {
-            mix-blend-mode: normal;
+            color: #fff;
         }
         .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span {
+            background: #fff;
+        }
         .menu-toggle.active .hamburger span:nth-child(1) { 
             transform: translateY(4px) rotate(45deg); 
             width: 100%; 
@@ -915,7 +921,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="/" class="logo">
+        <a href="index.html" class="logo">
             <img src="assets/logo/logo no tagline.png" alt="FTECH">
         </a>
         <div class="menu-toggle" id="menuToggle">
@@ -930,11 +936,11 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="/" class="menu-link">Home <span>01</span></a>
-            <a href="about" class="menu-link">About <span>02</span></a>
-            <a href="services" class="menu-link">Services <span>03</span></a>
-            <a href="projects" class="menu-link">Projects <span>04</span></a>
-            <a href="contact" class="menu-link">Contact <span>05</span></a>
+            <a href="index.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
         </div>
         <div class="menu-footer">
             <p>FTECH Solutions Sdn Bhd</p>
@@ -968,40 +974,64 @@
 
         <!-- Section 2: Core Competencies (Strip Expand) -->
         <section class="strip-section">
-            <!-- Strip 1 -->
+            <!-- Strip 1: Design -->
             <div class="strip-item">
                 <div class="strip-bg">
-                    <img src="assets/sections/core competencies/Control System Design and Integration.jpg" alt="Control Systems" fetchpriority="high">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1400" alt="Design" fetchpriority="high">
                 </div>
                 <div class="strip-num">01</div>
-                <div class="strip-vertical-text">CONTROL SYSTEMS</div>
+                <div class="strip-vertical-text">DESIGN</div>
                 <div class="strip-content">
-                    <h3>Control System Design & Integration</h3>
-                    <p>Supported by a team of dedicated lighting designers and engineers, FTECH delivers advanced control system design and seamless integration to address the growing technical and digital demands of modern lighting environments. Our expertise ensures efficient, adaptable, and intelligent lighting systems aligned with today's smart infrastructure standards.</p>
+                    <h3>Design</h3>
+                    <p>FTECH offers complete lighting design services for both interior and exterior applications. Beyond visual aesthetics, FTECH provides advanced control system design and seamless integration to meet the modern demands of intelligent lighting environments. Our team delivers customized solutions tailored to each project, including adjustments to wattage, lumen output, colour temperature, CRI, beam angles, trims, and finishes. With smart controls and automation-ready integration, we ensure every lighting system performs efficiently, reliably, and in harmony with the overall project design.</p>
                 </div>
             </div>
-            <!-- Strip 2 -->
+            <!-- Strip 2: Customization -->
             <div class="strip-item">
                 <div class="strip-bg">
-                    <img src="assets/sections/core competencies/Interior and Exterior Lighting Design.jpg" alt="Lighting Design" fetchpriority="high">
+                    <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1400" alt="Customization" fetchpriority="high">
                 </div>
                 <div class="strip-num">02</div>
-                <div class="strip-vertical-text">LIGHTING DESIGN</div>
+                <div class="strip-vertical-text">CUSTOMIZATION</div>
                 <div class="strip-content">
-                    <h3>Interior & Exterior Lighting Design</h3>
-                    <p>FTECH offers complete lighting design services for both interior and exterior applications. Utilizing advanced lighting software and cutting-edge technologies, our experienced team develops high-impact lighting schemes that enhance functionality, comfort, and visual appeal across diverse environments.</p>
+                    <h3>Customization</h3>
+                    <p>Specializing in bespoke luminaires and custom fabrication, we tailor lighting solutions to meet specific project requirements and architectural visions. From unique material selection to precision engineering, we transform creative concepts into tangible realities.</p>
                 </div>
             </div>
-            <!-- Strip 3 -->
+            <!-- Strip 3: Supply -->
             <div class="strip-item">
                 <div class="strip-bg">
-                    <img src="assets/sections/core competencies/Comprehensive Contract Services.jpg" alt="Contract Services" fetchpriority="high">
+                    <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1400" alt="Supply" fetchpriority="high">
                 </div>
                 <div class="strip-num">03</div>
-                <div class="strip-vertical-text">CONTRACT SERVICES</div>
+                <div class="strip-vertical-text">SUPPLY</div>
                 <div class="strip-content">
-                    <h3>Comprehensive Contract Services</h3>
-                    <p>We provide end-to-end contract services, covering all phases from conceptual design to installation and maintenance. Our structured project management approach ensures quality, efficiency, and compliance with industry standards—delivering reliable lighting solutions for commercial, industrial, and public facilities.</p>
+                    <h3>Supply</h3>
+                    <p>We supply high-quality lighting products and systems, sourcing the best components to ensure durability, efficiency, and performance. Our procurement process is designed to meet the specific needs of each project, ensuring timely delivery and adherence to specifications.</p>
+                </div>
+            </div>
+            <!-- Strip 4: Testing & Commissioning -->
+            <div class="strip-item">
+                <div class="strip-bg">
+                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1400" alt="Testing & Commissioning" fetchpriority="high">
+                </div>
+                <div class="strip-num">04</div>
+                <div class="strip-vertical-text">TESTING & COMMISSIONING</div>
+                <div class="strip-content">
+                    <h3>Testing & Commissioning</h3>
+                    <p>Our team conducts rigorous testing and commissioning to ensure all systems operate perfectly and meet safety and performance standards. We verify that every installation complies with the design intent and regulatory requirements before handover.</p>
+                </div>
+            </div>
+            <!-- Strip 5: After Sales -->
+            <div class="strip-item">
+                <div class="strip-bg">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1400" alt="After Sales" fetchpriority="high">
+                </div>
+                <div class="strip-num">05</div>
+                <div class="strip-vertical-text">AFTER SALES</div>
+                <div class="strip-content">
+                    <h3>After Sales</h3>
+                    <p>We offer continuous after-sales support and maintenance to ensure optimal performance and long-term reliability of all installed lighting systems. Our commitment extends beyond project completion, providing peace of mind and sustained quality.</p>
                 </div>
             </div>
         </section>
@@ -1037,10 +1067,10 @@
                     <h3>Bespoke Customization</h3>
                     <p>Our customized and bespoke lighting services is central to our business here at FTECH.</p>
                     <ul class="service-capabilities">
-                        <li>Custom Fabrication</li>
-                        <li>Material Selection</li>
-                        <li>Prototyping</li>
-                        <li>Unique Fixtures</li>
+                        <li>Custom Design & Fabrication</li>
+                        <li>Decorative Lighting</li>
+                        <li>Unique & Exclusive Fixtures</li>
+                        <li>Integration with Smart Technology</li>
                     </ul>
                 </div>
             </div>
@@ -1105,7 +1135,7 @@
             <div class="footer-content">
                 <h2>Ready to Start?</h2>
                 <p>With a focus on precision and creativity, we transform every vision into a functional and inspiring reality. Let's discuss your distinctive requirements.</p>
-                <a href="contact" class="footer-btn">Get in Touch</a>
+                <a href="contact.html" class="footer-btn">Get in Touch</a>
             </div>
         </section>
     </div>
@@ -1114,10 +1144,12 @@
         // Menu Toggle Logic
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
+        const logo = document.querySelector('.logo');
 
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
+            logo.classList.toggle('active');
 
             const menuText = menuToggle.querySelector('.menu-text');
             if (menuOverlay.classList.contains('active')) {

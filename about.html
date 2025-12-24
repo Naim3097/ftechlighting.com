@@ -66,16 +66,20 @@
             display: block;
             width: 120px;
             pointer-events: auto;
-            /* Smart contrast: White on dark, Black on light */
-            mix-blend-mode: difference; 
+            transition: all 0.3s ease;
         }
 
         .logo img {
             width: 100%;
             height: auto;
             display: block;
-            /* Force the burgundy logo to be pure white for maximum contrast */
-            filter: brightness(0) invert(1); 
+            /* Default: Original Brand Color (Burgundy) */
+            filter: none; 
+        }
+        
+        /* Active State for Logo (White on Overlay) */
+        .logo.active img {
+            filter: brightness(0) invert(1);
         }
 
         /* ====== MENU TOGGLE ====== */
@@ -86,8 +90,7 @@
             gap: 15px;
             cursor: pointer;
             z-index: 20001; /* Above overlay */
-            mix-blend-mode: difference;
-            color: #fff;
+            color: #940003; /* Burgundy */
         }
 
         .menu-text {
@@ -109,7 +112,7 @@
         .hamburger span {
             display: block;
             height: 2px;
-            background: #fff;
+            background: #940003; /* Burgundy */
             transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
         }
 
@@ -120,9 +123,12 @@
 
         /* Active State for Hamburger */
         .menu-toggle.active {
-            mix-blend-mode: normal;
+            color: #fff;
         }
         .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span {
+            background: #fff;
+        }
         .menu-toggle.active .hamburger span:nth-child(1) { 
             transform: translateY(4px) rotate(45deg); 
             width: 100%; 
@@ -350,15 +356,13 @@
 
         .focus-overlay-text h3 {
             font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 700;
+            font-weight: 900;
             margin-bottom: 25px;
             line-height: 0.9;
             letter-spacing: -2px;
-            color: transparent;
-            -webkit-text-stroke: 1px var(--beige-light);
-            text-stroke: 1px var(--beige-light);
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            text-transform: none;
+            color: var(--beige-light);
+            text-transform: uppercase;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
         }
         
         .focus-overlay-text p {
@@ -931,7 +935,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="/" class="logo">
+        <a href="index.html" class="logo">
             <img src="assets/logo/logo no tagline.png" alt="FTECH">
         </a>
         <div class="menu-toggle" id="menuToggle">
@@ -946,11 +950,11 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="/" class="menu-link">Home <span>01</span></a>
-            <a href="about" class="menu-link">About <span>02</span></a>
-            <a href="services" class="menu-link">Services <span>03</span></a>
-            <a href="projects" class="menu-link">Projects <span>04</span></a>
-            <a href="contact" class="menu-link">Contact <span>05</span></a>
+            <a href="index.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
         </div>
         <div class="menu-footer">
             <p>FTECH Solutions Sdn Bhd</p>
@@ -993,7 +997,7 @@
             <div class="editorial-content">
                 <div class="editorial-text-col">
                     <h2>The Editorial</h2>
-                    <p>FTECH Solutions Sdn Bhd (FTECH) is a holistic and innovative lighting specialist headquartered in Kuala Lumpur, Malaysia. The company provides end-to-end lighting solutions, working closely with clients from conceptualization and design planning to lighting simulation, project management, installation, and maintenance.</p>
+                    <p>As a full-service lighting solutions provider, FTECH Solutions Sdn Bhd (FTECH) delivers comprehensive expertise across all aspects of lighting design, site management, cabling works, installation, and maintenance. We are a CIDB-certified company, demonstrating our commitment to quality, professionalism, and compliance with industry standards. Our end-to-end approach covers every stage: Design, Customization, Supply, Testing & Commissioning, and After Sales.</p>
                     <p>FTECH is a licensed professional entity specializing in bespoke luminaires, pole customization, and steel and aluminium fabrication works for construction projects within the commercial and industrial sectors.</p>
                     <p>The company's capabilities also encompass the design and installation of both indoor and outdoor lighting systems for various facilities, including office buildings, public transportation terminals, convention and event centers, educational institutions, libraries, and parliamentary complexes.</p>
                 </div>
@@ -1028,46 +1032,61 @@
         <!-- Section 4: Dynamic Tabs (Section 29) -->
         <section class="dynamic-tabs-section">
             <div class="tabs-visual">
-                <img src="assets/logo/logo with tagline.png" class="tab-img active" data-tab="1" loading="lazy" style="object-fit: contain; padding: 10%; background-color: #050505;">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1400" class="tab-img" data-tab="2" fetchpriority="high">
-                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1400" class="tab-img" data-tab="3" fetchpriority="high">
-                <img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?q=80&w=1400" class="tab-img" data-tab="4" fetchpriority="high">
+                <!-- Design: Architectural/Blueprint context -->
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1400" class="tab-img active" data-tab="1" loading="lazy" style="object-fit: cover;">
+                <!-- Customization: Fabrication/Industrial detail -->
+                <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=1400" class="tab-img" data-tab="2" fetchpriority="high">
+                <!-- Supply: Warehouse/Logistics -->
+                <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1400" class="tab-img" data-tab="3" fetchpriority="high">
+                <!-- Testing & Commissioning: Technical inspection -->
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1400" class="tab-img" data-tab="4" fetchpriority="high">
+                <!-- After Sales: Client support/Handshake -->
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1400" class="tab-img" data-tab="5" fetchpriority="high">
             </div>
             <div class="tabs-content">
                 <div class="tab-item active" data-tab="1">
                     <div class="tab-header">
-                        <span>Introduction</span>
+                        <span>Design</span>
                         <span>+</span>
                     </div>
                     <div class="tab-body">
-                        <p>As a full-service lighting solutions provider, FTECH Solutions Sdn Bhd (FTECH) delivers comprehensive expertise across all aspects of lighting design, site management, cabling works, installation, and maintenance.</p>
+                        <p>We provide comprehensive lighting design services, from conceptualization to detailed planning and simulation, ensuring functional and aesthetic excellence.</p>
                     </div>
                 </div>
                 <div class="tab-item" data-tab="2">
                     <div class="tab-header">
-                        <span>Industry Expertise</span>
+                        <span>Customization</span>
                         <span>+</span>
                     </div>
                     <div class="tab-body">
-                        <p>With extensive hands-on experience, FTECH has successfully undertaken a wide range of medium to large-scale projects across multiple sectors. Our proven track record demonstrates our capability to meet complex project requirements with precision and efficiency.</p>
+                        <p>Specializing in bespoke luminaires and custom fabrication, we tailor lighting solutions to meet specific project requirements and architectural visions.</p>
                     </div>
                 </div>
                 <div class="tab-item" data-tab="3">
                     <div class="tab-header">
-                        <span>End-to-End Solutions</span>
+                        <span>Supply</span>
                         <span>+</span>
                     </div>
                     <div class="tab-body">
-                        <p>We provide complete lighting solutions for industrial facilities, retail environments, hospitality spaces, distribution centers, and other large-scale developments. From concept to completion, FTECH transforms lighting ideas into practical, efficient, and aesthetically impactful outcomes.</p>
+                        <p>We supply high-quality lighting products and systems, sourcing the best components to ensure durability, efficiency, and performance.</p>
                     </div>
                 </div>
                 <div class="tab-item" data-tab="4">
                     <div class="tab-header">
-                        <span>After-Sales Support</span>
+                        <span>Testing & Commissioning</span>
                         <span>+</span>
                     </div>
                     <div class="tab-body">
-                        <p>In line with our commitment to service excellence, FTECH offers continuous after-sales support and maintenance to ensure optimal performance and long-term reliability of all installed lighting systems.</p>
+                        <p>Our team conducts rigorous testing and commissioning to ensure all systems operate perfectly and meet safety and performance standards.</p>
+                    </div>
+                </div>
+                <div class="tab-item" data-tab="5">
+                    <div class="tab-header">
+                        <span>After Sales</span>
+                        <span>+</span>
+                    </div>
+                    <div class="tab-body">
+                        <p>We offer continuous after-sales support and maintenance to ensure optimal performance and long-term reliability of all installed lighting systems.</p>
                     </div>
                 </div>
             </div>
@@ -1078,7 +1097,7 @@
             <div class="footer-content">
                 <h2>Ready to Start?</h2>
                 <p>With a focus on precision and creativity, we transform every vision into a functional and inspiring reality. Let's discuss your distinctive requirements.</p>
-                <a href="contact" class="footer-btn">Get in Touch</a>
+                <a href="contact.html" class="footer-btn">Get in Touch</a>
             </div>
         </section>
     </div>
@@ -1087,10 +1106,12 @@
         // Menu Toggle Logic
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
+        const logo = document.querySelector('.logo');
 
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
+            logo.classList.toggle('active');
 
             const menuText = menuToggle.querySelector('.menu-text');
             if (menuOverlay.classList.contains('active')) {
@@ -1158,7 +1179,7 @@
                     setTimeout(() => isScrolling = false, 700);
                 } else {
                     // Redirect to next page (Services)
-                    window.location.href = 'services';
+                    window.location.href = 'services.html';
                 }
             } else {
                 if (currentSection > 0) {
@@ -1203,7 +1224,7 @@
         prevSectionBtn.addEventListener('click', (e) => {
             e.preventDefault();
             if (currentSection === 0) {
-                window.location.href = '/';
+                window.location.href = 'index.html';
             } else {
                 updateSection(currentSection - 1);
             }

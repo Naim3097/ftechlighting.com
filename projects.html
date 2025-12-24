@@ -33,7 +33,7 @@
         /* ====== HORIZONTAL SCROLL CONTAINER ====== */
         #fullpage {
             display: flex;
-            width: 700vw; /* 7 Sections: Hero, Featured, Showcase, Grid, Index, Additional, Footer */
+            width: 1200vw; /* 12 Sections: Hero, 10 Projects, Footer */
             height: 100vh;
             transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
             will-change: transform;
@@ -66,16 +66,20 @@
             display: block;
             width: 120px;
             pointer-events: auto;
-            /* Smart contrast: White on dark, Black on light */
-            mix-blend-mode: difference; 
+            transition: all 0.3s ease;
         }
 
         .logo img {
             width: 100%;
             height: auto;
             display: block;
-            /* Force the burgundy logo to be pure white for maximum contrast */
-            filter: brightness(0) invert(1); 
+            /* Default: Original Brand Color (Burgundy) */
+            filter: none; 
+        }
+        
+        /* Active State for Logo (White on Overlay) */
+        .logo.active img {
+            filter: brightness(0) invert(1);
         }
 
         /* ====== MENU TOGGLE ====== */
@@ -86,8 +90,7 @@
             gap: 15px;
             cursor: pointer;
             z-index: 20001; /* Above overlay */
-            mix-blend-mode: difference;
-            color: #fff;
+            color: #940003; /* Burgundy */
         }
 
         .menu-text {
@@ -109,7 +112,7 @@
         .hamburger span {
             display: block;
             height: 2px;
-            background: #fff;
+            background: #940003; /* Burgundy */
             transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
         }
 
@@ -120,9 +123,12 @@
 
         /* Active State for Hamburger */
         .menu-toggle.active {
-            mix-blend-mode: normal;
+            color: #fff;
         }
         .menu-toggle.active .menu-text { opacity: 1; }
+        .menu-toggle.active .hamburger span {
+            background: #fff;
+        }
         .menu-toggle.active .hamburger span:nth-child(1) { 
             transform: translateY(4px) rotate(45deg); 
             width: 100%; 
@@ -249,7 +255,7 @@
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             z-index: 100;
             pointer-events: auto;
         }
@@ -304,11 +310,11 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100%; /* Changed to 100% to match strip height */
+            height: 100%;
             object-fit: cover;
             filter: contrast(1.1);
             transform: scale(1);
-            transition: transform 10s ease; /* Slow zoom effect */
+            transition: transform 10s ease;
         }
 
         .slice-strip picture {
@@ -346,7 +352,6 @@
             z-index: 10;
             text-align: center;
             color: #fff;
-            /* mix-blend-mode removed for better visibility */
             text-shadow: 0 4px 20px rgba(0,0,0,0.8);
             opacity: 0;
             transition: opacity 1s 1.5s;
@@ -364,7 +369,7 @@
             text-transform: uppercase;
         }
 
-        /* ====== SECTION 2: DIAGONAL SPLIT (Section 3) - Featured Project ====== */
+        /* ====== PROJECT SECTIONS (Diagonal Split) ====== */
         .diagonal-section {
             height: 100vh;
             position: relative;
@@ -375,7 +380,7 @@
         }
 
         .diagonal-bg {
-            display: none; /* Removed as requested to avoid overlap */
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -399,7 +404,7 @@
             height: 100%;
             overflow: hidden;
             z-index: 2;
-            background-color: #0f0c0c; /* Prevent white flash */
+            background-color: #0f0c0c;
         }
 
         .diagonal-image::after {
@@ -408,7 +413,7 @@
             top: 0;
             bottom: 0;
             right: 0;
-            left: -2px; /* Stronger overlap to prevent gap */
+            left: -2px;
             background: linear-gradient(90deg, #0f0c0c 0%, transparent 20%);
             z-index: 1;
             pointer-events: none;
@@ -419,8 +424,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%; /* Adjusted to show top of building */
-            /* clip-path removed for straight split */
+            object-position: center 20%;
             transform: scale(1);
             transition: transform 8s cubic-bezier(0.19, 1, 0.22, 1);
             will-change: transform;
@@ -474,123 +478,17 @@
             font-weight: 400;
         }
 
-        /* ====== QUAD PANEL LAYOUT (Used for Sections 3, 4, 5) ====== */
-        .quad-section {
-            height: 100vh;
-            display: flex;
-            background: #000;
-            overflow: hidden;
-        }
-
-        .quad-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-            transition: flex 0.5s ease;
-            height: 100%;
-        }
-
-        .quad-col:last-child {
-            border-right: none;
-        }
-
-        .quad-col:hover {
-            flex: 1.2; /* Slight expansion on hover */
-        }
-
-        .quad-image-wrapper {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        .quad-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
-            filter: grayscale(100%) brightness(0.8);
-        }
-
-        .quad-col:hover .quad-image-wrapper img {
-            transform: scale(1.1);
-            filter: grayscale(0%) brightness(1);
-        }
-
-        .quad-footer {
-            height: 140px;
-            background: #000;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            z-index: 2;
-            position: relative;
-        }
-
-        .quad-header-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .quad-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-burgundy);
+        .project-number {
+            position: absolute;
+            bottom: 40px;
+            left: 120px;
+            font-size: 120px;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.1);
+            z-index: 1;
             line-height: 1;
-        }
-
-        .quad-title {
-            font-size: 1.4rem;
-            color: #fff;
-            font-weight: 400;
-            line-height: 1.1;
-        }
-
-        .quad-subtitle {
-            font-size: 0.75rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-left: 0;
-        }
-
-        /* Mobile Responsive for Quad Layout */
-        @media (max-width: 768px) {
-            .quad-section {
-                flex-direction: column;
-                height: auto;
-            }
-
-            .quad-col {
-                width: 100%;
-                height: 500px; /* Fixed height for mobile items */
-                border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-                flex: none; /* Disable flex growing */
-            }
-
-            .quad-col:hover {
-                flex: none;
-            }
-
-            .quad-image-wrapper img {
-                filter: grayscale(0%) brightness(1); /* Always color on mobile */
-            }
-            
-            .quad-footer {
-                height: auto;
-                padding: 20px;
-            }
-            
-            .quad-number { font-size: 2rem; }
-            .quad-title { font-size: 1.2rem; }
+            pointer-events: none;
         }
 
         /* ====== FOOTER ====== */
@@ -660,7 +558,7 @@
 
             .logo, .menu-toggle { pointer-events: auto; }
 
-            /* Mobile Nav Elements - Match Home Page */
+            /* Mobile Nav Elements */
             .logo {
                 width: 100px;
                 mix-blend-mode: difference;
@@ -706,35 +604,7 @@
             .diagonal-image { height: 40vh; width: 100%; clip-path: none; position: relative; }
             .diagonal-content { padding: 30px; transform: none; opacity: 1; max-width: 100%; }
             .diagonal-content h2 { font-size: 2.5rem; }
-
-            /* Triptych Mobile */
-            .triptych-section { flex-direction: column; height: auto; }
-            .triptych-col { width: 100%; height: 400px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); flex: none; }
-            .triptych-info { opacity: 1; transform: none; bottom: 20px; left: 20px; right: 20px; }
-            .triptych-info h3 { font-size: 1.8rem; }
-
-            /* Morph Mobile */
-            .morphing-grid { padding: 20px; height: auto; }
-            .morph-container { 
-                grid-template-columns: 1fr !important; 
-                grid-template-rows: repeat(4, 400px) !important; 
-                gap: 10px; 
-                height: auto;
-            }
-            .morph-item { grid-column: span 1 !important; grid-row: span 1 !important; }
-            .morph-label { opacity: 1; transform: none; bottom: 20px; left: 20px; }
-            .morph-controls { display: none; }
-
-            /* Project Index Mobile */
-            .project-index-section { flex-direction: column; padding: 40px 20px; height: auto; }
-            .index-list-wrapper { padding: 0; flex: 1; width: 100%; }
-            .index-preview-wrapper { display: none; }
-            .project-row { grid-template-columns: 1fr; gap: 5px; padding: 20px 0; }
-            .project-row .type { text-align: left; opacity: 1 !important; }
-            .project-row:hover::after { display: none; }
-            .index-header h2 { font-size: 2.5rem; }
-            .index-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .index-header p { text-align: left; max-width: 100%; }
+            .project-number { display: none; }
             
             /* Footer */
             .footer-section { height: 50vh; min-height: 400px; }
@@ -742,29 +612,16 @@
 
         /* Large Screens */
         @media (min-width: 1921px) {
-            .quad-title { font-size: 2.5rem; }
-            .quad-subtitle { font-size: 1.2rem; }
-            .quad-number { font-size: 1.5rem; }
-            .showcase-title { font-size: 8rem; }
-            .showcase-location { font-size: 1.5rem; }
+            .diagonal-content h2 { font-size: 6rem; }
+            .project-meta { font-size: 1.2rem; }
         }
 
         /* Short Screens (Landscape Mobile/Tablet) */
         @media (max-height: 600px) and (min-width: 769px) {
-            .quad-footer { bottom: 20px; left: 20px; right: 20px; }
             .nav-arrows { bottom: 20px; }
             .page-indicators { right: 20px; }
         }
-    
-        .project-link {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-            text-decoration: none;
-            color: inherit;
-        }
-</style>
+    </style>
 
     <!-- SEO & Social Meta Tags -->
     <link rel="icon" type="image/png" href="assets/logo/favicon.png">
@@ -790,7 +647,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="/" class="logo">
+        <a href="index.html" class="logo">
             <img src="assets/logo/logo no tagline.png" alt="FTECH">
         </a>
         <div class="menu-toggle" id="menuToggle">
@@ -805,11 +662,11 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="/" class="menu-link">Home <span>01</span></a>
-            <a href="about" class="menu-link">About <span>02</span></a>
-            <a href="services" class="menu-link">Services <span>03</span></a>
-            <a href="projects" class="menu-link">Projects <span>04</span></a>
-            <a href="contact" class="menu-link">Contact <span>05</span></a>
+            <a href="index.html" class="menu-link">Home <span>01</span></a>
+            <a href="about.html" class="menu-link">About <span>02</span></a>
+            <a href="services.html" class="menu-link">Services <span>03</span></a>
+            <a href="projects.html" class="menu-link">Projects <span>04</span></a>
+            <a href="contact.html" class="menu-link">Contact <span>05</span></a>
         </div>
         <div class="menu-footer">
             <p>FTECH Solutions Sdn Bhd</p>
@@ -832,6 +689,11 @@
         <div class="indicator-dot" data-index="4"></div>
         <div class="indicator-dot" data-index="5"></div>
         <div class="indicator-dot" data-index="6"></div>
+        <div class="indicator-dot" data-index="7"></div>
+        <div class="indicator-dot" data-index="8"></div>
+        <div class="indicator-dot" data-index="9"></div>
+        <div class="indicator-dot" data-index="10"></div>
+        <div class="indicator-dot" data-index="11"></div>
     </div>
 
     <div id="fullpage">
@@ -873,7 +735,7 @@
             </div>
         </section>
 
-        <!-- Section 2: Featured (Split) -->
+        <!-- Section 2: Aria KLCC (01) -->
         <section class="diagonal-section">
             <div class="diagonal-bg"></div>
             <div class="diagonal-image">
@@ -889,254 +751,177 @@
                     <p style="margin-top: 20px;">A prestigious residential development where lighting design enhances the architectural elegance and creates an ambiance of sophisticated luxury.</p>
                 </div>
             </div>
+            <div class="project-number">01</div>
         </section>
 
-        <!-- Section 3: Showcase (Quad Layout) -->
-        <section class="quad-section">
-            <div class="quad-col">
-                <a href="projects/menara-hap-seng-3" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/menara hap seng 3 kuala lumpur.jpg" alt="Menara Hap Seng 3" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">01</span>
-                        <h3 class="quad-title">Menara Hap Seng 3</h3>
-                    </div>
-                    <p class="quad-subtitle">Facade & Interior</p>
-                </div>
-            </a>
+        <!-- Section 3: Menara Hap Seng 3 (02) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/menara hap seng 3 kuala lumpur.jpg" alt="Menara Hap Seng 3" fetchpriority="high">
             </div>
-            <div class="quad-col">
-                <a href="projects/mercedes-showroom" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/mercedes showroom puchong.webp" alt="Mercedes Showroom" fetchpriority="high">
+            <div class="diagonal-content">
+                <h2>Menara<br>Hap Seng 3</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Kuala Lumpur</p>
+                    <p><strong>Scope:</strong> Facade & Interior Lighting</p>
+                    <p style="margin-top: 20px;">A landmark commercial tower featuring integrated facade lighting that accentuates its verticality and modern architectural form.</p>
                 </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">02</span>
-                        <h3 class="quad-title">Mercedes Showroom</h3>
-                    </div>
-                    <p class="quad-subtitle">Automotive Retail Experience</p>
-                </div>
-            </a>
             </div>
-            <div class="quad-col">
-                <a href="projects/versis-medini" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/versis medini johor.jpg" alt="Versis Medini" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">03</span>
-                        <h3 class="quad-title">Versis Medini</h3>
-                    </div>
-                    <p class="quad-subtitle">Commercial Landscape</p>
-                </div>
-            </a>
-            </div>
-            <div class="quad-col">
-                <a href="projects/autohaus-setia-alam" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/autohaus setia alam selangor.jpg" alt="Autohaus Setia Alam" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">04</span>
-                        <h3 class="quad-title">Autohaus Setia Alam</h3>
-                    </div>
-                    <p class="quad-subtitle">Showroom Lighting</p>
-                </div>
-            </a>
-            </div>
+            <div class="project-number">02</div>
         </section>
 
-        <!-- Section 4: Grid (Quad Layout) -->
-        <section class="quad-section">
-            <div class="quad-col">
-                <a href="projects/sterling-drug" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/sterling drug (malaya) sdn bhd.jpeg" alt="Sterling Drug" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">05</span>
-                        <h3 class="quad-title">Sterling Drug</h3>
-                    </div>
-                    <p class="quad-subtitle">Industrial Facility (Selangor)</p>
-                </div>
-            </a>
+        <!-- Section 4: Mercedes Showroom (03) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/mercedes showroom puchong.webp" alt="Mercedes Showroom" fetchpriority="high">
             </div>
-            <div class="quad-col">
-                <a href="projects/hornbill-skyways" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/hornbill skyways hangar sarawak.jpg" alt="Hornbill Skyways" fetchpriority="high">
+            <div class="diagonal-content">
+                <h2>Mercedes<br>Showroom</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Puchong, Selangor</p>
+                    <p><strong>Scope:</strong> Automotive Retail Experience</p>
+                    <p style="margin-top: 20px;">Precision lighting design tailored to highlight the sleek lines and premium finish of luxury automobiles in a retail environment.</p>
                 </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">06</span>
-                        <h3 class="quad-title">Hornbill Skyways</h3>
-                    </div>
-                    <p class="quad-subtitle">Aviation Hangar (Sarawak)</p>
-                </div>
-            </a>
             </div>
-            <div class="quad-col">
-                <a href="projects/kuching-port" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/kuching port authority sarawak.jpeg" alt="Kuching Port" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">07</span>
-                        <h3 class="quad-title">Kuching Port</h3>
-                    </div>
-                    <p class="quad-subtitle">Port Authority (Sarawak)</p>
-                </div>
-            </a>
-            </div>
-            <div class="quad-col">
-                <a href="projects/sime-darby" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/sime darby business centre singapore.webp" alt="Sime Darby" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">08</span>
-                        <h3 class="quad-title">Sime Darby</h3>
-                    </div>
-                    <p class="quad-subtitle">Business Centre (Singapore)</p>
-                </div>
-            </a>
-            </div>
+            <div class="project-number">03</div>
         </section>
 
-        <!-- Section 5: Project Index (Quad Layout) -->
-        <section class="quad-section">
-            <div class="quad-col">
-                <a href="projects/maslee-pontian" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/maslee express pontian johor.jpg" alt="Maslee Pontian" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">09</span>
-                        <h3 class="quad-title">Maslee Pontian</h3>
-                    </div>
-                    <p class="quad-subtitle">Interior Lighting (Johor)</p>
-                </div>
-            </a>
+        <!-- Section 5: Autohaus Setia Alam (04) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/autohaus setia alam selangor.jpg" alt="Autohaus Setia Alam" fetchpriority="high">
             </div>
-            <div class="quad-col">
-                <a href="projects/akasa-cheras" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/akasa cheras south balakong.jpg" alt="Akasa Cheras" fetchpriority="high">
+            <div class="diagonal-content">
+                <h2>Autohaus<br>Setia Alam</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Setia Alam, Selangor</p>
+                    <p><strong>Scope:</strong> Showroom Lighting</p>
+                    <p style="margin-top: 20px;">Creating an inviting and dynamic atmosphere for automotive display, ensuring optimal color rendering and visual comfort.</p>
                 </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">10</span>
-                        <h3 class="quad-title">Akasa Cheras</h3>
-                    </div>
-                    <p class="quad-subtitle">Exterior & Landscape</p>
-                </div>
-            </a>
             </div>
-            <div class="quad-col">
-                <a href="projects/one-changi-city" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/one @ changi city singapore.jpg" alt="One @ Changi City" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">11</span>
-                        <h3 class="quad-title">One @ Changi City</h3>
-                    </div>
-                    <p class="quad-subtitle">Commercial Hub (Singapore)</p>
-                </div>
-            </a>
-            </div>
-            <div class="quad-col">
-                <a href="projects/upeca-aerotech" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/UPECA.jpg" alt="UPECA Aerotech" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">12</span>
-                        <h3 class="quad-title">UPECA Aerotech</h3>
-                    </div>
-                    <p class="quad-subtitle">Industrial Lighting</p>
-                </div>
-            </a>
-            </div>
+            <div class="project-number">04</div>
         </section>
 
-        <!-- Section 6: Additional Projects (Quad Layout) -->
-        <section class="quad-section">
-            <div class="quad-col">
-                <a href="projects/cmc-materials" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/cmc materials singapore.jpeg" alt="CMC Materials" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">13</span>
-                        <h3 class="quad-title">CMC Materials</h3>
-                    </div>
-                    <p class="quad-subtitle">Industrial Facility (Singapore)</p>
-                </div>
-            </a>
+        <!-- Section 6: Sime Darby (05) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/sime darby business centre singapore.webp" alt="Sime Darby" fetchpriority="high">
             </div>
-            <div class="quad-col">
-                <a href="projects/hap-seng-industrial-park" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/hap seng industrial park selangor.jpg" alt="Hap Seng Industrial Park" fetchpriority="high">
+            <div class="diagonal-content">
+                <h2>Sime<br>Darby</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Singapore</p>
+                    <p><strong>Scope:</strong> Business Centre Lighting</p>
+                    <p style="margin-top: 20px;">Functional and aesthetic lighting solutions for a premier business centre, balancing corporate professionalism with architectural warmth.</p>
                 </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">14</span>
-                        <h3 class="quad-title">Hap Seng Industrial Park</h3>
-                    </div>
-                    <p class="quad-subtitle">Industrial Park (Selangor)</p>
-                </div>
-            </a>
             </div>
-            <div class="quad-col">
-                <a href="projects/independent-oil-terminal" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/independent oil terminal sarawak.jpg" alt="Independent Oil Terminal" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">15</span>
-                        <h3 class="quad-title">Independent Oil Terminal</h3>
-                    </div>
-                    <p class="quad-subtitle">Oil & Gas Facility (Sarawak)</p>
-                </div>
-            </a>
-            </div>
-            <div class="quad-col">
-                <a href="projects/singapore-botanic-gardens" class="project-link">
-                <div class="quad-image-wrapper">
-                    <img src="assets/sections/projects/singapore botanic gardens bukit timah gate.jpg" alt="Singapore Botanic Gardens" fetchpriority="high">
-                </div>
-                <div class="quad-footer">
-                    <div class="quad-header-group">
-                        <span class="quad-number">16</span>
-                        <h3 class="quad-title">Singapore Botanic Gardens</h3>
-                    </div>
-                    <p class="quad-subtitle">Landscape (Singapore)</p>
-                </div>
-            </a>
-            </div>
+            <div class="project-number">05</div>
         </section>
 
-        <!-- Section 7: Footer -->
+        <!-- Section 7: Akasa Cheras (06) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/akasa cheras south balakong.jpg" alt="Akasa Cheras" fetchpriority="high">
+            </div>
+            <div class="diagonal-content">
+                <h2>Akasa<br>Cheras</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Cheras South, Selangor</p>
+                    <p><strong>Scope:</strong> Exterior & Landscape</p>
+                    <p style="margin-top: 20px;">Enhancing the outdoor living experience through strategic landscape lighting that promotes safety, wayfinding, and visual appeal.</p>
+                </div>
+            </div>
+            <div class="project-number">06</div>
+        </section>
+
+        <!-- Section 8: One @ Changi City (07) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/one @ changi city singapore.jpg" alt="One @ Changi City" fetchpriority="high">
+            </div>
+            <div class="diagonal-content">
+                <h2>One @<br>Changi City</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Singapore</p>
+                    <p><strong>Scope:</strong> Commercial Hub</p>
+                    <p style="margin-top: 20px;">Integrated lighting solutions for a bustling commercial hub, focusing on energy efficiency and creating a vibrant urban environment.</p>
+                </div>
+            </div>
+            <div class="project-number">07</div>
+        </section>
+
+        <!-- Section 9: CMC Materials (08) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/cmc materials singapore.jpeg" alt="CMC Materials" fetchpriority="high">
+            </div>
+            <div class="diagonal-content">
+                <h2>CMC<br>Materials</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Singapore</p>
+                    <p><strong>Scope:</strong> Industrial Facility</p>
+                    <p style="margin-top: 20px;">High-performance industrial lighting designed to meet strict operational standards, ensuring safety and productivity in a manufacturing setting.</p>
+                </div>
+            </div>
+            <div class="project-number">08</div>
+        </section>
+
+        <!-- Section 10: Hap Seng Industrial Park (09) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/hap seng industrial park selangor.jpg" alt="Hap Seng Industrial Park" fetchpriority="high">
+            </div>
+            <div class="diagonal-content">
+                <h2>Hap Seng<br>Industrial Park</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Selangor</p>
+                    <p><strong>Scope:</strong> Industrial Park</p>
+                    <p style="margin-top: 20px;">Comprehensive lighting infrastructure for a modern industrial park, prioritizing durability, efficiency, and site-wide illumination.</p>
+                </div>
+            </div>
+            <div class="project-number">09</div>
+        </section>
+
+        <!-- Section 11: Singapore Botanic Gardens (10) -->
+        <section class="diagonal-section">
+            <div class="diagonal-bg"></div>
+            <div class="diagonal-image">
+                <img src="assets/sections/projects/singapore botanic gardens bukit timah gate.jpg" alt="Singapore Botanic Gardens" fetchpriority="high">
+            </div>
+            <div class="diagonal-content">
+                <h2>Singapore<br>Botanic Gardens</h2>
+                <div class="thin-line"></div>
+                <div class="project-meta">
+                    <p><strong>Location:</strong> Singapore</p>
+                    <p><strong>Scope:</strong> Landscape Lighting</p>
+                    <p style="margin-top: 20px;">Subtle and respectful lighting design for a UNESCO World Heritage site, enhancing the natural beauty while preserving the ecological balance.</p>
+                </div>
+            </div>
+            <div class="project-number">10</div>
+        </section>
+
+        <!-- Section 12: Footer -->
         <section class="footer-section">
             <div class="footer-content">
                 <h2>Ready to Start?</h2>
                 <p>With a focus on precision and creativity, we transform every vision into a functional and inspiring reality. Let's discuss your distinctive requirements.</p>
-                <a href="contact" class="footer-btn">Get in Touch</a>
+                <a href="contact.html" class="footer-btn">Get in Touch</a>
             </div>
         </section>
     </div>
@@ -1145,10 +930,12 @@
         // Menu Toggle Logic
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
+        const logo = document.querySelector('.logo');
 
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
+            logo.classList.toggle('active');
 
             const menuText = menuToggle.querySelector('.menu-text');
             if (menuOverlay.classList.contains('active')) {
@@ -1164,7 +951,7 @@
         const nextSectionBtn = document.getElementById('nextSectionBtn');
         const prevSectionBtn = document.getElementById('prevSectionBtn');
         let currentSection = 0;
-        const totalSections = 7;
+        const totalSections = 12;
         let isScrolling = false;
 
         function updateSection(index) {
