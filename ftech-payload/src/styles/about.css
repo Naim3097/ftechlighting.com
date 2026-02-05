@@ -1,0 +1,476 @@
+/* ====== ABOUT PAGE STYLES ====== */
+
+.about-page {
+    background: #050505;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ====== SECTION 1: FOCUS MODE (HERO) ====== */
+.focus-section {
+    height: 100vh;
+    width: 100vw;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.focus-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.focus-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(5, 5, 5, 0.3) 0%, rgba(5, 5, 5, 0.7) 100%);
+    z-index: 1;
+}
+
+.focus-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.focus-content h2 {
+    font-size: clamp(4rem, 15vw, 10rem);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -5px;
+    text-transform: uppercase;
+    color: var(--beige-light);
+    text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+
+.focus-overlay-text {
+    position: absolute;
+    bottom: 80px;
+    right: 80px;
+    text-align: right;
+    color: var(--beige-light);
+    z-index: 3;
+}
+
+.focus-overlay-text h3 {
+    font-size: 3rem;
+    font-weight: 200;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+    -webkit-text-stroke: 1px var(--beige-light);
+    color: transparent;
+}
+
+.focus-overlay-text p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+/* ====== SECTION 2: THE EDITORIAL ====== */
+.editorial-section {
+    height: 100vh;
+    width: 100vw;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: var(--burgundy-dark);
+}
+
+.editorial-bg {
+    position: absolute;
+    inset: 0;
+    background: url('/assets/sections/about/editorial.jpg') center/cover no-repeat;
+    filter: grayscale(20%) contrast(1.1) brightness(0.3);
+    transform: scale(1.1);
+    transition: transform 0.1s ease-out;
+    z-index: 0;
+}
+
+.editorial-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    gap: 0;
+}
+
+.editorial-text-col {
+    flex: 1;
+    padding: 100px;
+    color: var(--beige-light);
+    transform: translateX(0);
+    transition: transform 0.1s ease-out;
+}
+
+.editorial-text-col h2 {
+    font-size: 4rem;
+    font-weight: 200;
+    margin-bottom: 40px;
+    letter-spacing: -2px;
+    line-height: 1;
+}
+
+.editorial-text-col p {
+    font-size: 1.1rem;
+    line-height: 2;
+    font-weight: 300;
+    color: rgba(251, 241, 229, 0.9);
+    margin-bottom: 25px;
+    max-width: 650px;
+}
+
+.editorial-text-col p:first-of-type::first-letter {
+    font-size: 4rem;
+    font-weight: 100;
+    float: left;
+    line-height: 0.8;
+    margin-right: 10px;
+    color: var(--primary-burgundy);
+}
+
+.editorial-img-col {
+    flex: 1;
+    height: 80%;
+    position: relative;
+    overflow: hidden;
+    margin-right: 80px;
+}
+
+.editorial-img-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ====== SECTION 3: GLASS INSIGHTS ====== */
+.glass-insights-section {
+    height: 100vh;
+    width: 100vw;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #050505;
+}
+
+.glass-insights-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(130, 0, 0, 0.15) 0%, transparent 70%);
+    z-index: 0;
+}
+
+.glass-cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 60px;
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 4px;
+    border: 1px solid rgba(251, 241, 229, 0.1);
+    padding: 50px 40px;
+    color: white;
+    transition: all 0.5s var(--ease-out-quint);
+    cursor: pointer;
+    transform-style: preserve-3d;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.glass-card:hover {
+    background: rgba(130, 0, 0, 0.6);
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.glass-card h3 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    font-weight: 300;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.glass-card p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    opacity: 0.9;
+    font-weight: 300;
+    color: rgba(255,255,255,0.9);
+}
+
+/* ====== SECTION 4: DYNAMIC TABS ====== */
+.dynamic-tabs-section {
+    height: 100vh;
+    width: 100vw;
+    flex-shrink: 0;
+    display: flex;
+    background: var(--burgundy-dark);
+    color: var(--beige-light);
+    overflow: hidden;
+}
+
+.tabs-visual {
+    flex: 1.2;
+    position: relative;
+    overflow: hidden;
+}
+
+.tabs-visual img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    transform: scale(1.1);
+}
+
+.tabs-visual img.active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.6s ease, transform 6s ease-out;
+}
+
+.tabs-content {
+    flex: 0.8;
+    padding: 80px 80px 140px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--burgundy-dark);
+    position: relative;
+    z-index: 2;
+}
+
+.tab-item {
+    border-bottom: 1px solid rgba(251, 241, 229, 0.1);
+    padding: 30px 20px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    opacity: 0.5;
+    border-left: 3px solid transparent;
+}
+
+.tab-item:hover, .tab-item.active {
+    opacity: 1;
+    border-bottom-color: rgba(251, 241, 229, 0.3);
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+    padding-left: 30px;
+}
+
+.tab-item.active {
+    border-left-color: var(--primary-burgundy);
+}
+
+.tab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0;
+    transition: margin 0.3s ease;
+}
+
+.tab-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s var(--ease-out-quint);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(251, 241, 229, 0.8);
+}
+
+.tab-item.active .tab-header {
+    margin-bottom: 20px;
+}
+
+.tab-item.active .tab-body {
+    max-height: 200px;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+    .about-page {
+        overflow-y: auto;
+        height: auto;
+    }
+
+    /* Hero */
+    .focus-section {
+        min-height: 100vh;
+        height: auto;
+    }
+    
+    .focus-content h2 {
+        font-size: clamp(3rem, 12vw, 5rem);
+        line-height: 0.9;
+    }
+    
+    .focus-overlay-text {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-top: 40px;
+        padding: 0 20px;
+        transform: none;
+        opacity: 1;
+        text-align: center;
+    }
+    
+    .focus-overlay-text h3 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        -webkit-text-stroke: 0.5px var(--beige-light);
+    }
+    
+    .focus-overlay-text p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Editorial */
+    .editorial-section {
+        height: auto;
+        min-height: 100vh;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .editorial-bg {
+        filter: grayscale(20%) contrast(1.1) brightness(0.4);
+    }
+    
+    .editorial-content {
+        flex-direction: column;
+        padding: 0 20px;
+        gap: 0;
+        height: auto;
+        width: 100%;
+    }
+    
+    .editorial-img-col {
+        display: none;
+    }
+    
+    .editorial-text-col {
+        margin: 0;
+        padding: 40px 30px;
+        background: rgba(15, 10, 10, 0.75);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(251, 241, 229, 0.1);
+        transform: none;
+        border-radius: 4px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    
+    .editorial-text-col h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+    
+    .editorial-text-col p {
+        font-size: 1rem;
+        color: rgba(251, 241, 229, 0.9);
+    }
+
+    /* Glass Insights */
+    .glass-insights-section {
+        padding: 80px 20px 120px 20px;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .glass-cards-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0;
+        width: 100%;
+    }
+    
+    .glass-card {
+        padding: 30px;
+        background: rgba(15, 10, 10, 0.75);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        transform: none !important;
+    }
+    
+    .glass-card h3 { font-size: 1.5rem; }
+
+    /* Dynamic Tabs */
+    .dynamic-tabs-section {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .tabs-visual {
+        height: 35vh;
+        width: 100%;
+        flex: none;
+    }
+    
+    .tabs-content {
+        padding: 30px 20px;
+        flex: 1;
+        width: 100%;
+        height: auto;
+    }
+    
+    .tab-item {
+        padding: 20px 10px;
+    }
+    
+    .tab-header {
+        font-size: 1.1rem;
+    }
+    
+    .tab-body {
+        font-size: 0.95rem;
+    }
+}
+
+/* Large Screens */
+@media (min-width: 1921px) {
+    .editorial-text-col h2 { font-size: 5rem; }
+    .editorial-text-col p { font-size: 1.4rem; }
+    .glass-content h2 { font-size: 5rem; }
+    .glass-content p { font-size: 1.4rem; }
+    .tab-item h3 { font-size: 2.5rem; }
+    .tab-item p { font-size: 1.2rem; }
+}

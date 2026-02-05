@@ -64,7 +64,7 @@
 
         .logo {
             display: block;
-            width: 120px;
+            width: 144px;
             pointer-events: auto;
             transition: all 0.3s ease;
         }
@@ -312,8 +312,9 @@
             width: 100vw;
             height: 100%;
             object-fit: cover;
+            object-position: center;
             filter: contrast(1.1);
-            transform: scale(1);
+            transform: scale(1.05);
             transition: transform 10s ease;
         }
 
@@ -321,10 +322,11 @@
             display: block;
             width: 100%;
             height: 100%;
+            overflow: hidden;
         }
 
         .slice-section.active .slice-strip img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .slice-strip:nth-child(1) img { left: 0; }
@@ -424,14 +426,28 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%;
-            transform: scale(1);
+            object-position: center;
+            transform: scale(1.05);
             transition: transform 8s cubic-bezier(0.19, 1, 0.22, 1);
             will-change: transform;
         }
 
         .diagonal-section:hover .diagonal-image img {
-            transform: scale(1.1);
+            transform: scale(1.08);
+        }
+
+        /* Specific fix for Project 1 & 2 */
+        .contain-strict img {
+            transform: scale(1) !important;
+            object-fit: cover !important;
+            object-position: center center !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        /* Remove hover zoom or keep very subtle */
+        .diagonal-section:hover .contain-strict img {
+            transform: scale(1) !important;
         }
 
         .diagonal-content {
@@ -560,7 +576,7 @@
 
             /* Mobile Nav Elements */
             .logo {
-                width: 100px;
+                width: 120px;
                 mix-blend-mode: difference;
             }
             .logo img { 
@@ -601,7 +617,17 @@
             /* Diagonal Mobile */
             .diagonal-section { flex-direction: column; height: auto; min-height: 100vh; }
             .diagonal-bg { height: 40vh; width: 100%; clip-path: none; position: relative; }
-            .diagonal-image { height: 40vh; width: 100%; clip-path: none; position: relative; }
+            .diagonal-image { 
+                height: 40vh; 
+                width: 100%; 
+                clip-path: none; 
+                position: relative; 
+                overflow: hidden;
+            }
+            .diagonal-image img {
+                object-position: center;
+                transform: scale(1) !important;
+            }
             .diagonal-content { padding: 30px; transform: none; opacity: 1; max-width: 100%; }
             .diagonal-content h2 { font-size: 2.5rem; }
             .project-number { display: none; }
@@ -728,7 +754,7 @@
                     <source media="(max-width: 768px)" srcset="assets/sections/projects/heroo.jpeg">
                     <img src="assets/sections/projects/heroo.jpeg" alt="Hero 5" fetchpriority="high">
                 </picture>
-            </div>
+            </div> contain-strict
             <div class="hero-overlay"></div>
             <div class="slice-content">
                 <h1>PROJECTS</h1>
@@ -757,7 +783,7 @@
         <!-- Section 3: Menara Hap Seng 3 (02) -->
         <section class="diagonal-section">
             <div class="diagonal-bg"></div>
-            <div class="diagonal-image">
+            <div class="diagonal-image contain-strict">
                 <img src="assets/sections/projects/menara hap seng 3 kuala lumpur.jpg" alt="Menara Hap Seng 3" fetchpriority="high">
             </div>
             <div class="diagonal-content">

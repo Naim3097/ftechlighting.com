@@ -1,0 +1,38 @@
+/* ====== FTECH Brand Variables ====== */
+:root {
+    /* Brand Colors */
+    --primary-burgundy: #820000;
+    --burgundy-dark: #2a0a0a;
+    --burgundy-alt: #811517;
+    --accent-burgundy: #87181a;
+    --beige-light: #FBF1E5;
+    --beige-alt: #FBF4E9;
+    --text-dark: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    
+    /* Timing Functions */
+    --ease-smooth: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-out-back: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Global Resets */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: var(--beige-light);
+    overflow-x: hidden;
+}

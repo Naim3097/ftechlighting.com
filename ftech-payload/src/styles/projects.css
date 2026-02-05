@@ -1,0 +1,315 @@
+/* ====== PROJECTS PAGE STYLES ====== */
+
+/* ====== SECTION 1: THE SLICE (Hero) ====== */
+.slice-section {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  background: #000;
+}
+
+.slice-strip {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  transform: translateY(100%);
+  filter: brightness(2);
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
+}
+
+.slice-strip:nth-child(odd) {
+  transform: translateY(-100%);
+}
+
+.slice-strip:nth-child(even) {
+  transform: translateY(100%);
+}
+
+.slice-strip:nth-child(1) { transition-delay: 0.0s; }
+.slice-strip:nth-child(2) { transition-delay: 0.1s; }
+.slice-strip:nth-child(3) { transition-delay: 0.2s; }
+.slice-strip:nth-child(4) { transition-delay: 0.3s; }
+.slice-strip:nth-child(5) { transition-delay: 0.4s; }
+
+.slice-section.active .slice-strip {
+  transform: translateY(0);
+  filter: brightness(1);
+}
+
+.slice-strip img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: contrast(1.1);
+  transform: scale(1.05);
+  transition: transform 10s ease;
+}
+
+.slice-section.active .slice-strip img {
+  transform: scale(1.08);
+}
+
+.slice-strip:nth-child(1) img { left: 0; }
+.slice-strip:nth-child(2) img { left: -20vw; }
+.slice-strip:nth-child(3) img { left: -40vw; }
+.slice-strip:nth-child(4) img { left: -60vw; }
+.slice-strip:nth-child(5) img { left: -80vw; }
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%, rgba(5,5,5,0.8) 90%, #050505 100%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.slice-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+  opacity: 0;
+  transition: opacity 1s 1.5s;
+}
+
+.slice-section.active .slice-content {
+  opacity: 1;
+}
+
+.slice-content h1 {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  line-height: 0.8;
+  letter-spacing: -5px;
+  text-transform: uppercase;
+}
+
+/* ====== PROJECT SECTIONS (Diagonal Split) ====== */
+.diagonal-section {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: #0f0c0c;
+}
+
+.diagonal-bg {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  clip-path: polygon(0 0, 58% 0, 42% 100%, 0 100%);
+  z-index: 1;
+  transition: clip-path 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.diagonal-section:hover .diagonal-bg {
+  clip-path: polygon(0 0, 62% 0, 38% 100%, 0 100%);
+}
+
+.diagonal-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2;
+  background-color: #0f0c0c;
+}
+
+.diagonal-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: -2px;
+  background: linear-gradient(90deg, #0f0c0c 0%, transparent 20%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.diagonal-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.05);
+  transition: transform 8s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
+}
+
+.diagonal-section:hover .diagonal-image img {
+  transform: scale(1.08);
+}
+
+/* Specific fix for images that extend out */
+.contain-strict img {
+  transform: scale(1) !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.diagonal-section:hover .contain-strict img {
+  transform: scale(1) !important;
+}
+
+.diagonal-content {
+  position: relative;
+  z-index: 3;
+  color: var(--beige-light);
+  padding: 0 120px;
+  max-width: 650px;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 1s 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.diagonal-section.active .diagonal-content {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.diagonal-content h2 {
+  font-size: 4rem;
+  font-weight: 200;
+  line-height: 0.95;
+  margin-bottom: 20px;
+  letter-spacing: -2px;
+}
+
+.diagonal-content .thin-line {
+  width: 70px;
+  height: 1px;
+  background: rgba(251, 241, 229, 0.6);
+  margin: 35px 0;
+}
+
+.project-meta {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(251, 241, 229, 0.8);
+}
+
+.project-meta strong {
+  color: var(--primary-burgundy);
+  display: block;
+  margin-top: 15px;
+  font-weight: 400;
+}
+
+.project-meta p {
+  margin: 0;
+}
+
+.project-meta p + p {
+  margin-top: 5px;
+}
+
+.project-description {
+  margin-top: 20px !important;
+}
+
+.project-number {
+  position: absolute;
+  bottom: 40px;
+  left: 120px;
+  font-size: 120px;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.1);
+  z-index: 1;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ====== RESPONSIVE: Mobile ====== */
+@media (max-width: 768px) {
+  /* Slice Hero Mobile */
+  .slice-content h1 {
+    font-size: 15vw;
+  }
+  
+  .slice-strip img {
+    width: 100vw;
+  }
+
+  /* Diagonal Mobile */
+  .diagonal-section {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .diagonal-bg {
+    height: 40vh;
+    width: 100%;
+    clip-path: none;
+    position: relative;
+  }
+  
+  .diagonal-image {
+    height: 40vh;
+    width: 100%;
+    clip-path: none;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .diagonal-image img {
+    object-position: center;
+    transform: scale(1) !important;
+  }
+  
+  .diagonal-content {
+    padding: 30px;
+    transform: none;
+    opacity: 1;
+    max-width: 100%;
+  }
+  
+  .diagonal-content h2 {
+    font-size: 2.5rem;
+  }
+  
+  .project-number {
+    display: none;
+  }
+}
+
+/* Large Screens */
+@media (min-width: 1921px) {
+  .diagonal-content h2 {
+    font-size: 6rem;
+  }
+  
+  .project-meta {
+    font-size: 1.2rem;
+  }
+}
+
+/* Short Screens (Landscape Mobile/Tablet) */
+@media (max-height: 600px) and (min-width: 769px) {
+  .diagonal-content {
+    padding: 0 80px;
+  }
+}
