@@ -6,7 +6,10 @@ export const Services: CollectionConfig = {
     useAsTitle: 'name',
   },
   access: {
-    read: () => true,
+    read: ({ req }) => {
+      if (req.user) return true
+      return { status: { equals: 'published' } }
+    },
   },
   fields: [
     {

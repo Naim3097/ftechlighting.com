@@ -1,6 +1,7 @@
 import { buildConfig } from 'payload'
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -24,6 +25,13 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  cors: process.env.NEXT_PUBLIC_SITE_URL
+    ? [process.env.NEXT_PUBLIC_SITE_URL]
+    : [],
+  csrf: process.env.NEXT_PUBLIC_SITE_URL
+    ? [process.env.NEXT_PUBLIC_SITE_URL]
+    : [],
+  maxDepth: 2,
   collections: [
     Users,
     Pages,
@@ -34,14 +42,26 @@ export default buildConfig({
     Media,
     Inquiries,
   ],
+  plugins: [
+    vercelBlobStorage({
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN || '',
+    }),
+  ],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || 'your-secret-key-change-in-production',
+  secret: (() => {
+    const secret = process.env.PAYLOAD_SECRET
+    if (!secret) throw new Error('PAYLOAD_SECRET environment variable is required')
+    return secret
+  })(),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: 'file:./payload.db',
+  db: vercelPostgresAdapter({
+    pool: {
+      connectionString: process.env.POSTGRES_URL,
     },
   }),
 })

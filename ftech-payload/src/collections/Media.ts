@@ -11,6 +11,8 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: 'public/uploads',
     mimeTypes: ['image/*', 'video/*'],
+    filesRequiredOnCreate: true,
+    focalPoint: true,
   },
   fields: [
     {
