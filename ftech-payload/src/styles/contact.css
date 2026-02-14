@@ -206,6 +206,26 @@
   cursor: not-allowed;
 }
 
+.form-status {
+  padding: 15px 20px;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.form-status-success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #86efac;
+}
+
+.form-status-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
 /* ====== RESPONSIVE: Mobile ====== */
 @media (max-width: 768px) {
   /* Hero */

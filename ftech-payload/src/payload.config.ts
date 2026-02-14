@@ -12,6 +12,7 @@ import { Services } from './collections/Services'
 import { CompanyInfo } from './collections/CompanyInfo'
 import { Locations } from './collections/Locations'
 import { Media } from './collections/Media'
+import { Inquiries } from './collections/Inquiries'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,6 +32,7 @@ export default buildConfig({
     CompanyInfo,
     Locations,
     Media,
+    Inquiries,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'your-secret-key-change-in-production',

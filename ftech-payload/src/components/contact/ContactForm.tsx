@@ -9,25 +9,40 @@ export default function ContactForm() {
     projectType: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (status) setStatus(null);
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // TODO: Integrate with Payload CMS form submission
-    console.log('Form submitted:', formData);
-    
-    // Simulate submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      alert('Thank you for your inquiry. We will get back to you soon!');
+    setStatus(null);
+
+    try {
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setStatus({ type: 'error', message: data.error || 'Something went wrong. Please try again.' });
+        return;
+      }
+
+      setStatus({ type: 'success', message: 'Thank you for your inquiry. We will get back to you soon!' });
       setFormData({ name: '', email: '', projectType: '' });
-    }, 1000);
+    } catch {
+      setStatus({ type: 'error', message: 'Unable to submit your inquiry. Please try again later.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -37,6 +52,11 @@ export default function ContactForm() {
           <h2>Send a Message</h2>
           <p>We&apos;d love to hear about your project.</p>
         </div>
+        {status && (
+          <div className={`form-status ${status.type === 'success' ? 'form-status-success' : 'form-status-error'}`}>
+            {status.message}
+          </div>
+        )}
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <input

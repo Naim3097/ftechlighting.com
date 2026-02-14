@@ -239,9 +239,10 @@
   flex: 4;
 }
 
-.accordion-bg {
+.accordion-section .accordion-bg {
   position: absolute;
   inset: 0;
+  display: block;
 }
 
 .accordion-bg::before {

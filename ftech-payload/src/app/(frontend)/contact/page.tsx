@@ -2,23 +2,23 @@ import HorizontalScroll from '@/components/HorizontalScroll';
 import ContactHero from '@/components/contact/ContactHero';
 import LocationsSection from '@/components/contact/LocationsSection';
 import ContactForm from '@/components/contact/ContactForm';
+import { getLocations } from '@/lib/payload';
 
-// Locations data (will be CMS-driven)
-const locations = [
-  {
-    id: 'selangor',
-    tag: 'Headquarters',
-    title: 'Selangor',
+export default async function ContactPage() {
+  const docs = await getLocations();
+
+  const locations = docs.map((doc) => ({
+    id: String(doc.id),
+    tag: doc.isHeadquarters ? 'Headquarters' : 'Office',
+    title: doc.city,
     company: 'FTECH Solutions Sdn Bhd',
     address: [
-      '10-2, Jln USJ 9/5N, Subang Business Centre',
-      '47600 Subang Jaya, Selangor'
+      [doc.address?.building, doc.address?.street].filter(Boolean).join(', '),
+      [doc.address?.postalCode, doc.city, doc.country].filter(Boolean).join(' '),
     ],
-    phone: '03-8021 7905'
-  }
-];
+    phone: doc.contact?.phone ?? '',
+  }));
 
-export default function ContactPage() {
   return (
     <HorizontalScroll totalSections={3} prevPageUrl="/projects">
       {/* Section 1: Hero */}

@@ -28,6 +28,18 @@ export default function DiagonalSection({ project, isActive = false }: DiagonalS
     setActive(isActive);
   }, [isActive]);
 
+  // Self-activate when scrolled into view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setActive(true); },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   // Split title by line breaks
   const titleParts = project.title.split('<br>');
 
