@@ -33,3 +33,11 @@ body {
     min-width: 100vw;
     flex-shrink: 0;
 }
+
+/* Mobile: vertical scroll layout */
+@media (max-width: 768px) {
+    #fullpage > * {
+        height: auto;
+        min-height: 100vh;
+    }
+}

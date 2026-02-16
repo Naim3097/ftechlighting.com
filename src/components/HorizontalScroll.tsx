@@ -10,16 +10,25 @@ interface HorizontalScrollProps {
     prevPageUrl?: string;
 }
 
-export default function HorizontalScroll({ 
-    children, 
-    totalSections, 
+export default function HorizontalScroll({
+    children,
+    totalSections,
     nextPageUrl,
     prevPageUrl = '/'
 }: HorizontalScrollProps) {
     const [currentSection, setCurrentSection] = useState(0);
     const [isScrolling, setIsScrolling] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+
+    // Detect mobile
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const updateSection = (index: number) => {
         if (index < 0) index = 0;
@@ -29,8 +38,9 @@ export default function HorizontalScroll({
 
     // Wheel Event Handler
     useEffect(() => {
+        if (isMobile) return;
+
         const handleWheel = (e: WheelEvent) => {
-            if (window.innerWidth <= 768) return;
             e.preventDefault();
 
             if (isScrolling) return;
@@ -55,22 +65,22 @@ export default function HorizontalScroll({
 
         window.addEventListener('wheel', handleWheel, { passive: false });
         return () => window.removeEventListener('wheel', handleWheel);
-    }, [currentSection, isScrolling, totalSections, nextPageUrl, router]);
+    }, [currentSection, isScrolling, totalSections, nextPageUrl, router, isMobile]);
 
     // Touch Events
     useEffect(() => {
+        if (isMobile) return;
+
         let touchStartX = 0;
         let touchEndX = 0;
 
         const handleTouchStart = (e: TouchEvent) => {
-            if (window.innerWidth <= 768) return;
             touchStartX = e.changedTouches[0].screenX;
         };
 
         const handleTouchEnd = (e: TouchEvent) => {
-            if (window.innerWidth <= 768) return;
             touchEndX = e.changedTouches[0].screenX;
-            
+
             const swipeThreshold = 50;
             if (touchStartX - touchEndX > swipeThreshold) {
                 if (currentSection < totalSections - 1) updateSection(currentSection + 1);
@@ -82,12 +92,12 @@ export default function HorizontalScroll({
 
         window.addEventListener('touchstart', handleTouchStart, { passive: false });
         window.addEventListener('touchend', handleTouchEnd, { passive: false });
-        
+
         return () => {
             window.removeEventListener('touchstart', handleTouchStart);
             window.removeEventListener('touchend', handleTouchEnd);
         };
-    }, [currentSection, totalSections]);
+    }, [currentSection, totalSections, isMobile]);
 
     const handlePrev = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -103,14 +113,33 @@ export default function HorizontalScroll({
         updateSection(currentSection + 1);
     };
 
+    // Mobile: vertical scroll layout
+    if (isMobile) {
+        return (
+            <div
+                ref={containerRef}
+                id="fullpage"
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100vw',
+                    height: 'auto',
+                }}
+            >
+                {children}
+            </div>
+        );
+    }
+
+    // Desktop: horizontal scroll layout
     return (
         <>
             {/* Navigation Arrows */}
             <div className="nav-arrows">
                 <a href="#" className="nav-arrow" onClick={handlePrev}>←</a>
-                <a 
-                    href="#" 
-                    className="nav-arrow" 
+                <a
+                    href="#"
+                    className="nav-arrow"
                     onClick={handleNext}
                     style={{
                         opacity: currentSection === totalSections - 1 ? 0.5 : 1,
@@ -122,7 +151,7 @@ export default function HorizontalScroll({
             {/* Page Indicators */}
             <div className="page-indicators">
                 {Array.from({ length: totalSections }).map((_, index) => (
-                    <div 
+                    <div
                         key={index}
                         className={`indicator-dot ${index === currentSection ? 'active' : ''}`}
                         onClick={() => updateSection(index)}
@@ -131,7 +160,7 @@ export default function HorizontalScroll({
             </div>
 
             {/* Horizontal Scroll Container */}
-            <div 
+            <div
                 ref={containerRef}
                 id="fullpage"
                 style={{

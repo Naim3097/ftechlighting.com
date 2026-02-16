@@ -255,6 +255,16 @@
 
 /* ====== RESPONSIVE: Mobile ====== */
 @media (max-width: 768px) {
+  .projects-page {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .slice-section {
+    height: auto;
+    min-height: 100vh;
+  }
+
   /* Slice Hero Mobile */
   .slice-content h1 {
     font-size: 15vw;

@@ -323,6 +323,11 @@
 
 /* ====== RESPONSIVE: Mobile ====== */
 @media (max-width: 768px) {
+  .contact-page {
+    height: auto;
+    overflow-y: auto;
+  }
+
   /* Hero */
   .contact-hero {
     min-height: 100vh;

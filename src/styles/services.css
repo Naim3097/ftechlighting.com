@@ -411,6 +411,16 @@
 
 /* ====== RESPONSIVE: Mobile ====== */
 @media (max-width: 768px) {
+  .services-page {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .mask-hero {
+    height: auto;
+    min-height: 100vh;
+  }
+
   /* Mask Hero Mobile */
   .mask-hero h1 {
     font-size: 15vw;
