@@ -26,3 +26,10 @@ body {
     background: var(--beige-light);
     overflow-x: hidden;
 }
+
+/* Horizontal scroll sections must take full viewport width */
+#fullpage > * {
+    width: 100vw;
+    min-width: 100vw;
+    flex-shrink: 0;
+}

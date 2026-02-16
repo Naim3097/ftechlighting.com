@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { name, email, projectType } = body
+    const { name, email, projectType, phone, company, message } = body
 
     // Honeypot: if this hidden field is filled, it's a bot
     if (body.website) {
@@ -73,6 +73,9 @@ export async function POST(request: Request) {
         name: name.slice(0, 200),
         email: email.slice(0, 320),
         projectType: projectType.slice(0, 500),
+        ...(phone && { phone: String(phone).slice(0, 50) }),
+        ...(company && { company: String(company).slice(0, 200) }),
+        ...(message && { message: String(message).slice(0, 2000) }),
       },
     })
 

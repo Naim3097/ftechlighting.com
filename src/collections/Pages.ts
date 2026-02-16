@@ -10,6 +10,9 @@ export const Pages: CollectionConfig = {
       if (req.user) return true
       return { status: { equals: 'published' } }
     },
+    create: ({ req }) => !!req.user,
+    update: ({ req }) => !!req.user,
+    delete: ({ req }) => !!req.user,
   },
   fields: [
     {

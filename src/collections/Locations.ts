@@ -7,6 +7,9 @@ export const Locations: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: ({ req }) => !!req.user,
+    update: ({ req }) => !!req.user,
+    delete: ({ req }) => !!req.user,
   },
   fields: [
     {
@@ -61,6 +64,31 @@ export const Locations: CollectionConfig = {
         {
           name: 'whatsapp',
           type: 'text',
+        },
+      ],
+    },
+    {
+      name: 'businessHours',
+      type: 'array',
+      admin: {
+        description: 'Office business hours (e.g. Monday - Friday: 9:00 AM - 6:00 PM)',
+      },
+      fields: [
+        {
+          name: 'day',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'e.g. Monday - Friday, Saturday, Sunday',
+          },
+        },
+        {
+          name: 'time',
+          type: 'text',
+          required: true,
+          admin: {
+            description: 'e.g. 9:00 AM - 6:00 PM, Closed',
+          },
         },
       ],
     },

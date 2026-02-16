@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
 interface SliceHeroProps {
   title: string;
@@ -12,7 +11,6 @@ export default function SliceHero({ title, backgroundImage }: SliceHeroProps) {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    // Trigger animation on mount
     setIsActive(true);
   }, []);
 
@@ -20,13 +18,10 @@ export default function SliceHero({ title, backgroundImage }: SliceHeroProps) {
     <section className={`slice-section ${isActive ? 'active' : ''}`}>
       {[0, 1, 2, 3, 4].map((index) => (
         <div key={index} className="slice-strip">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={backgroundImage}
             alt={`Hero ${index + 1}`}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover' }}
           />
         </div>
       ))}

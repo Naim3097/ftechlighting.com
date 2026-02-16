@@ -25,12 +25,14 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  cors: process.env.NEXT_PUBLIC_SITE_URL
-    ? [process.env.NEXT_PUBLIC_SITE_URL]
-    : [],
-  csrf: process.env.NEXT_PUBLIC_SITE_URL
-    ? [process.env.NEXT_PUBLIC_SITE_URL]
-    : [],
+  cors: [
+    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
+    'http://localhost:3000',
+  ],
+  csrf: [
+    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
+    'http://localhost:3000',
+  ],
   maxDepth: 2,
   collections: [
     Users,

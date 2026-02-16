@@ -1,8 +1,17 @@
 /* ====== SERVICES PAGE STYLES ====== */
 
+.services-page {
+  background: #0a0808;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
 /* Section 1: Mask Hero */
 .mask-hero {
   height: 100vh;
+  width: 100vw;
+  flex-shrink: 0;
   position: relative;
   background: #0a0808;
   display: flex;
@@ -84,6 +93,8 @@
 /* ====== Section 2: Strip Expand (Core Competencies) ====== */
 .strip-section {
   height: 100vh;
+  width: 100vw;
+  flex-shrink: 0;
   display: flex;
   background: #000;
   overflow: hidden;
@@ -111,7 +122,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  filter: grayscale(100%) brightness(0.4);
+  filter: grayscale(60%) brightness(0.6);
   transition: filter 0.6s, transform 1.2s;
   transform: scale(1.1);
 }
@@ -127,18 +138,18 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
   z-index: 1;
 }
 
 .strip-item:hover .strip-bg {
-  filter: grayscale(0%) brightness(0.8);
+  filter: grayscale(0%) brightness(1);
   transform: scale(1);
 }
 
 /* Darken non-hovered items */
 .strip-section:hover .strip-item:not(:hover) .strip-bg {
-  filter: grayscale(100%) brightness(0.2);
+  filter: grayscale(80%) brightness(0.35);
 }
 
 .strip-content {
@@ -215,14 +226,16 @@
 }
 
 /* ====== Section 3: Accordion Expand (Services & Solutions) ====== */
-.accordion-section {
+.services-page .accordion-section {
   height: 100vh;
+  width: 100vw;
+  flex-shrink: 0;
   display: flex;
   background: var(--beige-light);
   overflow: hidden;
 }
 
-.accordion-panel {
+.services-page .accordion-panel {
   flex: 1;
   position: relative;
   overflow: hidden;
@@ -231,49 +244,49 @@
   cursor: pointer;
 }
 
-.accordion-panel:last-child {
+.services-page .accordion-panel:last-child {
   border-right: none;
 }
 
-.accordion-panel.expanded {
+.services-page .accordion-panel.expanded {
   flex: 4;
 }
 
-.accordion-section .accordion-bg {
+.services-page .accordion-bg {
   position: absolute;
   inset: 0;
   display: block;
 }
 
-.accordion-bg::before {
+.services-page .accordion-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
   z-index: 1;
   transition: opacity 0.8s;
 }
 
-.accordion-panel.expanded .accordion-bg::before {
-  opacity: 0.6;
+.services-page .accordion-panel.expanded .accordion-bg::before {
+  opacity: 0.5;
 }
 
-.accordion-bg img {
+.services-page .accordion-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(100%) brightness(0.5);
+  filter: grayscale(60%) brightness(0.7);
   transform: scale(1);
   transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), filter 1s cubic-bezier(0.19, 1, 0.22, 1);
   will-change: transform, filter;
 }
 
-.accordion-panel.expanded .accordion-bg img {
-  filter: grayscale(0%) brightness(0.8);
+.services-page .accordion-panel.expanded .accordion-bg img {
+  filter: grayscale(0%) brightness(1);
   transform: scale(1.08);
 }
 
-.accordion-title {
+.services-page .accordion-title {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -289,7 +302,7 @@
   text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
-.accordion-panel.expanded .accordion-title {
+.services-page .accordion-panel.expanded .accordion-title {
   transform: translate(-50%, -50%) rotate(0deg) scale(1);
   font-size: 56px;
   top: 25%;
@@ -298,7 +311,7 @@
   font-weight: 200;
 }
 
-.accordion-content {
+.services-page .accordion-content {
   position: absolute;
   bottom: 10%;
   left: 10%;
@@ -310,12 +323,12 @@
   z-index: 2;
 }
 
-.accordion-panel.expanded .accordion-content {
+.services-page .accordion-panel.expanded .accordion-content {
   opacity: 1;
   transform: translateY(0);
 }
 
-.accordion-num {
+.services-page .accordion-num {
   position: absolute;
   bottom: -20px;
   right: 0px;
@@ -330,13 +343,13 @@
   opacity: 0.5;
 }
 
-.accordion-panel.expanded .accordion-num {
+.services-page .accordion-panel.expanded .accordion-num {
   opacity: 0.1;
   transform: translateY(-50px) scale(1.1);
   -webkit-text-stroke: 2px rgba(255,255,255,0.05);
 }
 
-.accordion-content::before {
+.services-page .accordion-content::before {
   content: '';
   width: 50px;
   height: 1px;
@@ -348,11 +361,11 @@
   transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
 }
 
-.accordion-panel.expanded .accordion-content::before {
+.services-page .accordion-panel.expanded .accordion-content::before {
   transform: scaleX(1);
 }
 
-.accordion-content p {
+.services-page .accordion-content p {
   font-size: 1.1rem;
   font-weight: 300;
   line-height: 1.6;
@@ -373,7 +386,7 @@
   margin: 0;
 }
 
-.accordion-panel.expanded .service-capabilities {
+.services-page .accordion-panel.expanded .service-capabilities {
   opacity: 1;
   transform: translateY(0);
 }
@@ -482,12 +495,12 @@
   }
 
   /* Accordion Mobile */
-  .accordion-section {
+  .services-page .accordion-section {
     flex-direction: column;
     height: auto;
   }
-  
-  .accordion-panel {
+
+  .services-page .accordion-panel {
     width: 100%;
     height: 120px;
     min-height: 120px;
@@ -496,14 +509,14 @@
     flex: none;
     transition: height 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
-  
-  .accordion-panel.expanded {
+
+  .services-page .accordion-panel.expanded {
     height: auto;
     min-height: 600px;
     flex: none;
   }
-  
-  .accordion-title {
+
+  .services-page .accordion-title {
     transform: translate(-50%, -50%) rotate(0);
     font-size: 1.2rem;
     top: 50%;
@@ -512,24 +525,24 @@
     text-align: center;
     letter-spacing: 2px;
   }
-  
-  .accordion-panel.expanded .accordion-title {
+
+  .services-page .accordion-panel.expanded .accordion-title {
     top: 15%;
     font-size: 2rem;
     opacity: 1;
   }
-  
-  .accordion-content {
+
+  .services-page .accordion-content {
     bottom: 20px;
     left: 20px;
     right: 20px;
   }
-  
-  .accordion-content p {
+
+  .services-page .accordion-content p {
     font-size: 1rem;
   }
-  
-  .accordion-num {
+
+  .services-page .accordion-num {
     font-size: 100px;
     bottom: 10px;
     right: 10px;
@@ -546,18 +559,18 @@
     font-size: 1.4rem;
   }
   
-  .accordion-title {
+  .services-page .accordion-title {
     font-size: 32px;
   }
-  
-  .accordion-panel.expanded .accordion-title {
+
+  .services-page .accordion-panel.expanded .accordion-title {
     font-size: 72px;
   }
-  
-  .accordion-content p {
+
+  .services-page .accordion-content p {
     font-size: 1.4rem;
   }
-  
+
   .service-capabilities li {
     font-size: 1.1rem;
   }
@@ -568,8 +581,8 @@
   .strip-content {
     bottom: 80px;
   }
-  
-  .accordion-content {
+
+  .services-page .accordion-content {
     bottom: 5%;
   }
 }

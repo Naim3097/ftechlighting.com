@@ -4,7 +4,7 @@ export const Inquiries: CollectionConfig = {
   slug: 'inquiries',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'email', 'projectType', 'status', 'submittedAt'],
+    defaultColumns: ['name', 'email', 'phone', 'company', 'projectType', 'status', 'submittedAt'],
   },
   access: {
     create: () => true,
@@ -20,14 +20,38 @@ export const Inquiries: CollectionConfig = {
       required: true,
     },
     {
+      name: 'company',
+      type: 'text',
+      admin: {
+        description: 'Company or organization name',
+      },
+    },
+    {
       name: 'email',
       type: 'email',
       required: true,
     },
     {
+      name: 'phone',
+      type: 'text',
+      admin: {
+        description: 'Contact phone number',
+      },
+    },
+    {
       name: 'projectType',
       type: 'text',
       required: true,
+      admin: {
+        description: 'Service interest or project type',
+      },
+    },
+    {
+      name: 'message',
+      type: 'textarea',
+      admin: {
+        description: 'Inquiry details or project requirements',
+      },
     },
     {
       name: 'status',

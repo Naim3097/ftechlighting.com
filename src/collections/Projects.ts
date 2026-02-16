@@ -10,6 +10,9 @@ export const Projects: CollectionConfig = {
       if (req.user) return true
       return { status: { equals: 'published' } }
     },
+    create: ({ req }) => !!req.user,
+    update: ({ req }) => !!req.user,
+    delete: ({ req }) => !!req.user,
   },
   fields: [
     {
@@ -32,8 +35,19 @@ export const Projects: CollectionConfig = {
         { label: 'Hospitality', value: 'hospitality' },
         { label: 'Retail', value: 'retail' },
         { label: 'Outdoor', value: 'outdoor' },
+        { label: 'Industrial', value: 'industrial' },
+        { label: 'Landscape', value: 'landscape' },
+        { label: 'Automotive', value: 'automotive' },
+        { label: 'Public Infrastructure', value: 'public-infrastructure' },
       ],
       required: true,
+    },
+    {
+      name: 'scope',
+      type: 'text',
+      admin: {
+        description: 'Custom scope description (e.g. "Luxury Residential Lighting", "Facade & Interior Lighting"). Overrides category label on frontend.',
+      },
     },
     {
       name: 'location',
@@ -59,7 +73,6 @@ export const Projects: CollectionConfig = {
       name: 'featuredImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
     },
     {
       name: 'gallery',

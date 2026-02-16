@@ -17,15 +17,6 @@
     background: #0f0c0c;
 }
 
-/* Desktop Hero Background (Seamless Video) */
-.desktop-hero-background {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .curtain-bg {
     position: absolute;
     inset: 0;
@@ -44,9 +35,10 @@
     position: relative;
     overflow: hidden;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
-    transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1), height 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     cursor: pointer;
-    background: transparent;
+    background: #0f0c0c;
+    transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                height 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .accordion-panel:last-child {
@@ -57,58 +49,24 @@
     flex: 3;
 }
 
-.accordion-bg {
+/* ====== PER-PANEL BACKGROUND IMAGE ====== */
+.accordion-panel-bg {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: grayscale(100%) brightness(0.4);
+    transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* Inactive State: Uniform Dark Overlay */
-.accordion-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-    transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+.accordion-panel.expanded .accordion-panel-bg {
+    filter: grayscale(0%) brightness(1);
 }
 
-/* Active State: Gradient Overlay */
-.accordion-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(20, 16, 16, 0.95) 0%, rgba(20, 16, 16, 0.4) 50%, transparent 100%);
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-@media (max-width: 768px) {
-    .desktop-hero-background {
-        display: none;
-    }
-}
-
+/* ====== DESKTOP: Gradient overlay on expanded panel ====== */
 @media (min-width: 769px) {
-    /* Hide per-panel images on desktop */
-    .accordion-bg {
-        display: none;
-    }
-
-    /* Panel Styles for Desktop - NO background, only backdrop-filter */
-    .accordion-panel {
-        background: none;
-        backdrop-filter: grayscale(100%) brightness(0.5);
-        -webkit-backdrop-filter: grayscale(100%) brightness(0.5);
-        transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1), backdrop-filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-
-    .accordion-panel.expanded {
-        backdrop-filter: grayscale(0%) brightness(1);
-        -webkit-backdrop-filter: grayscale(0%) brightness(1);
-    }
-
-    /* Gradient Overlay on Panel */
     .accordion-panel::after {
         content: '';
         position: absolute;
@@ -116,8 +74,8 @@
         background: linear-gradient(to top, rgba(20, 16, 16, 0.95) 0%, rgba(20, 16, 16, 0.4) 50%, transparent 100%);
         z-index: 1;
         opacity: 0;
-        transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         pointer-events: none;
+        transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
     .accordion-panel.expanded::after {
@@ -125,6 +83,7 @@
     }
 }
 
+/* ====== ACCORDION TITLE & CONTENT ====== */
 .accordion-title {
     position: absolute;
     top: 50%;
@@ -216,7 +175,7 @@
 }
 
 .accordion-cta::after {
-    content: '→';
+    content: '\2192';
     font-size: 18px;
     transition: transform 0.3s;
     line-height: 1;
@@ -238,7 +197,7 @@
     transition: all 0.1s ease;
 }
 
-/* Curtain Panels (Overlay) */
+/* ====== CURTAIN PANELS (Opening Animation) ====== */
 .curtain-panels {
     position: absolute;
     inset: 0;
@@ -278,7 +237,7 @@
     transform: translateY(-100%) scaleY(0.98);
 }
 
-/* Mobile Background Container */
+/* ====== MOBILE BACKGROUND ====== */
 .mobile-hero-background {
     display: none;
     position: fixed;
@@ -410,7 +369,7 @@
     opacity: 0.8;
 }
 
-/* Responsive adjustments */
+/* ====== RESPONSIVE ====== */
 @media (max-width: 1200px) {
     .accordion-panel.expanded .accordion-title { font-size: 52px; }
 }
@@ -419,11 +378,11 @@
     .mobile-hero-background {
         display: block;
     }
-    
+
     .scroll-indicator {
         display: flex;
     }
-    
+
     .privacy-popup {
         width: calc(100% - 40px);
         bottom: 20px;
@@ -445,7 +404,7 @@
     .curtain-panels {
         display: none;
     }
-    
+
     .accordion-section {
         flex-direction: column;
         padding-top: 0;
@@ -461,20 +420,21 @@
         border-bottom: 1px solid rgba(255,255,255,0.1);
         flex: none;
         scroll-snap-align: start;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(5px);
-        transition: background 0.5s ease;
-    }
-
-    .accordion-panel .accordion-bg {
-        display: none;
+        background: #0f0c0c;
+        transition: height 0.5s ease;
     }
 
     .accordion-panel.expanded {
         height: 70vh;
         flex: none;
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(0px);
+    }
+
+    .accordion-panel-bg {
+        filter: grayscale(100%) brightness(0.3);
+    }
+
+    .accordion-panel.expanded .accordion-panel-bg {
+        filter: grayscale(0%) brightness(1);
     }
 
     .accordion-title {
@@ -518,10 +478,5 @@
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
         overflow: hidden;
-    }
-    
-    /* Mobile: Center the portrait image */
-    .accordion-bg img {
-        object-position: center center !important;
     }
 }

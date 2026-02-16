@@ -46,14 +46,18 @@ export default function AccordionExpand({ panels }: AccordionExpandProps) {
           onClick={() => handlePanelInteraction(index, 'click')}
         >
           <div className="accordion-bg">
-            <Image
-              src={panel.image}
-              alt={panel.title}
-              fill
-              sizes="(max-width: 768px) 100vw, 25vw"
-              style={{ objectFit: 'cover' }}
-              priority={index === 0}
-            />
+            {panel.image ? (
+              <Image
+                src={panel.image}
+                alt={panel.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 25vw"
+                style={{ objectFit: 'cover' }}
+                priority={index === 0}
+              />
+            ) : (
+              <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, #2a0a0a, #820000)' }} />
+            )}
           </div>
           <div className="accordion-num">{panel.num}</div>
           <div className="accordion-title">{panel.title}</div>

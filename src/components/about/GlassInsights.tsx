@@ -12,6 +12,13 @@ interface GlassInsightsProps {
 export default function GlassInsights({ cards }: GlassInsightsProps) {
     return (
         <section className="glass-insights-section">
+            <Image
+                src="/assets/sections/about/vision.jpg"
+                alt="City skyline"
+                fill
+                style={{ objectFit: 'cover' }}
+                className="glass-insights-bg"
+            />
             <div className="glass-insights-overlay"></div>
             <div className="glass-cards-container">
                 {cards.map((card, index) => (

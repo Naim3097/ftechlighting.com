@@ -7,6 +7,8 @@ interface LocationData {
   company: string;
   address: string[];
   phone?: string;
+  email?: string;
+  hours?: { day: string; time: string }[];
 }
 
 interface LocationsSectionProps {
@@ -28,8 +30,23 @@ export default function LocationsSection({ locations }: LocationsSectionProps) {
             {location.phone && (
               <>
                 <br />
-                <p><strong>Phone:</strong> {location.phone}</p>
+                <p><strong>Phone:</strong> <a href={`tel:${location.phone.replace(/\s/g, '')}`}>{location.phone}</a></p>
               </>
+            )}
+            {location.email && (
+              <p><strong>Email:</strong> <a href={`mailto:${location.email}`}>{location.email}</a></p>
+            )}
+            {location.hours && location.hours.length > 0 && (
+              <div className="location-hours">
+                <br />
+                <p><strong>Business Hours</strong></p>
+                {location.hours.map((h, index) => (
+                  <p key={index} className="hours-row">
+                    <span className="hours-day">{h.day}</span>
+                    <span className="hours-time">{h.time}</span>
+                  </p>
+                ))}
+              </div>
             )}
           </div>
         ))}

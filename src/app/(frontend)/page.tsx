@@ -9,6 +9,7 @@ const heroPanels = [
         description: "Holistic & Innovative Lighting Solutions. We craft lighting solutions that transform industrial and commercial spaces into experiences.",
         ctaText: "Explore FTECH",
         ctaHref: "#",
+        image: "/assets/sections/home/1.jpg",
     },
     {
         title: "About Us",
@@ -16,6 +17,7 @@ const heroPanels = [
         description: "We are a team of dedicated professionals committed to excellence in lighting design and engineering. Discover our story and philosophy.",
         ctaText: "Read Our Story",
         ctaHref: "/about",
+        image: "/assets/sections/home/2.jpg",
     },
     {
         title: "Services",
@@ -23,6 +25,7 @@ const heroPanels = [
         description: "From conceptual design to installation and commissioning, we offer a comprehensive range of lighting services tailored to your needs.",
         ctaText: "View Services",
         ctaHref: "/services",
+        image: "/assets/sections/home/3.jpg",
     },
     {
         title: "Projects",
@@ -30,6 +33,7 @@ const heroPanels = [
         description: "Explore our portfolio of award-winning projects across various sectors, showcasing our expertise and innovation.",
         ctaText: "View Portfolio",
         ctaHref: "/projects",
+        image: "/assets/sections/home/4.jpg",
     },
     {
         title: "Contact",
@@ -37,6 +41,7 @@ const heroPanels = [
         description: "Ready to transform your space? Connect with our team for consultations, quotes, and lighting design inquiries.",
         ctaText: "Contact Us",
         ctaHref: "/contact",
+        image: "/assets/sections/home/6.jpeg",
     },
 ];
 

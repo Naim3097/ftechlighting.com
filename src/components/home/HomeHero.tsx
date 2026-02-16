@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface AccordionPanelProps {
     index: number;
@@ -11,6 +11,7 @@ interface AccordionPanelProps {
     description: string;
     ctaText: string;
     ctaHref: string;
+    image: string;
     isExpanded: boolean;
     onHover: () => void;
     onClick: () => void;
@@ -24,24 +25,23 @@ export function AccordionPanel({
     description,
     ctaText,
     ctaHref,
+    image,
     isExpanded,
     onHover,
     onClick,
-    onCtaClick
+    onCtaClick,
 }: AccordionPanelProps) {
     const handleClick = (e: React.MouseEvent) => {
         const target = e.target as HTMLElement;
         if (target.classList.contains('accordion-cta')) return;
 
         if (window.innerWidth > 768) {
-            // Desktop: Navigate on click
             if (onCtaClick) {
                 onCtaClick(e);
             } else {
                 window.location.href = ctaHref;
             }
         } else {
-            // Mobile: Expand first, then navigate
             if (isExpanded) {
                 if (onCtaClick) {
                     onCtaClick(e);
@@ -61,15 +61,14 @@ export function AccordionPanel({
             onMouseEnter={() => window.innerWidth > 768 && onHover()}
             onClick={handleClick}
         >
-            <div className="accordion-bg">
-                <Image
-                    src="/assets/sections/home/mobilehero.jpg"
-                    alt={title}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    priority={index === 0}
-                />
-            </div>
+            <Image
+                src={image}
+                alt={title}
+                fill
+                sizes="(min-width: 769px) 60vw, 100vw"
+                priority={index === 0}
+                className="accordion-panel-bg"
+            />
             <div className="accordion-title">{title}</div>
             <div className="accordion-content">
                 <h2 dangerouslySetInnerHTML={{ __html: heading }} />
@@ -95,13 +94,13 @@ interface HomeHeroProps {
         description: string;
         ctaText: string;
         ctaHref: string;
+        image: string;
     }[];
 }
 
 export default function HomeHero({ panels }: HomeHeroProps) {
     const [isActive, setIsActive] = useState(false);
     const [expandedIndex, setExpandedIndex] = useState(0);
-    const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -110,21 +109,11 @@ export default function HomeHero({ panels }: HomeHeroProps) {
         return () => clearTimeout(timer);
     }, []);
 
-    // Ensure video plays on mount
-    useEffect(() => {
-        const video = videoRef.current;
-        if (video) {
-            video.play().catch((e) => {
-                console.log('Video autoplay failed:', e);
-            });
-        }
-    }, []);
-
     const handleExplore = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         setExpandedIndex(1);
-        
+
         if (window.innerWidth <= 768) {
             setTimeout(() => {
                 const aboutPanel = document.querySelector('.accordion-panel[data-index="1"]');
@@ -138,7 +127,7 @@ export default function HomeHero({ panels }: HomeHeroProps) {
     return (
         <section className={`curtain-reveal ${isActive ? 'active' : ''}`}>
             <div className="mobile-hero-background"></div>
-            
+
             {/* Scroll Indicator */}
             <div className="scroll-indicator">
                 <div className="scroll-mouse">
@@ -148,18 +137,8 @@ export default function HomeHero({ panels }: HomeHeroProps) {
             </div>
 
             <div className="curtain-bg">
+                {/* Accordion Section */}
                 <section className="accordion-section">
-                    <video
-                        ref={videoRef}
-                        className="desktop-hero-background"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        poster="/assets/sections/home/desktophero.jpeg"
-                    >
-                        <source src="/assets/sections/home/videobg.mp4" type="video/mp4" />
-                    </video>
                     {panels.map((panel, index) => (
                         <AccordionPanel
                             key={index}
@@ -169,6 +148,7 @@ export default function HomeHero({ panels }: HomeHeroProps) {
                             description={panel.description}
                             ctaText={panel.ctaText}
                             ctaHref={panel.ctaHref}
+                            image={panel.image}
                             isExpanded={expandedIndex === index}
                             onHover={() => setExpandedIndex(index)}
                             onClick={() => setExpandedIndex(index)}

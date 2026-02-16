@@ -171,11 +171,21 @@
     background: #050505;
 }
 
+.glass-insights-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.4);
+}
+
 .glass-insights-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(130, 0, 0, 0.15) 0%, transparent 70%);
-    z-index: 0;
+    background: linear-gradient(to top, rgba(5, 5, 5, 0.7) 0%, rgba(5, 5, 5, 0.3) 50%, rgba(5, 5, 5, 0.5) 100%);
+    z-index: 1;
 }
 
 .glass-cards-container {

@@ -28,14 +28,18 @@ export default function StripExpand({ items }: StripExpandProps) {
           onMouseLeave={() => setHoveredIndex(null)}
         >
           <div className="strip-bg">
-            <Image
-              src={item.image}
-              alt={item.title}
-              fill
-              sizes="(max-width: 768px) 100vw, 20vw"
-              style={{ objectFit: 'cover', objectPosition: 'center' }}
-              priority={index < 3}
-            />
+            {item.image ? (
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 20vw"
+                style={{ objectFit: 'cover', objectPosition: 'center' }}
+                priority={index < 3}
+              />
+            ) : (
+              <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, #2a0a0a, #820000)' }} />
+            )}
           </div>
           <div className="strip-num">{item.num}</div>
           <div className="strip-vertical-text">{item.title.toUpperCase()}</div>

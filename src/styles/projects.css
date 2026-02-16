@@ -1,8 +1,17 @@
 /* ====== PROJECTS PAGE STYLES ====== */
 
+.projects-page {
+  background: #0a0808;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
 /* ====== SECTION 1: THE SLICE (Hero) ====== */
 .slice-section {
   height: 100vh;
+  width: 100vw;
+  flex-shrink: 0;
   display: flex;
   overflow: hidden;
   background: #000;
@@ -98,6 +107,8 @@
 /* ====== PROJECT SECTIONS (Diagonal Split) ====== */
 .diagonal-section {
   height: 100vh;
+  width: 100vw;
+  flex-shrink: 0;
   position: relative;
   overflow: hidden;
   display: flex;
