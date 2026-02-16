@@ -47,9 +47,8 @@ export default async function AboutPage() {
         },
         {
             title: 'Company Values',
-            content: valuesArray
-                .map((v: { title: string; description: string }) => `<strong>${v.title}:</strong> ${v.description}`)
-                .join('<br>'),
+            content: '',
+            values: valuesArray as { title: string; description: string }[],
         },
     ];
 

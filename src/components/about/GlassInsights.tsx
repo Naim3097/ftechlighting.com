@@ -1,8 +1,14 @@
 import Image from 'next/image';
 
+interface ValueItem {
+    title: string;
+    description: string;
+}
+
 interface GlassCard {
     title: string;
     content: string;
+    values?: ValueItem[];
 }
 
 interface GlassInsightsProps {
@@ -24,7 +30,18 @@ export default function GlassInsights({ cards }: GlassInsightsProps) {
                 {cards.map((card, index) => (
                     <div key={index} className="glass-card">
                         <h3>{card.title}</h3>
-                        <p dangerouslySetInnerHTML={{ __html: card.content }} />
+                        {card.values ? (
+                            <p>
+                                {card.values.map((v, i) => (
+                                    <span key={i}>
+                                        <strong>{v.title}:</strong> {v.description}
+                                        {i < card.values!.length - 1 && <br />}
+                                    </span>
+                                ))}
+                            </p>
+                        ) : (
+                            <p>{card.content}</p>
+                        )}
                     </div>
                 ))}
             </div>

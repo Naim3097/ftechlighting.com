@@ -9,7 +9,7 @@ export const Locations: CollectionConfig = {
     read: () => true,
     create: ({ req }) => !!req.user,
     update: ({ req }) => !!req.user,
-    delete: ({ req }) => !!req.user,
+    delete: ({ req }) => req.user?.role === 'admin',
   },
   fields: [
     {
@@ -108,9 +108,9 @@ export const Locations: CollectionConfig = {
     },
     {
       name: 'mapEmbed',
-      type: 'textarea',
+      type: 'text',
       admin: {
-        description: 'Google Maps embed iframe code',
+        description: 'Google Maps embed URL only (not raw HTML). Example: https://www.google.com/maps/embed?pb=...',
       },
     },
     {

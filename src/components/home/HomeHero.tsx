@@ -71,7 +71,9 @@ export function AccordionPanel({
             />
             <div className="accordion-title">{title}</div>
             <div className="accordion-content">
-                <h2 dangerouslySetInnerHTML={{ __html: heading }} />
+                <h2>{heading.split('<br>').map((part, i, arr) => (
+                    <span key={i}>{part}{i < arr.length - 1 && <br />}</span>
+                ))}</h2>
                 <p>{description}</p>
                 {onCtaClick ? (
                     <button className="accordion-cta" onClick={onCtaClick}>

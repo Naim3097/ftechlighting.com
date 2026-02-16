@@ -1,7 +1,19 @@
 import { NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/payload'
 
-export async function POST() {
+export async function POST(request: Request) {
+  // Block in production
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not available' }, { status: 404 })
+  }
+
+  // Require secret token
+  const authHeader = request.headers.get('authorization')
+  const seedSecret = process.env.SEED_SECRET
+  if (seedSecret && authHeader !== `Bearer ${seedSecret}`) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const payload = await getPayloadClient()
     const log: string[] = []
@@ -53,7 +65,6 @@ export async function POST() {
       })
       log.push('Company Info created')
     } else {
-      // Update existing record with fullDescription if missing
       const doc = existingCompany.docs[0]
       if (!doc.aboutCompany?.fullDescription) {
         await payload.update({
@@ -179,7 +190,6 @@ export async function POST() {
     log.push(projCreated > 0 ? `${projCreated} Projects created` : 'Projects already exist, skipped')
 
     // ===== 6. CLEAN UP ORPHANED MEDIA REFERENCES =====
-    // Clear all featuredImage refs on services/projects (images were never uploaded)
     const allSvcs = await payload.find({ collection: 'services', limit: 100, depth: 0 })
     let cleaned = 0
     for (const svc of allSvcs.docs) {
@@ -203,7 +213,6 @@ export async function POST() {
         cleaned++
       }
     }
-    // Also delete orphaned media records (files never uploaded)
     const allMedia = await payload.find({ collection: 'media', limit: 100 })
     let mediaDeleted = 0
     for (const m of allMedia.docs) {
@@ -216,24 +225,9 @@ export async function POST() {
     log.push(cleaned > 0 ? `${cleaned} orphaned media references cleaned` : 'No orphaned media references')
     if (mediaDeleted > 0) log.push(`${mediaDeleted} orphaned media records deleted`)
 
-    // ===== 7. PROMOTE ALL USERS TO ADMIN =====
-    const users = await payload.find({ collection: 'users', limit: 100 })
-    let usersPromoted = 0
-    for (const user of users.docs) {
-      if (user.role !== 'admin') {
-        await payload.update({
-          collection: 'users',
-          id: user.id,
-          data: { role: 'admin' },
-        })
-        usersPromoted++
-      }
-    }
-    log.push(usersPromoted > 0 ? `${usersPromoted} user(s) promoted to admin` : 'All users already admin')
-
     return NextResponse.json({ success: true, log })
   } catch (error) {
     console.error('Seed error:', error)
-    return NextResponse.json({ error: String(error) }, { status: 500 })
+    return NextResponse.json({ error: 'Seed failed. Check server logs.' }, { status: 500 })
   }
 }

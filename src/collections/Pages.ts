@@ -12,7 +12,7 @@ export const Pages: CollectionConfig = {
     },
     create: ({ req }) => !!req.user,
     update: ({ req }) => !!req.user,
-    delete: ({ req }) => !!req.user,
+    delete: ({ req }) => req.user?.role === 'admin',
   },
   fields: [
     {
