@@ -26,11 +26,13 @@ export default buildConfig({
     },
   },
   cors: [
-    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
+    'https://www.ftechlighting.com',
+    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL.trim()] : []),
     'http://localhost:3000',
   ],
   csrf: [
-    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL] : []),
+    'https://www.ftechlighting.com',
+    ...(process.env.NEXT_PUBLIC_SITE_URL ? [process.env.NEXT_PUBLIC_SITE_URL.trim()] : []),
     'http://localhost:3000',
   ],
   maxDepth: 2,
