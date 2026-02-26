@@ -240,10 +240,13 @@ nav {
 
     .logo {
         width: 120px;
-        mix-blend-mode: difference;
     }
-    
+
     .logo img {
+        filter: none;
+    }
+
+    .logo.active img {
         filter: brightness(0) invert(1);
     }
 

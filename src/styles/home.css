@@ -463,6 +463,9 @@
         left: 20px;
         right: 20px;
         transform: translateY(20px);
+        background: rgba(0, 0, 0, 0.45);
+        padding: 20px;
+        border-radius: 6px;
     }
 
     .accordion-panel.expanded .accordion-content {
