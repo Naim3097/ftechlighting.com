@@ -19,13 +19,15 @@ export default function HorizontalScroll({
     const [currentSection, setCurrentSection] = useState(0);
     const [isScrolling, setIsScrolling] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
-    // Detect mobile
+    // Detect mobile + mark mounted
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth <= 768);
         checkMobile();
+        setMounted(true);
         window.addEventListener('resize', checkMobile);
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
@@ -38,7 +40,7 @@ export default function HorizontalScroll({
 
     // Wheel Event Handler
     useEffect(() => {
-        if (isMobile) return;
+        if (!mounted || isMobile) return;
 
         const handleWheel = (e: WheelEvent) => {
             e.preventDefault();
@@ -65,11 +67,11 @@ export default function HorizontalScroll({
 
         window.addEventListener('wheel', handleWheel, { passive: false });
         return () => window.removeEventListener('wheel', handleWheel);
-    }, [currentSection, isScrolling, totalSections, nextPageUrl, router, isMobile]);
+    }, [currentSection, isScrolling, totalSections, nextPageUrl, router, isMobile, mounted]);
 
     // Touch Events
     useEffect(() => {
-        if (isMobile) return;
+        if (!mounted || isMobile) return;
 
         let touchStartX = 0;
         let touchEndX = 0;
@@ -97,7 +99,7 @@ export default function HorizontalScroll({
             window.removeEventListener('touchstart', handleTouchStart);
             window.removeEventListener('touchend', handleTouchEnd);
         };
-    }, [currentSection, totalSections, isMobile]);
+    }, [currentSection, totalSections, isMobile, mounted]);
 
     const handlePrev = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -113,8 +115,8 @@ export default function HorizontalScroll({
         updateSection(currentSection + 1);
     };
 
-    // Mobile: vertical scroll layout
-    if (isMobile) {
+    // After hydration: mobile gets vertical scroll layout
+    if (mounted && isMobile) {
         return (
             <div
                 ref={containerRef}
@@ -131,33 +133,37 @@ export default function HorizontalScroll({
         );
     }
 
-    // Desktop: horizontal scroll layout
+    // SSR default + desktop: horizontal scroll layout
     return (
         <>
-            {/* Navigation Arrows */}
-            <div className="nav-arrows">
-                <a href="#" className="nav-arrow" onClick={handlePrev}>←</a>
-                <a
-                    href="#"
-                    className="nav-arrow"
-                    onClick={handleNext}
-                    style={{
-                        opacity: currentSection === totalSections - 1 ? 0.5 : 1,
-                        pointerEvents: currentSection === totalSections - 1 ? 'none' : 'auto'
-                    }}
-                >→</a>
-            </div>
+            {/* Navigation Arrows - hidden until hydrated */}
+            {mounted && (
+                <div className="nav-arrows">
+                    <a href="#" className="nav-arrow" onClick={handlePrev}>←</a>
+                    <a
+                        href="#"
+                        className="nav-arrow"
+                        onClick={handleNext}
+                        style={{
+                            opacity: currentSection === totalSections - 1 ? 0.5 : 1,
+                            pointerEvents: currentSection === totalSections - 1 ? 'none' : 'auto'
+                        }}
+                    >→</a>
+                </div>
+            )}
 
-            {/* Page Indicators */}
-            <div className="page-indicators">
-                {Array.from({ length: totalSections }).map((_, index) => (
-                    <div
-                        key={index}
-                        className={`indicator-dot ${index === currentSection ? 'active' : ''}`}
-                        onClick={() => updateSection(index)}
-                    />
-                ))}
-            </div>
+            {/* Page Indicators - hidden until hydrated */}
+            {mounted && (
+                <div className="page-indicators">
+                    {Array.from({ length: totalSections }).map((_, index) => (
+                        <div
+                            key={index}
+                            className={`indicator-dot ${index === currentSection ? 'active' : ''}`}
+                            onClick={() => updateSection(index)}
+                        />
+                    ))}
+                </div>
+            )}
 
             {/* Horizontal Scroll Container */}
             <div

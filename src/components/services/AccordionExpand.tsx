@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 interface AccordionPanelData {
@@ -19,19 +19,9 @@ interface AccordionExpandProps {
 
 export default function AccordionExpand({ panels }: AccordionExpandProps) {
   const [expandedIndex, setExpandedIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const handlePanelInteraction = (index: number, type: 'enter' | 'click') => {
-    if (type === 'enter' && !isMobile) {
-      setExpandedIndex(index);
-    } else if (type === 'click') {
+  const handlePointerEnter = (index: number, e: React.PointerEvent) => {
+    if (e.pointerType !== 'touch') {
       setExpandedIndex(index);
     }
   };
@@ -42,8 +32,8 @@ export default function AccordionExpand({ panels }: AccordionExpandProps) {
         <div
           key={panel.id}
           className={`accordion-panel ${expandedIndex === index ? 'expanded' : ''}`}
-          onMouseEnter={() => handlePanelInteraction(index, 'enter')}
-          onClick={() => handlePanelInteraction(index, 'click')}
+          onPointerEnter={(e) => handlePointerEnter(index, e)}
+          onClick={() => setExpandedIndex(index)}
         >
           <div className="accordion-bg">
             {panel.image ? (

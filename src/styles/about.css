@@ -92,11 +92,13 @@
 .editorial-bg {
     position: absolute;
     inset: 0;
-    background: url('/assets/sections/about/editorial.jpg') center/cover no-repeat;
-    filter: grayscale(20%) contrast(1.1) brightness(0.3);
+    z-index: 0;
     transform: scale(1.1);
     transition: transform 0.1s ease-out;
-    z-index: 0;
+}
+
+.editorial-bg img {
+    filter: grayscale(20%) contrast(1.1) brightness(0.3);
 }
 
 .editorial-content {

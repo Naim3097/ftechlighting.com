@@ -17,29 +17,25 @@ interface DynamicTabsProps {
 export default function DynamicTabs({ tabs }: DynamicTabsProps) {
     const [activeTab, setActiveTab] = useState(1);
 
-    const handleTabHover = (id: number) => {
-        if (window.innerWidth > 768) {
+    const handlePointerEnter = (id: number, e: React.PointerEvent) => {
+        if (e.pointerType !== 'touch') {
             setActiveTab(id);
-        }
-    };
-
-    const handleTabClick = (id: number) => {
-        if (window.innerWidth <= 768) {
-            setActiveTab(activeTab === id ? 0 : id);
         }
     };
 
     return (
         <section className="dynamic-tabs-section">
             <div className="tabs-visual">
-                {tabs.map((tab) => (
+                {tabs.map((tab, index) => (
                     <Image
                         key={tab.id}
                         src={tab.image}
                         alt={tab.title}
                         fill
+                        sizes="60vw"
                         style={{ objectFit: 'cover' }}
                         className={activeTab === tab.id ? 'active' : ''}
+                        {...(index === 0 ? { priority: true } : { loading: 'lazy' as const })}
                     />
                 ))}
             </div>
@@ -49,8 +45,8 @@ export default function DynamicTabs({ tabs }: DynamicTabsProps) {
                         key={tab.id}
                         className={`tab-item ${activeTab === tab.id ? 'active' : ''}`}
                         data-tab={tab.id}
-                        onMouseEnter={() => handleTabHover(tab.id)}
-                        onClick={() => handleTabClick(tab.id)}
+                        onPointerEnter={(e) => handlePointerEnter(tab.id, e)}
+                        onClick={() => setActiveTab(activeTab === tab.id ? 0 : tab.id)}
                     >
                         <div className="tab-header">
                             <span>{tab.title}</span>

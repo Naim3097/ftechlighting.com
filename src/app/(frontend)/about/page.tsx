@@ -105,7 +105,16 @@ export default async function AboutPage() {
             <HorizontalScroll totalSections={5} nextPageUrl="/services" prevPageUrl="/">
                 {/* Section 1: Hero */}
                 <section className="focus-section">
-                    <div className="focus-bg" style={{ backgroundImage: "url('/assets/sections/about/hero.jpeg')" }}></div>
+                    <div className="focus-bg">
+                        <Image
+                            src="/assets/sections/about/hero.jpeg"
+                            alt="About FTECH"
+                            fill
+                            priority
+                            sizes="100vw"
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </div>
                     <div className="focus-gradient"></div>
                     <div className="focus-content">
                         <h2>About<br/>Us</h2>
@@ -118,7 +127,15 @@ export default async function AboutPage() {
 
                 {/* Section 2: Editorial */}
                 <section className="editorial-section" id="editorialSection">
-                    <div className="editorial-bg"></div>
+                    <div className="editorial-bg">
+                        <Image
+                            src="/assets/sections/about/editorial.jpg"
+                            alt="Editorial background"
+                            fill
+                            sizes="100vw"
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </div>
                     <div className="editorial-content">
                         <div className="editorial-text-col">
                             <h2>The Editorial</h2>
