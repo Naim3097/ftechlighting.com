@@ -39,6 +39,8 @@
     background: #0f0c0c;
     transition: flex 0.8s cubic-bezier(0.25, 1, 0.5, 1),
                 height 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: flex;
+    contain: layout style;
 }
 
 .accordion-panel:last-child {
@@ -59,6 +61,8 @@
     z-index: 0;
     filter: grayscale(100%) brightness(0.4);
     transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: filter;
+    transform: translateZ(0);
 }
 
 .accordion-panel.expanded .accordion-panel-bg {
@@ -95,7 +99,7 @@
     white-space: nowrap;
     letter-spacing: 3px;
     text-transform: uppercase;
-    transition: all 1s var(--ease-out-expo);
+    transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
     z-index: 2;
 }
 
@@ -112,7 +116,7 @@
     color: var(--beige-light);
     opacity: 0;
     transform: translateY(35px);
-    transition: all 1s var(--ease-out-expo) 0.3s;
+    transition: opacity 1s var(--ease-out-expo) 0.3s, transform 1s var(--ease-out-expo) 0.3s;
     z-index: 2;
 }
 
@@ -166,7 +170,7 @@
     font-size: 13px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    transition: all 0.3s;
+    transition: color 0.3s;
     border: none;
     padding: 0;
     position: relative;
@@ -194,7 +198,7 @@
 .accordion-cta:active {
     opacity: 0.7;
     transform: scale(0.98);
-    transition: all 0.1s ease;
+    transition: opacity 0.1s ease, transform 0.1s ease;
 }
 
 /* ====== CURTAIN PANELS (Opening Animation) ====== */
@@ -351,7 +355,7 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: all 0.3s;
+    transition: opacity 0.3s;
 }
 
 .privacy-btn.accept {

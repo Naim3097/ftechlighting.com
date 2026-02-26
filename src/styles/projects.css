@@ -24,6 +24,7 @@
   transform: translateY(100%);
   filter: brightness(2);
   transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), filter 1.2s ease;
+  will-change: transform, filter;
 }
 
 .slice-strip:nth-child(odd) {
@@ -192,7 +193,7 @@
   max-width: 650px;
   opacity: 0;
   transform: translateX(-30px);
-  transition: all 1s 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: opacity 1s 0.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1s 0.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .diagonal-section.active .diagonal-content {

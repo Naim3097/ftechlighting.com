@@ -15,16 +15,27 @@ export default function MaskHero({ title, subtitle, backgroundImage }: HeroProps
   const bgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    let rafId: number | null = null;
+
     const handleMouseMove = (e: MouseEvent) => {
       if (window.innerWidth <= 768 || !bgRef.current) return;
-      const x = (window.innerWidth - e.pageX * 2) / 50;
-      const y = (window.innerHeight - e.pageY * 2) / 50;
-      bgRef.current.style.transform = `scale(1.05) translate(${x}px, ${y}px)`;
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        if (!bgRef.current) return;
+        const x = (window.innerWidth - e.pageX * 2) / 50;
+        const y = (window.innerHeight - e.pageY * 2) / 50;
+        bgRef.current.style.transform = `scale(1.05) translate3d(${x}px, ${y}px, 0)`;
+        rafId = null;
+      });
     };
 
     const handleMouseLeave = () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
       if (window.innerWidth <= 768 || !bgRef.current) return;
-      bgRef.current.style.transform = 'scale(1)';
+      bgRef.current.style.transform = 'scale(1) translate3d(0, 0, 0)';
     };
 
     const hero = heroRef.current;
@@ -38,6 +49,7 @@ export default function MaskHero({ title, subtitle, backgroundImage }: HeroProps
         hero.removeEventListener('mousemove', handleMouseMove);
         hero.removeEventListener('mouseleave', handleMouseLeave);
       }
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 

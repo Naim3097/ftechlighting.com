@@ -265,7 +265,7 @@
   left: 0;
   color: rgba(255,255,255,0.5);
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
   font-size: 1rem;
 }
 
@@ -285,7 +285,7 @@
   text-transform: uppercase;
   letter-spacing: 2px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
   margin-top: 20px;
   width: 100%;
 }

@@ -34,7 +34,7 @@
     text-decoration: none;
     font-size: 18px;
     letter-spacing: 2px;
-    transition: all 0.3s;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
     text-transform: uppercase;
     background: transparent;
     cursor: pointer;

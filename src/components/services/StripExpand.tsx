@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 
 interface StripItemData {
@@ -16,16 +15,12 @@ interface StripExpandProps {
 }
 
 export default function StripExpand({ items }: StripExpandProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   return (
     <section className="strip-section">
       {items.map((item, index) => (
         <div
           key={item.id}
           className="strip-item"
-          onMouseEnter={() => setHoveredIndex(index)}
-          onMouseLeave={() => setHoveredIndex(null)}
         >
           <div className="strip-bg">
             {item.image ? (
