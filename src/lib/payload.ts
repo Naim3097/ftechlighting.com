@@ -20,9 +20,9 @@ export async function getProjects() {
       },
     },
     sort: 'order',
-    depth: 2,
+    depth: 1,
   })
-  
+
   return projects.docs
 }
 

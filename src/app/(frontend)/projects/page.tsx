@@ -1,3 +1,5 @@
+export const revalidate = 3600;
+
 import HorizontalScroll from '@/components/HorizontalScroll';
 import MaskHero from '@/components/services/MaskHero';
 import DiagonalSection from '@/components/projects/DiagonalSection';

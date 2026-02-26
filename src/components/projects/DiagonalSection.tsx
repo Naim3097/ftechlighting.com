@@ -34,7 +34,7 @@ export default function DiagonalSection({ project, isActive = false }: DiagonalS
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setActive(true); },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -54,7 +54,7 @@ export default function DiagonalSection({ project, isActive = false }: DiagonalS
           src={project.image}
           alt={project.title.replace('<br>', ' ')}
           fill
-          sizes="60vw"
+          sizes="(max-width: 768px) 100vw, 60vw"
           style={{ objectFit: 'cover' }}
           priority={parseInt(project.number) <= 2}
         />
