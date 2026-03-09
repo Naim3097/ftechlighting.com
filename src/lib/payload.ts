@@ -21,6 +21,7 @@ export async function getProjects() {
     },
     sort: 'order',
     depth: 1,
+    limit: 100,
   })
 
   return projects.docs

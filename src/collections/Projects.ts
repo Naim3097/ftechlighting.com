@@ -1,9 +1,18 @@
 import type { CollectionConfig } from 'payload'
+import { revalidatePath } from 'next/cache'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
     useAsTitle: 'name',
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        revalidatePath('/projects')
+        return doc
+      },
+    ],
   },
   access: {
     read: ({ req }) => {
