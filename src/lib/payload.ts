@@ -40,15 +40,16 @@ export async function getServices() {
     },
     sort: 'order',
     depth: 2,
+    limit: 100,
   })
-  
+
   return services.docs
 }
 
 // Get services by category
 export async function getServicesByCategory(category: 'core-competencies' | 'lighting-solutions') {
   const payload = await getPayloadClient()
-  
+
   const services = await payload.find({
     collection: 'services',
     where: {
@@ -67,19 +68,21 @@ export async function getServicesByCategory(category: 'core-competencies' | 'lig
     },
     sort: 'order',
     depth: 2,
+    limit: 100,
   })
-  
+
   return services.docs
 }
 
 // Get all locations
 export async function getLocations() {
   const payload = await getPayloadClient()
-  
+
   const locations = await payload.find({
     collection: 'locations',
     sort: 'order',
     depth: 1,
+    limit: 100,
   })
   
   return locations.docs

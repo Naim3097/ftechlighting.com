@@ -1,9 +1,25 @@
 import type { CollectionConfig } from 'payload'
+import { revalidatePath } from 'next/cache'
 
 export const Services: CollectionConfig = {
   slug: 'services',
   admin: {
     useAsTitle: 'name',
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        revalidatePath('/services')
+        revalidatePath('/about')
+        return doc
+      },
+    ],
+    afterDelete: [
+      () => {
+        revalidatePath('/services')
+        revalidatePath('/about')
+      },
+    ],
   },
   access: {
     read: ({ req }) => {

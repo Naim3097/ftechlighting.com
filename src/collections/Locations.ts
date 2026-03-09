@@ -1,9 +1,23 @@
 import type { CollectionConfig } from 'payload'
+import { revalidatePath } from 'next/cache'
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
   admin: {
     useAsTitle: 'city',
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        revalidatePath('/contact')
+        return doc
+      },
+    ],
+    afterDelete: [
+      () => {
+        revalidatePath('/contact')
+      },
+    ],
   },
   access: {
     read: () => true,

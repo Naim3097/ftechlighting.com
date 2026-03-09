@@ -1,9 +1,18 @@
 import type { CollectionConfig } from 'payload'
+import { revalidatePath } from 'next/cache'
 
 export const CompanyInfo: CollectionConfig = {
   slug: 'company-info',
   admin: {
     useAsTitle: 'companyName',
+  },
+  hooks: {
+    afterChange: [
+      ({ doc }) => {
+        revalidatePath('/about')
+        return doc
+      },
+    ],
   },
   access: {
     read: () => true,
