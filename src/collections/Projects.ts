@@ -13,6 +13,11 @@ export const Projects: CollectionConfig = {
         return doc
       },
     ],
+    afterDelete: [
+      () => {
+        revalidatePath('/projects')
+      },
+    ],
   },
   access: {
     read: ({ req }) => {
